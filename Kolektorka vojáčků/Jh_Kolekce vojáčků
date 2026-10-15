@@ -1,0 +1,551 @@
+Jo. Tohle bych si už uložil jako samostatný **globální design kontrakt pro collector/Hyde route** a zatím ho necpat do K1 ani Masteru po kouskách. Až budeme mít rozložené další kapitoly a víme, kde přesně těch šestnáct významných Hydeových obětí leží, implementuje se to jako celek. Základ bych uzamkl následovně.
+
+## Olověných 16
+
+Ve hře existuje šestnáct Stevensonových olověných vojáčků a každý z nich má v manuscriptovém světě svůj „odraz“. Tyto odrazy nejsou rozmístěné jako běžné collectibles po náhodných rozích mapy. **Každý je svázaný s jednou významnou osobou, kterou během příběhu zabije Hyde.** Nejde o náhodné civilisty nebo systémová zabití; musí to být authored, pojmenované nebo dějově významné oběti.
+
+Tím pádem je 16/16 samo o sobě záznamem extrémní Hyde cesty. Hráč nemůže kolekci dokončit tím, že bude jen dobře hledat. Musí se skutečně dostat ke všem šestnácti významným Hydeovým úmrtím. Samotné sebrání vojáčka **nepřidává Hyde Dependence**. Dependence vzniká už těmi vraždami a dalšími Hyde rozhodnutími podle běžných globálních systémů. Kolekce jen dokazuje, jakou cestou hráč prošel.
+
+Vojáček se v manuscriptovém světě objeví až jako důsledek příslušné smrti. Nemusíme nikdy vysvětlit, jestli tam fyzicky byl předtím, nebo jestli se do světa „propsal“ ze Stevensona. Čím déle hra pokračuje, tím méně jisté by to mělo být.
+
+## První figurka: Rook
+
+Rook je první významná oběť a zároveň první vojáček. Při Day 2 ohledávání může Jekyll mezi Rookovými osobními věcmi nebo přímo ve vnitřní kapse kabátu nalézt malou olověnou figurku. Na ní je motiv věže, takže v pozdější šachové scéně bude přirozeně fungovat jako jedna z Hydeových věží.
+
+V K1 hráč ještě vůbec nemusí vědět, že jde o collectible systém. Pokud ji sebere před objevením Stevensonovy police, hra si pouze tiše uloží `RLS_SOLDIER_01_ROOK = FOUND`. Neukazuje `1/16`, žádný quest, žádný achievement a žádnou vysvětlující hlášku. Jekyll může jen krátce reagovat na podivný předmět.
+
+Pokud ji v K1 mine, **Rookova figurka nesmí být permanentně ztracená**. Buď musí být Rookovo místo činu později znovu dostupné, nebo se jeho osobní věci přesunou do authored police/evidence location, odkud ji lze stále získat. To samé platí pro všech dalších patnáct.
+
+## Objevení collector linky u Stevensona
+
+Collector systém se hráči nevysvětlí menu tutorialem. V jednom z prvních Stevensonových interludií po K1, a každopádně **dříve, než může vzniknout druhá permanentně ztratitelná Hydeova oběť**, proběhne krátká povinná authored událost.
+
+Stevenson z vedlejší místnosti zaslechne Fanny, například:
+
+> „Louis?“
+
+Jde za jejím hlasem. Fanny tam ale není. Na stěně se na několik sekund objeví Hydeův stín, přestože v místnosti nikdo nestojí. Stín se zastaví nad policí s šestnácti olověnými vojáčky a zmizí. Stevenson se podívá tam, kde by Hyde musel stát, nikoho nenajde, potom se jeho pozornost přirozeně vrátí k polici.
+
+Od tohoto okamžiku se police stane interaktivní. Samotná událost hráče neinformuje „začal collector quest“. Teprve když polici prohlédne, zjistí, že obsahuje šestnáct figur. Pokud už našel Rookovu figurku, police okamžitě ukáže `1/16`. Pokud ne, `0/16`.
+
+To je první skutečný okamžik, kdy hráč pochopí, že olověná figurka z manuscriptu a Stevensonova sbírka spolu souvisejí.
+
+## Police jako diegetický quest log
+
+Nepotřeboval bych samostatné menu s šestnácti položkami. **Stevensonova police sama funguje jako tracker i jako nápověda.**
+
+Každá figurka na polici má vlastní drobný detail vztahující se k místu, kde se její manuscriptový protějšek objeví. Nejde o text typu „hledej v dokách“. Jedna může mít saze na podstavci, jiná drobnou zelenou skvrnu, jiná prasklou šavli, symbol určité budovy, kapku vosku, kousek látky, deformovanou botu nebo jiný vizuální motiv. Hráč musí spojení rozpoznat při hraní manuscriptu.
+
+Nenalezená figurka na Stevensonově polici poskytuje pouze indicii. Nalezená se změní: může dostat jinou pózu, materiál, drobný detail nebo zpřístupnit další inspect text. Právě zde bych zobrazoval i Stevensonovy životopisné a literární fragmenty, o kterých jsme mluvili dřív. Ne jako „odměnu za vraždu“ přímo u těla, ale až při pozdějším návratu k Stevensonovi a prohlédnutí odpovídající figurky.
+
+Tak se manuscriptová vražda, Stevensonova historie a jeho tvorba propojí, aniž by hra oslavovala samotné zabití nějakým XP popupem.
+
+## Tvrdé pravidlo pro placement
+
+Tohle je nejdůležitější výrobní pravidlo celého systému: žádný vojáček nesmí být umístěn do lokace, kterou po jeho vzniku už nelze navštívit, pokud neexistuje authored recovery route.
+
+V praxi tedy každá z šestnácti obětí musí při návrhu kapitoly dostat nejen místo smrti, ale také odpověď na otázku „co se stane s figurkou, když ji hráč teď nevezme?“. Může zůstat v aftermath verzi lokace, přesunout se spolu s tělem nebo důkazy, být dostupná při pozdější policejní návštěvě nebo jiným logickým způsobem. Nikdy ne „minul jsi třísekundové okno, takže 16/16 je navždy nemožné“.
+
+Důležitý je také rozdíl mezi **smrtí a nalezením**. Figurku lze sebrat pouze pokud konkrétní významná oběť skutečně zemřela Hydeovou rukou. Pokud hráč danou osobu ušetří nebo daná Hydeova větev vůbec nenastane, figurka se nemanifestuje a 16/16 už na tom průchodu není možné. To je v pořádku, protože plná kolekce je právě Hyde route.
+
+## 16/16 neuděluje běžnou odměnu
+
+Po nalezení všech šestnácti se hráči nepřidá skill point, peníze ani statistika. Místo toho se odemkne zvláštní latentní motiv:
+
+```text
+VOJÁČCI
+```
+
+Ten se sám automaticky nevyřeší. Pouze znamená, že hráč během celé hry vytvořil podmínky pro pozdní Stevenson–Hyde konfrontaci.
+
+To je důležité: `16/16` není konec collectoru. Je to **klíč k authored scéně**, která jinak vůbec nevznikne.
+
+## Proč právě šestnáct
+
+To číslo bych už nechal definitivně, protože nám krásně zapadne do šachů: jedna strana šachovnice má přesně šestnáct figur.
+
+V pozdní scéně tedy šestnáct manuscriptových vojáčků nebude jen stát vedle šachovnice. **Stanou se Hydeovou celou šachovou armádou.** Rookova figurka se skutečně promění nebo funkčně přepíše na jednu z věží. Další oběti později dostanou odpovídající šachovou roli: druhá věž, dva jezdci, dva střelci, královna, král a osm pěšců.
+
+Nemusíme ještě rozhodovat, která oběť bude která figura. To se má dělat až při návrhu konkrétních postav, aby role odpovídala jejich významu, vztahu k Hydeovi nebo způsobu smrti.
+
+## Pozdní konfrontace Stevenson versus Hyde
+
+V poslední části hry už bleed mezi manuscriptovým a Stevensonovým světem pokročil natolik, že se Hyde dokáže ve Stevensonově realitě zhmotnit. Nemusíme ještě rozhodnout přesnou kapitolu, ale musí jít o okamžik, kdy už hra otevřeně připouští, že hranice mezi autorem a jeho postavou přestala fungovat.
+
+Pokud hráč nemá 16/16, může tato konfrontace proběhnout jiným způsobem.
+
+Pokud má `VOJÁČCI`, vznikne zvláštní authored route. Stevenson přijde k šachovnici a na Hydeově straně se postupně objeví všech šestnáct nalezených vojáčků. Na druhé straně jsou Stevensonovy normální šachové figury. Hyde se posadí naproti němu.
+
+Tady bych už **nepřepínal ovládání každé dva tahy mezi Stevensonem a Hydem**. Nápad „hráč hraje sám proti sobě“ je tematicky dobrý, ale mechanicky by scénu spíš znepřehlednil. Mnohem silnější a jednodušší je, když je hráč v této scéně **Hyde** a Stevenson je protivník. Kamera, odrazy a krátké bleed momenty mohou pořád občas vizuálně stavět hráče do Stevensonovy pozice, ale kontrola zůstává na Hydeově straně.
+
+## Jak mají fungovat šachy
+
+Nedělal bych z toho plnohodnotnou šachovou hru od počátečního postavení. Je to obrovská vedlejší mechanika a hráč, který neumí šachy, by byl najednou testovaný z úplně jiné dovednosti.
+
+Lepší je krátký **authored chess endgame**. Hráč přijde k už rozehrané pozici. V každém tahu má několik legálních a dramaturgicky relevantních možností. Partie může mít třeba několik rozhodujících tahů, nikoli čtyřicetiminutový zápas. Stále jde o skutečné šachové tahy a skutečný stav desky, ale nepotřebujeme robustní AI ani kompletní šachový produkt uvnitř hry.
+
+Počáteční pozice může být ovlivněna tím, jak daleko už Hyde získal převahu. Extrémní Hyde Dependence může Hydeovi dát silnější výchozí pozici; vyšší Integration může Stevensonovi dát lepší obranu. Přesné prahy bych zatím nedával, protože je potřeba je později svázat s finálním systémem Integration/Dependence.
+
+Samotný fakt, že hráč má 16/16, ale znamená, že Hyde vstupuje do partie velmi silný. To je správně: hráč prošel extrémní Hyde cestou.
+
+## Výsledek partie
+
+Tady bych ponechal přesně dvě významové větve.
+
+Pokud **Hyde vyhraje**, je to definitivní vítězství Hydeovy dominance. Ne jen další `Dependence +5`. Hra nastaví hard narrative flag, že Hyde v rozhodujícím střetu porazil samotného autora. Od té chvíle už pozdní hra vede k Hyde-dominantnímu výsledku: Jekyll ztrácí hlavní postavení a Hyde postupně přebírá kontrolu. Přesnou podobu závěru nemusíme ještě určovat, ale větev už je zamčená jako Hyde victory route.
+
+Pokud **Hyde prohraje**, nastane naopak zásadní Integration breakthrough. A klidně i tehdy, když hráč předtím prošel všemi šestnácti vraždami. Není to odpuštění těch činů ani „good ending“. Je to okamžik, kdy Hyde v posledním boji o dominanci selhal a Jekyll/Stevenson už ho nemůže dál chápat jako něco úplně cizího, co stačí vypustit nebo zničit. Prohra Hydeovy strany proto může tvrdě odemknout nebo přímo zamknout Integration route.
+
+Nevadí mi ani to, že hráč může partii záměrně prohrát. V tomhle kontextu je to vlastně legitimní rozhodnutí: došel až na konec extrémní Hyde cesty a v posledním okamžiku odmítl, aby Hyde zvítězil. Nemusíme z toho dělat tajný anti-cheese systém.
+
+## Implementační kontrakt k uložení
+
+```yaml
+stevenson_lead_soldier_system:
+
+  status: DESIGN_LOCK_FOR_FUTURE_IMPLEMENTATION
+
+  total_soldiers: 16
+
+  concept: >
+    Sixteen lead-soldier echoes are tied to sixteen authored significant
+    victims killed by Hyde. They are not generic exploration collectibles.
+    Completing the collection therefore represents an extreme Hyde route.
+
+  qualifying_victim_rule: >
+    A soldier slot may only be assigned to a named or narratively significant
+    authored victim whose death is caused by Hyde. Random systemic kills,
+    disposable civilians and filler deaths do not qualify.
+
+  dependency_rule: >
+    Collecting a soldier does not itself add HydeDependence.
+    The authored Hyde actions and murders required to create the soldiers
+    must apply their normal HydeDependence consequences through the global
+    dependence system. The collection records the path; it does not create it.
+
+  collection_state:
+    StevensonSoldierCollectionDiscovered:
+      type: BOOLEAN
+      initial: false
+
+    FoundStevensonSoldiers:
+      type: SET
+      initial: []
+
+    StevensonSoldiersFoundCount:
+      derived_from: FoundStevensonSoldiers
+      range: 0_TO_16
+
+    SoldiersMotifUnlocked:
+      type: BOOLEAN
+      initial: false
+
+  discovery_sequence:
+
+    timing_rule: >
+      Trigger during an early Stevenson interlude after K1 and before the
+      player can permanently pass a second soldier-bearing Hyde victim.
+
+    setup:
+    - Stevenson hears Fanny calling from another room.
+    - Stevenson follows the voice.
+    - Fanny is not present.
+    - Hyde's shadow briefly manifests above the shelf of sixteen lead soldiers.
+    - Stevenson checks the physical space where Hyde would have been.
+    - Nobody is there.
+    - The shelf becomes interactable.
+
+    shelf_interaction:
+      on_first_inspect:
+      - set StevensonSoldierCollectionDiscovered = true
+      - reveal sixteen-soldier collection structure
+      - retroactively register any soldiers already found
+      - reveal found count
+      - enable cryptic shelf clues
+
+    tutorial_rule: >
+      Do not display a conventional quest tutorial or objective marker.
+      The shelf itself teaches the system.
+
+  shelf:
+
+    location: STEVENSON_HOME
+
+    physical_soldier_count: 16
+
+    function:
+    - diegetic collection tracker
+    - cryptic location-hint source
+    - Stevenson life/literary fragment archive
+    - late-game motif anchor
+
+    unfound_soldier:
+      presentation: >
+        Each soldier contains one subtle authored visual clue connected to
+        the manuscript location, victim or circumstances of its echo.
+      forbidden:
+      - explicit map waypoint
+      - victim name as solution
+      - exact written location
+      - mandatory quest marker
+
+    found_soldier:
+      presentation: >
+        The corresponding shelf soldier gains a subtle changed state and
+        unlocks its authored Stevenson fragment.
+      unlocks:
+      - STEVENSON_LIFE_FRAGMENT
+      - optional STEVENSON_LITERARY_FRAGMENT
+
+    lore_rule: >
+      Historical/literary fragments are reviewed at Stevenson's shelf rather
+      than rewarded directly at the site of a murder.
+
+  manuscript_echo_rule:
+
+    manifestation_condition: >
+      The associated significant victim has died by Hyde through the authored
+      incident assigned to that soldier slot.
+
+    before_death:
+      echo_exists: false
+
+    after_death:
+      echo_exists: true
+
+    collection_allowed_before_shelf_discovery: true
+
+    pre_discovery_feedback:
+      collection_counter_visible: false
+      collector_UI_visible: false
+      significance_explained: false
+
+    retroactive_rule: >
+      Soldiers collected before Stevenson discovers the shelf remain stored
+      and are registered when the shelf system is discovered.
+
+  placement_contract:
+
+    primary_rule: >
+      Each soldier manifests at the immediate aftermath location of its
+      associated Hyde kill, normally on the victim, among personal effects,
+      or in a location physically tied to the death.
+
+    permanent_miss_rule: FORBIDDEN
+
+    recovery_requirement: >
+      Every soldier slot must declare a logical recovery route if the player
+      leaves the initial aftermath without collecting it.
+
+    valid_recovery_examples:
+    - revisitable aftermath location
+    - victim personal effects preserved in-world
+    - police evidence storage
+    - body/morgue follow-up
+    - later authored revisit to the same site
+
+    invalid_design: >
+      A one-shot location that permanently disappears while an uncollected
+      soldier remains inside it.
+
+  soldier_slots:
+
+    RLS_SOLDIER_01_ROOK:
+      associated_victim: ROOK
+      associated_incident: INC_K1_ROOK
+      death_form: HYDE
+      chess_role: ROOK_A
+      primary_location: ROOK_INNER_COAT_POCKET_OR_PERSONAL_EFFECTS
+      first_collection_window: K1_CRIME_SCENE_INVESTIGATION
+      can_be_found_before_collection_discovery: true
+      recovery_route: REQUIRED_IF_K1_MISSED
+      shelf_hint: TBD_AUTHORED_VISUAL_CLUE
+      life_fragment: TBD_RESEARCHED_CONTENT
+      literary_fragment: TBD_OPTIONAL
+
+    RLS_SOLDIER_02:
+      associated_victim: TBD
+      associated_incident: TBD
+      chess_role: TBD
+      primary_location: TBD
+      recovery_route: REQUIRED
+      shelf_hint: TBD
+      life_fragment: TBD
+      literary_fragment: TBD
+
+    RLS_SOLDIER_03:
+      associated_victim: TBD
+      associated_incident: TBD
+      chess_role: TBD
+      primary_location: TBD
+      recovery_route: REQUIRED
+      shelf_hint: TBD
+      life_fragment: TBD
+      literary_fragment: TBD
+
+    RLS_SOLDIER_04:
+      associated_victim: TBD
+      associated_incident: TBD
+      chess_role: TBD
+      primary_location: TBD
+      recovery_route: REQUIRED
+      shelf_hint: TBD
+      life_fragment: TBD
+      literary_fragment: TBD
+
+    RLS_SOLDIER_05:
+      associated_victim: TBD
+      associated_incident: TBD
+      chess_role: TBD
+      primary_location: TBD
+      recovery_route: REQUIRED
+      shelf_hint: TBD
+      life_fragment: TBD
+      literary_fragment: TBD
+
+    RLS_SOLDIER_06:
+      associated_victim: TBD
+      associated_incident: TBD
+      chess_role: TBD
+      primary_location: TBD
+      recovery_route: REQUIRED
+      shelf_hint: TBD
+      life_fragment: TBD
+      literary_fragment: TBD
+
+    RLS_SOLDIER_07:
+      associated_victim: TBD
+      associated_incident: TBD
+      chess_role: TBD
+      primary_location: TBD
+      recovery_route: REQUIRED
+      shelf_hint: TBD
+      life_fragment: TBD
+      literary_fragment: TBD
+
+    RLS_SOLDIER_08:
+      associated_victim: TBD
+      associated_incident: TBD
+      chess_role: TBD
+      primary_location: TBD
+      recovery_route: REQUIRED
+      shelf_hint: TBD
+      life_fragment: TBD
+      literary_fragment: TBD
+
+    RLS_SOLDIER_09:
+      associated_victim: TBD
+      associated_incident: TBD
+      chess_role: TBD
+      primary_location: TBD
+      recovery_route: REQUIRED
+      shelf_hint: TBD
+      life_fragment: TBD
+      literary_fragment: TBD
+
+    RLS_SOLDIER_10:
+      associated_victim: TBD
+      associated_incident: TBD
+      chess_role: TBD
+      primary_location: TBD
+      recovery_route: REQUIRED
+      shelf_hint: TBD
+      life_fragment: TBD
+      literary_fragment: TBD
+
+    RLS_SOLDIER_11:
+      associated_victim: TBD
+      associated_incident: TBD
+      chess_role: TBD
+      primary_location: TBD
+      recovery_route: REQUIRED
+      shelf_hint: TBD
+      life_fragment: TBD
+      literary_fragment: TBD
+
+    RLS_SOLDIER_12:
+      associated_victim: TBD
+      associated_incident: TBD
+      chess_role: TBD
+      primary_location: TBD
+      recovery_route: REQUIRED
+      shelf_hint: TBD
+      life_fragment: TBD
+      literary_fragment: TBD
+
+    RLS_SOLDIER_13:
+      associated_victim: TBD
+      associated_incident: TBD
+      chess_role: TBD
+      primary_location: TBD
+      recovery_route: REQUIRED
+      shelf_hint: TBD
+      life_fragment: TBD
+      literary_fragment: TBD
+
+    RLS_SOLDIER_14:
+      associated_victim: TBD
+      associated_incident: TBD
+      chess_role: TBD
+      primary_location: TBD
+      recovery_route: REQUIRED
+      shelf_hint: TBD
+      life_fragment: TBD
+      literary_fragment: TBD
+
+    RLS_SOLDIER_15:
+      associated_victim: TBD
+      associated_incident: TBD
+      chess_role: TBD
+      primary_location: TBD
+      recovery_route: REQUIRED
+      shelf_hint: TBD
+      life_fragment: TBD
+      literary_fragment: TBD
+
+    RLS_SOLDIER_16:
+      associated_victim: TBD
+      associated_incident: TBD
+      chess_role: TBD
+      primary_location: TBD
+      recovery_route: REQUIRED
+      shelf_hint: TBD
+      life_fragment: TBD
+      literary_fragment: TBD
+
+  completion:
+
+    condition: StevensonSoldiersFoundCount == 16
+
+    actions:
+    - set SoldiersMotifUnlocked = true
+    - unlock motif VOJÁČCI
+
+    immediate_stat_reward: NONE
+    skill_reward: NONE
+    money_reward: NONE
+
+    rule: >
+      Completing the collection unlocks an authored late-game possibility.
+      It does not itself resolve the motif or determine an ending.
+
+  motif_VOJÁČCI:
+
+    availability: SoldiersMotifUnlocked == true
+
+    thematic_axis:
+    - HYDE_DOMINANCE
+    - INTEGRATION
+
+    intended_application: LATE_STEVENSON_HYDE_CONFRONTATION
+
+    rule: >
+      The motif becomes usable only when Hyde can materially manifest inside
+      Stevenson's world during the late-game bleed.
+
+  chess_confrontation:
+
+    status: LATE_GAME_CONCEPT_LOCKED_MECHANICS_TBD
+
+    availability:
+    - SoldiersMotifUnlocked == true
+    - late-game Hyde manifestation active
+    - authored Stevenson/Hyde confrontation reached
+
+    presentation:
+      Stevenson_side: ORDINARY_CHESS_PIECES
+      Hyde_side: SIXTEEN_COLLECTED_LEAD_SOLDIERS
+
+    Hyde_piece_mapping:
+      total: 16
+      roles:
+      - KING
+      - QUEEN
+      - ROOK_A
+      - ROOK_B
+      - BISHOP_A
+      - BISHOP_B
+      - KNIGHT_A
+      - KNIGHT_B
+      - PAWN_1
+      - PAWN_2
+      - PAWN_3
+      - PAWN_4
+      - PAWN_5
+      - PAWN_6
+      - PAWN_7
+      - PAWN_8
+
+      fixed_mapping:
+        RLS_SOLDIER_01_ROOK: ROOK_A
+
+      remaining_mapping: TBD_WHEN_VICTIMS_ARE_AUTHORED
+
+    player_character: HYDE
+    opponent: STEVENSON
+
+    control_rule: >
+      Mechanical control remains with Hyde throughout the chess encounter.
+      Presentation may briefly use Stevenson-side perspective or reflection
+      imagery, but does not swap player control every two moves.
+
+    game_structure: SHORT_AUTHORED_CHESS_ENDGAME
+
+    production_rule: >
+      Do not build a full standalone chess game. Use a curated legal position
+      with a bounded set of meaningful legal moves and a short decisive line.
+
+    state_influence:
+      HydeDependence: may improve Hyde's initial board advantage
+      Integration: may improve Stevenson's resistance
+      exact_mapping: TUNING_AFTER_LATE_GAME_SYSTEMS_ARE_LOCKED
+
+    HYDE_WIN:
+      meaning: Hyde defeats the author in the struggle for dominance.
+      result:
+      - set HYDE_WINS_AUTHOR_CONFRONTATION = true
+      - lock HYDE_DOMINANCE_ROUTE
+      - prevent this chess event from resolving as Integration
+      downstream_intent: >
+        Jekyll increasingly loses primary control and the late-game outcome
+        proceeds toward Hyde dominance.
+
+    HYDE_LOSS:
+      meaning: Hyde fails to defeat the author despite the completed Hyde route.
+      result:
+      - set HYDE_LOSES_AUTHOR_CONFRONTATION = true
+      - lock INTEGRATION_ROUTE
+      - resolve the confrontation as an Integration breakthrough
+      downstream_intent: >
+        Previous murders are not forgiven or erased. The result represents
+        the collapse of Hyde's claim to separate dominance and forces the
+        Jekyll/Hyde conflict toward integration.
+
+    no_draw_route:
+      rule: >
+        This authored confrontation resolves only as HYDE_WIN or HYDE_LOSS.
+        A permanent draw/stalemate outcome is not part of the final route logic.
+
+  implementation_order:
+
+    phase_1:
+      - lock all sixteen significant Hyde-victim slots across K1-K7
+      - ensure every slot has a recovery route
+      - place RLS_SOLDIER_01_ROOK in K1/K2 evidence flow
+
+    phase_2:
+      - author Stevenson shelf discovery interlude
+      - build shelf interaction and retroactive registration
+      - author sixteen cryptic shelf hints
+
+    phase_3:
+      - research/write sixteen Stevenson life/literary fragments
+      - implement persistent collection state
+
+    phase_4:
+      - unlock VOJÁČCI at 16/16
+      - implement late-game chess confrontation only after final
+        HydeDependence/Integration rules are stable
+```
+
+Tohle bych teď považoval za **uložitelnou verzi návrhu**. Nejdůležitější pro další práci je, že až budeme dělat K2, K3 atd., u každé významné Hydeovy smrti si hned řekneme: „je to jeden z těch šestnácti, nebo ne?“ Pokud ano, rovnou jí zapíšeme figurku, hint na Stevensonově polici a recovery route. Tím se nestane, že v K6 zjistíme, že jsme před pěti kapitolami zamkli jedinou figurku do nenávratné lokace.

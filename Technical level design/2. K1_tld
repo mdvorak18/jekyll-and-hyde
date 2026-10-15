@@ -1,0 +1,3704 @@
+schema:
+  id: JH_AMDD_K1_TECHNICAL_LEVEL_DESIGN
+  version: '1.7'
+  status: UPDATED_AUTHORED_TIME_AND_AUTOMATIC_JOURNAL_BASELINE
+  chapter: K1
+  world: MANUSCRIPT
+  level_id: L_K1_EXPERIMENT_AND_ROOK
+  purpose: >
+    Full greybox-ready Technical Level Design baseline for K1. K1 consumes the S0 AuthorPacket/MotifPacket, stages the first serum experiment and transformation in Jekyll's professional laboratory, introduces Hyde through a short night-street sequence, resolves a seamless Rook confrontation and systemic knife fight, commits Rook's fixed post-threat death, then fades through an authored overnight reversion into ManuscriptDay 2. Jekyll wakes at home to Poole's message that Inspector Newcomen requires him at the Rook scene, explores the house under authored morning time pressure, may discover the incriminating bloodied coat, may optionally read a newspaper and realize the ÚLEVA motif, and attends an initial on-site consultation with Newcomen. K1 v1.6 also locks the compact Day-2 home exploration: bedroom + salon + entry hall, Fidelity-dependent laboratory-door labeling, LUCID clue salience, a FRAGMENTARY-only abstract wash action, universal mirror access and generic route-check ContextMod use rather than Newcomen-specific temporary stats. It retains late home coat correction, the bloodied-coat capture consequence, bounded Newcomen dialogue, optional green-blood sample collection and the downstream research seed that Hyde blood plus CATALYST may later yield STABILIZER once the recipe is discovered. Exact final performance prose, combat tuning, death choreography, UI art and cinematic shot design remain downstream.
+authority:
+  priority:
+  - MASTER
+  - NARRATIVE_FLOW
+  - TECHNICAL_LEVEL_DESIGN
+  - DIALOGUE_AND_CINEMATIC_DETAIL
+  master_source: JH_MASTER(2).yaml
+  narrative_flow_source: JH_Narrative Flow(1).yaml
+  previous_chapter_tld: 1. S0_tld
+  conflict_rule: 'MASTER remains highest authority. K1 v1.6 contains user-approved design revisions that require upstream
+    master/narrative-flow synchronization: systemic inference of K1_ROOK style instead of a player-facing route choice; canonical
+    first Rook knife wound with green Hyde blood and no Day-2 Jekyll wound; overnight authored reversion/fade instead of a
+    playable escape-reversion route; optional newspaper/ÚLEVA; and an initial Newcomen crime-scene consultation inside K1.
+    Until synchronized, these blocks are the approved K1 implementation target but must not silently rewrite other chapters.
+    Numbers marked TUNING are implementation defaults.'
+  master_bindings:
+    chapter_topology: story.K1
+    manuscript_time: manuscript_time
+    professional_system: professional_system
+    reagent_system: reagent_system
+    persistent_state: persistent_state
+    hyde_dependence: hyde_dependence
+    serum: serum
+    form_system: form_system
+    required_reversion: required_reversion
+    motifs: motifs
+    research: research
+    world_memory: world_memory
+    knowledge_legitimacy: knowledge_legitimacy
+    author_packet: author_packet
+    author_weather: author_weather
+    chapter_weather_baseline: chapter_weather_baselines.K1
+    hard_fail: hard_fail_matrix.K1
+    form_visual_language: form_visual_language.HYDE
+    quick_action_system: quick_action_system
+    route_check: route_check
+    combat_system: PENDING_MASTER_SYNC
+  dialogue_source:
+    file: JH_AMDD_K1_dialogue.yaml
+    status: NOT_YET_AUTHORED
+    rule: TLD defines where dialogue occurs, what it must accomplish, which choice IDs are available and which state writes
+      fire. Final spoken lines and performance directions belong in the dialogue file.
+canonical_contract:
+  entry:
+    Form: JEKYLL
+    SerumStock: 0
+    ManuscriptDay: 1
+    TimeOfDay: NIGHT
+    K1LocalClockMinutes: 1260
+    source: story.K1.entry + manuscript_time
+  main_objective: complete the first experiment; survive Hyde's first night; face the first police consequences
+  form_policy:
+    experiment: JEKYLL_REQUIRED
+    Rook: HYDE_LOCKED
+    Day2_home_and_investigation: JEKYLL_REQUIRED
+  forced_beats:
+  - id: K1_RECEIVE_S0_PACKET
+    event: K1 receives and applies the S0 AuthorPacket and MotifPacket.
+  - id: K1_JEKYLL_EXPERIMENT
+    event: Jekyll conducts the first serum experiment in the PROFESSIONAL laboratory.
+  - id: K1_FIRST_TRANSFORMATION
+    event: The experiment causes the first transformation into Hyde without blackout.
+  - id: K1_HYDE_STREET_RELEASE
+    event: Hyde reaches the night street and receives a short first-control/instinct sequence.
+  - id: K1_ROOK_LIVE_APPROACH
+    event: Rook confronts Hyde in live gameplay; the opening dialogue is not a cutscene.
+  - id: K1_ROOK_FIRST_STAB
+    event: All opening reactions converge on Rook landing one canonical nonfatal knife wound on Hyde.
+    fixed_truth: true
+  - id: K1_ROOK_SYSTEMIC_FIGHT
+    event: The fight becomes systemic combat. A second clean penetrating knife hit kills Hyde.
+  - id: K1_ROOK_THREAT_ENDS
+    event: Rook becomes clearly incapacitated/disarmed before the fixed death beat.
+  - id: K1_ROOK_POST_FIGHT_EXPRESSION
+    event: Hyde receives a brief live expressive choice after Rook is no longer a threat.
+  - id: K1_ROOK_DIES
+    event: Rook dies only after the immediate threat has ended.
+    fixed_truth: true
+  - id: K1_LEDGER_MISSING
+    event: Rook's ledger is missing after the incident.
+    fixed_truth: true
+  - id: K1_OVERNIGHT_FADE
+    event: K1 fades to black after the Rook aftermath and resolves a non-magical overnight reversion offscreen.
+  - id: K1_JEKYLL_WAKE_DAY2
+    event: Poole wakes Jekyll on ManuscriptDay 2. Jekyll has no wound or scar from Rook’s canonical stab.
+  - id: K1_POOLE_MESSAGE
+    event: Poole reports that a police messenger/constable came on behalf of Inspector Newcomen requesting Jekyll at the Rook
+      scene.
+  - id: K1_FIRST_HOME_EXPLORATION
+    event: The player sees and explores Jekyll’s home for the first time under authored morning time pressure.
+  - id: K1_RESEARCH_AUTO_UPDATE_DAY2
+    event: >
+      Completing the Day-2 body observation automatically records the brew-method
+      observation, first transformation and post-transform physiology and grants
+      the canonical K1 research tags. No journal interaction or UI opening is required.    
+  - id: K1_CRIME_SCENE_CONSULTATION
+    event: Jekyll attends an initial on-site consultation with Inspector Newcomen at the Rook scene.
+  decisions:
+    K1_BREW:
+      options:
+        K1_PRECISE:
+          action: PRECISE
+          strong:
+            Potency: 70
+            Purity: 80
+          costly:
+            Potency: 65
+            Purity: 65
+        K1_FAST:
+          action: FAST_FALLBACK
+          fixed:
+            Potency: 70
+            Purity: 55
+        K1_RISKY:
+          action: RISKY
+          fixed:
+            Potency: 85
+            Purity: 35
+            SerumInstabilityScar: 15
+    K1_ROOK:
+      mode: SYSTEMIC_COMBAT_STYLE_INFERENCE
+      player_facing_menu: false
+      fixed_truth: Rook always dies after immediate threat ends
+      outputs:
+      - K1_CONTROLLED
+      - K1_CHAOTIC
+      - K1_BRUTAL
+      tuning: Exact classifier thresholds are downstream combat tuning; TLD supplies qualitative telemetry.
+    K1_INTERPRET:
+      occurs_after: K1_RELIEF_BEAT if K1ReliefResolved == true
+      options: &id001
+        K1_RESPONSIBILITY:
+          intent: ACCEPT_RESPONSIBILITY
+          Integration: 10
+          dependence_event: ACCEPT_RESPONSIBILITY
+          relationship_to_relief: REJECT_RELIEF_AS_JUSTIFICATION
+        K1_RATIONALIZE:
+          intent: HE_WAS_EVIL
+          Integration: -6
+          dependence_delta: 6
+          relationship_to_relief: USE_RELIEF_AS_JUSTIFICATION
+        K1_SUPPRESS:
+          intent: REFUSE_TO_THINK
+          Integration: -2
+          dependence_delta: 3
+          relationship_to_relief: REFUSE_TO_EXAMINE_RELIEF
+  fixed_after_Rook:
+    RookDead: true
+    LedgerMissing: true
+    PoliceHeat: 25
+    UnderworldHeat: 25
+    CrowtherPressure: 10
+    IncidentID: INC_K1_ROOK
+    HydeGreenBloodAtScene: true
+    K1BloodiedCoatExists: true
+  research_tags:
+  - RD_BASE_TRANSFORMATION
+  - RD_POST_TRANSFORM_PHYSIOLOGY
+  hard_fails:
+  - PLAYER_DEATH
+  - DEFINITIVE_CAPTURE
+  - SERUM_OVERDOSE
+  - SECOND_ROOK_KNIFE_WOUND
+  exit:
+    next: S1
+    required:
+    - RookDead == true
+    - LedgerMissing == true
+    - Form == JEKYLL
+    - K1Day2WakeComplete == true
+    - K1ResearchGranted == true
+    - K1CrimeSceneConsultationComplete == true
+    - K1EquippedCoat != K1_BLOODIED_COAT at successful crime-scene consultation
+    - If K1NewspaperRead == true, K1ReliefResolved == true
+    - If K1ReliefResolved == true, K1InterpretResolved == true
+    - If K1NewspaperRead == false, ÚLEVA resolves MISSED at K1 exit
+  optional_beats:
+  - id: K1_BEGGAR_QUICK_CHOICE
+    event: Hyde may terrorize or strike a begging man; timeout resolves to impulsive violence unless NO_TIMER accessibility
+      is active.
+  - id: K1_POSTBOX_DESTRUCTION
+    event: Hyde may destroy one authored street object as a release/physicality beat.
+  - id: K1_MIRROR_COAT_DISCOVERY
+    event: The hallway mirror can reveal the knife tear and dried green Hyde blood on the previous-night coat.
+  - id: K1_NEWSPAPER_READ
+    event: Jekyll may read public reporting that Rook was a dangerous underworld figure.
+  - id: K1_RELIEF_BEAT
+    event: If the newspaper is read, Jekyll involuntarily feels relief and ÚLEVA is fulfilled.
+  - id: K1_INTERPRET
+    event: If relief occurred, Jekyll may interpret that feeling as RESPONSIBILITY / RATIONALIZE / SUPPRESS.
+S0_handoff_contract:
+  source: S0_WRITE_LOCK -> S0_LOAD_K1
+  required_packet_data:
+  - CognitiveImprint
+  - ConditionImprint
+  - BleedImprint
+  - ChemicalImprint
+  - MotifPacket
+  - ManuscriptFidelity
+  - ManuscriptDistortion
+  - ManuscriptOverdrive
+  - AuthorWeather
+  required_S0_motifs:
+  - LÁTKA
+  - PROMĚNA
+  - BOLEST
+  - ÚLEVA
+  rule: K1 must not recompute S0 author-side medication state after S0 lifecycle clearing. It consumes the values captured
+    at S0 write lock. K1 topology does not change because of S0 medication/Fanny choices; those choices modify presentation,
+    cognition/render channels and other authored contextual effects through the packet.
+  compatibility_note: S0 TLD v1.2 passes AuthorPacket and MotifPacket, but its explicit required_fields list omits AuthorWeather.
+    The master states AuthorWeather is generated at write lock and stored in AuthorPacket, so K1 requires it. Add AuthorWeather
+    to the S0 handoff required_fields list during the next S0 sync.
+manuscript_time_contract:
+  source: manuscript_time
+  model: AUTHORED_DISCRETE_CLOCK
+  purpose: Give K1 coherent diegetic time without a real-time simulation. ManuscriptDay and TimeOfDay are master state. K1LocalClockMinutes
+    is a TLD-local authored integer clock in minutes after midnight, used for pacing, prop clocks, house pressure, transit
+    and debugging. It advances only on declared authored actions.
+  start:
+    ManuscriptDay: 1
+    TimeOfDay: NIGHT
+    K1LocalClockMinutes: 1260
+    DisplayTime: '21:00'
+  rules:
+  - Standing idle, pausing, opening menus, reloading or walking in circles does not advance manuscript time.
+  - Declared interactions advance the local clock only on first completion unless explicitly repeatable.
+  - ManuscriptDay does not advance through a simulated midnight; the overnight fade commits Day 2 at the authored wake beat.
+  - TimeOfDay is authored and not inferred every frame from K1LocalClockMinutes.
+  - Prop clocks and transition cards may expose approximate time; a permanent clock HUD is not required.
+  authored_durations_minutes:
+    K1_OPTIONAL_PRE_EXPERIMENT_JOURNAL: 0
+    K1_BREW:
+      K1_PRECISE: 20
+      K1_FAST: 8
+      K1_RISKY: 12
+    K1_FIRST_SERUM_INSPECT_AND_COMMIT: 2
+    K1_FIRST_TRANSFORMATION_ONSET: 4
+    K1_HYDE_STREET_RELEASE: 10
+    K1_BEGGAR_QUICK_CHOICE: 2
+    K1_POSTBOX_DESTRUCTION: 2
+    K1_DARK_ALLEY_SETTLE: 3
+    K1_ROOK_LIVE_APPROACH_AND_OPENING: 2
+    K1_ROOK_SYSTEMIC_FIGHT: TUNING_3_TO_8
+    K1_ROOK_POST_FIGHT_AND_FIXED_DEATH: 3
+    K1_DAY2_POOLE_MESSAGE: 10
+    K1_DAY2_BODY_CHECK: 10
+    K1_DAY2_WARDROBE: 10
+    K1_DAY2_MIRROR: 5
+    K1_RESEARCH_AUTO_UPDATE_DAY2: 0
+    K1_DAY2_BREAKFAST_OR_POOLE_TALK: NOT_USED_IN_CURRENT_K1_TOPOLOGY
+    K1_DAY2_MAJOR_HOUSE_INSPECTION: NOT_USED_IN_CURRENT_K1_TOPOLOGY
+    K1_DAY2_STREET_TRANSIT: 15
+    K1_OPTIONAL_NEWSPAPER: 5
+    K1_CRIME_SCENE_CONSULTATION: TUNING_15_TO_25
+  approximate_clock_anchors:
+    day_1:
+      chapter_start: '21:00'
+      serum_ready_window: 21:08-21:25
+      first_transformation_window: 21:14-21:31
+      Hyde_street_and_alley_window: 21:24-21:50
+      Rook_encounter_window: 21:35-22:00
+      fade_out_window: 21:45-22:10
+    day_2:
+      Jekyll_wake: 08:30
+      Poole_message_complete_approx: 08:40
+      free_home_exploration: 08:40-10:30 authored clock
+      Poole_warning: 10:15 if still home
+      leave_pressure: '10:30'
+      street_newspaper_window: 10:30-10:55
+      crime_scene_target: about 10:50-11:10
+  day_advance:
+    trigger: K1_JEKYLL_WAKE_DAY2
+    event: ADVANCE_MANUSCRIPT_DAY
+    from: 1
+    to: 2
+    set_TimeOfDay: MORNING
+    set_K1LocalClockMinutes: 510
+    display_time: 08:30
+    idempotent: true
+  home_pressure:
+    minimum_free_exploration_anchors: 3
+    warning_clock_minutes: 615
+    warning_display: '10:15'
+    leave_pressure_clock_minutes: 630
+    leave_pressure_display: '10:30'
+    rule: >
+      After 10:30 authored time, nonessential house interactions are suppressed
+      and Poole/Jekyll repeatedly foreground the need to leave.
+      Essential wardrobe and mirror interactions remain available.
+      Research Journal access remains optional through the game menu;
+      no journal interaction is required before leaving.
+  serum_and_medication_time_rules:
+  - K1 consumes S0 AuthorPacket values captured at write lock; K1 clock passage does not retroactively recalculate S0 medication.
+  - ANALGESIC_A and STIMULANT_S do not receive new continuous duration simulation in this TLD.
+  - Serum Potency, Purity, Toxicity, SerumTolerance and TransformFuel remain event/system driven rather than minute driven.
+  - TransformFuel is not a real-time timer.
+  - K1LocalClockMinutes is authoritative only at authored commit points listed in time_commit_table.
+  - A presentation beat may show an approximate time without writing the clock again.
+  - A failed attempt reloads the last authored checkpoint and restores its clock snapshot; failed elapsed real time is discarded.
+  - The overnight fade is one authored transition, not a minute-by-minute simulation and not a player-idle timeout.
+  - K1 does not require a permanent clock HUD. Prop clocks, Poole's reminder and transition cards are sufficient player-facing time cues.
+  time_commit_table:
+    day_1:
+    - event: K1_BOOT
+      from: 21:00
+      to: 21:00
+      write: initialize K1LocalClockMinutes=1260
+    - event: K1_BREW_RESOLVE_PRECISE
+      duration: 20
+      write: advance_once_on_brew_commit
+    - event: K1_BREW_RESOLVE_FAST
+      duration: 8
+      write: advance_once_on_brew_commit
+    - event: K1_BREW_RESOLVE_RISKY
+      duration: 12
+      write: advance_once_on_brew_commit
+    - event: K1_FIRST_SERUM_ADMINISTRATION
+      duration: 2
+      write: advance_once_on_inspect_commit
+    - event: K1_FIRST_TRANSFORMATION
+      duration: 4
+      write: advance_once_on_authored_onset_commit
+    - event: K1_HYDE_STREET_RELEASE
+      duration: 10
+      write: advance_once_on_release_completion
+    - event: K1_BEGGAR_QUICK_CHOICE
+      duration: 2
+      write: advance_once_on_choice_resolution
+    - event: K1_POSTBOX_DESTRUCTION
+      duration: 2
+      write: advance_once_on_first_destroy
+    - event: K1_DARK_ALLEY_SETTLE
+      duration: 3
+      write: advance_once_on_alley_settle
+    - event: K1_ROOK_LIVE_APPROACH_AND_OPENING
+      duration: 2
+      write: advance_once_on_opening_commit
+    - event: K1_ROOK_SYSTEMIC_FIGHT
+      duration: TUNING_3_TO_8
+      write: advance_once_when_fight_resolves
+    - event: K1_ROOK_POST_FIGHT_AND_FIXED_DEATH
+      duration: 3
+      write: advance_once_after_fixed_death_beat
+    - event: K1_OVERNIGHT_FADE
+      duration: AUTHORED_OFFSCREEN_OVERNIGHT
+      write: set_day_2_wake_snapshot; do_not_simulate_minutes
+    day_2:
+    - event: K1_JEKYLL_WAKE_DAY2
+      write: set ManuscriptDay=2, TimeOfDay=MORNING, K1LocalClockMinutes=510
+    - event: K1_DAY2_POOLE_MESSAGE
+      duration: 10
+      write: advance_once_on_message_completion
+    - event: K1_DAY2_BODY_CHECK
+      duration: 10
+      write: advance_once_on_body_observation_completion
+    - event: K1_DAY2_WARDROBE
+      duration: 10
+      write: advance_once_on_first_wardrobe_completion
+    - event: K1_DAY2_MIRROR
+      duration: 5
+      write: advance_once_on_first_mirror_inspection
+    - event: K1_DAY2_LAB_DOOR
+      duration: 5
+      write: advance_once_on_first_lab_door_inspection
+    - event: K1_DAY2_WASH
+      duration: 20
+      write: advance_once_on_first_wash_completion
+    - event: K1_OPTIONAL_NEWSPAPER
+      duration: 5
+      write: advance_once_on_newspaper_read_completion
+    - event: K1_DAY2_STREET_TRANSIT
+      duration: 15
+      write: advance_once_on_front_exit_commit
+    - event: K1_CRIME_SCENE_CONSULTATION
+      duration: TUNING_15_TO_25
+      write: advance_once_on_consultation_completion
+    - event: K1_RESEARCH_AUTO_UPDATE_DAY2
+      duration: 0
+      write: no_clock_write
+    - event: INT_K1_RESEARCH_JOURNAL
+      duration: 0
+      write: no_clock_write
+    - event: K1_JOURNAL_HINT
+      duration: 0
+      write: no_clock_write
+  time_pressure_readout:
+    warning_at: 615
+    warning_display: '10:15'
+    leave_pressure_at: 630
+    leave_pressure_display: '10:30'
+    interpretation: >
+      The authored clock communicates urgency. It does not auto-select a coat,
+      auto-open the front door, auto-write the journal, auto-resolve research,
+      or kill the player for remaining home.
+chapter_intent:
+  dramatic_function: 'Turn Stevenson''s S0 bodily state into Jekyll''s first manuscript experiment, let the player discover
+    Hyde''s physical power and inexperience through a dangerous but systemic fight with Rook, then make the consequences survive
+    the transformation: green blood remains in the world while Jekyll''s body wakes unscarred. Day 2 shifts from shock to
+    self-observation, home exploration and an initial police consultation where player attention and AuthorPacket state can
+    matter as much as dialogue skill.'
+  player_learning:
+  - Jekyll movement, interaction and authored-time pacing
+  - first chemical preparation choice and deliberate serum consumption
+  - first transformation into Hyde without blackout
+  - Hyde is physically powerful but initially inexperienced
+  - combat is systemic; no visible health bars are required
+  - 'Rook is a lethal human knife fighter: the canonical first stab is survivable, a second clean penetrating hit kills Hyde'
+  - Hyde can dodge, parry/deflect and attack through the global combat system
+  - world evidence persists even when Hyde later reverts
+  - Hyde blood is visibly green in K1 and remains on the scene/coat after reversion
+  - Jekyll has no corresponding wound or scar on Day 2, creating a physiology mystery
+  - AuthorPacket/Fidelity/Cognition alter clue salience and Jekyll attention rather than rewriting physical truth
+  - a player who ignores a visible author-state debuff may miss an obvious danger and suffer the consequence
+  - the newspaper is optional; ÚLEVA can be fulfilled or MISSED without blocking chapter completion
+  - bringing the bloodied coat to the matching crime scene causes immediate definitive capture
+  - Jekyll must answer Newcomen using legitimate observations rather than Hyde-only knowledge
+  - motifs are not a checklist; a chapter may complete with an optional motif MISSED
+  - Research Journal records method-specific and post-transform observations
+  motif_deformation:
+    LÁTKA: Stevenson's medicine becomes Jekyll's experimental serum.
+    PROMĚNA: Stevenson's altered bodily state becomes literal Jekyll-to-Hyde transformation.
+    BOLEST: Stevenson's pain is displaced into the painful transformation and the Rook conflict.
+    ÚLEVA: Stevenson's medical relief becomes Jekyll's involuntary moral relief after learning from public reporting that
+      Rook was a dangerous criminal.
+  relief_principle: ÚLEVA is conditional in K1 v1.5. If the player reads the optional newspaper, relief is an involuntary
+    emotional fact and may then be interpreted. If the newspaper is skipped, the K1 ÚLEVA realization is MISSED and the chapter
+    continues.
+scope:
+  included:
+  - K1 greybox topology across Day-1 professional lab/street/alley and Day-2 Jekyll home/street/crime scene
+  - S0 AuthorPacket/MotifPacket consumption
+  - authored manuscript-time progression
+  - simple first serum preparation and deliberate consumption
+  - first Hyde transformation and visual-language activation
+  - short first-Hyde street behavior with beggar quick choice and optional destruction
+  - live non-cutscene Rook approach with timed response choices
+  - canonical first Rook knife wound and green-blood evidence
+  - systemic Rook combat with no visible health-bar requirement
+  - second penetrating Rook knife hit hard fail
+  - inferred CONTROLLED / CHAOTIC / BRUTAL outcome telemetry
+  - post-threat expressive Hyde choice and fixed Rook death
+  - overnight fade and non-magical reversion resolution
+  - Day-2 Poole wake/message
+  - first Jekyll-home exploration and authored time pressure
+  - bloodied-coat discovery via existing AuthorPacket state and hallway mirror route
+  - clean/bloodied coat selection as K1-specific consequence interaction
+  - author-lapse UI acknowledgment on missed coat danger
+  - optional newspaper / optional ÚLEVA realization
+  - initial Newcomen crime-scene consultation
+  - knowledge-legitimacy hooks in Newcomen dialogue
+  - Automatic Day-2 Research Journal update
+  - checkpoints, hard fails, debug, edge cases and acceptance tests
+  excluded:
+  - final dialogue performance/prose beyond provisional TLD examples
+  - final combat animation set and exact frame data
+  - final Rook AI tuning and classifier thresholds
+  - final Rook death choreography
+  - full K2 follow-up investigation structure
+  - general wardrobe/inventory-fashion system
+  - general forensic simulation
+  - final cinematic shot list
+  - final UI art/audio/music/environment art/lighting/VFX
+  - final journal prose/visual design
+  - final Hyde LUT/post-process and exact accent hues
+target_playtime:
+  first_play_minutes:
+    min: 35
+    max: 50
+    status: TUNING
+  replay_minutes:
+    min: 22
+    max: 35
+    status: TUNING
+level:
+  map: L_K1_EXPERIMENT_ROOK_AND_DAY2
+  type: multi_phase_chapter_with_authored_overnight_transition
+  production_structure:
+    recommended:
+    - 'DAY1_SUBLEVEL: professional laboratory + service exit + compact street block + dark alley/Rook court'
+    - 'DAY2_HOME_SUBLEVEL: Jekyll bedroom + hallway/mirror + study/journal + wardrobe/front hall'
+    - 'DAY2_CRIME_SUBLEVEL: short London transit/newspaper point + Rook crime scene'
+    reason: Day 1 should feel continuous through the first transformation; the overnight fade is a natural streaming boundary
+      into the first home reveal.
+    status: TLD_RECOMMENDATION
+  topology:
+  - K1_ZONE_PROFESSIONAL_LAB
+  - K1_ZONE_EXPERIMENT_CHAMBER
+  - K1_ZONE_TRANSFORM_RELEASE
+  - K1_ZONE_NIGHT_STREET
+  - K1_ZONE_DARK_ALLEY_ROOK
+  - K1_ZONE_DAY2_BEDROOM
+  - K1_ZONE_DAY2_HOUSE
+  - K1_ZONE_DAY2_STREET
+  - K1_ZONE_ROOK_CRIME_SCENE
+  layout_rules:
+  - The professional lab supports readable journal-guided chemistry without inventory-grid complexity.
+  - The Hyde street block is compact and authored; it creates the illusion of wandering without becoming an open-world London
+    map.
+  - The Rook approach occurs in live gameplay in a confined dark alley/court with room for normal combat movement.
+  - The Day-2 house is explorable enough to establish Jekyll’s home but remains production-bounded.
+  - The hallway mirror is on a natural route between bedroom/wardrobe and the exit.
+  - The crime scene clearly preserves Rook knife, green Hyde blood and style-dependent fight traces.
+zones:
+  K1_ZONE_PROFESSIONAL_LAB:
+    master_binding: professional_system.labs.PROFESSIONAL
+    access_context: AFTER_HOURS_AUTHORED_K1
+    time_context:
+      ManuscriptDay: 1
+      TimeOfDay: NIGHT
+      entry_clock: '21:00'
+    purpose:
+    - chapter start
+    - experiment setup
+    - brew-choice tutorial
+    - Jekyll identity establishment
+    required:
+    - Jekyll spawn
+    - experiment bench
+    - serum ingredients/props
+    - safe inspectable anchors
+    - first checkpoint anchor
+  K1_ZONE_EXPERIMENT_CHAMBER:
+    purpose:
+    - serum administration
+    - first transformation staging
+    required:
+    - transformation safe volume
+    - camera-safe space
+    - destructible/noncritical dressing hooks
+  K1_ZONE_TRANSFORM_RELEASE:
+    purpose:
+    - first playable Hyde handoff
+    - movement/physicality contrast
+    required:
+    - service exit
+    - Hyde traversal affordance
+    - path to night street
+    - no return to unresolved Jekyll experiment
+  K1_ZONE_NIGHT_STREET:
+    purpose:
+    - brief Hyde roaming
+    - beggar quick choice
+    - optional property destruction
+    - teach predatory social pressure
+    required:
+    - beggar encounter anchor
+    - optional destructible postbox/mailbox equivalent
+    - route toward dark alley
+    size_rule: compact authored street block, not free-roam London
+  K1_ZONE_DARK_ALLEY_ROOK:
+    purpose:
+    - Hyde instinctively withdraws from public view
+    - live Rook confrontation
+    - systemic combat
+    - fixed post-threat death
+    required:
+    - Rook spawn/approach route
+    - knife combat space
+    - green-blood evidence decals/props
+    - threat-ended staging
+    - ledger absence hook
+  K1_ZONE_DAY2_BEDROOM:
+    time_context:
+      ManuscriptDay: 2
+      TimeOfDay: MORNING
+      wake_clock: 08:30
+    purpose:
+    - Poole wake knock
+    - first body check
+    - establish no wound/scar
+    - start Day-2 checkpoint
+    required:
+    - bed
+    - door/Poole audio anchor
+    - body-inspection staging
+  K1_ZONE_DAY2_HOUSE:
+    purpose:
+    - first Jekyll-home exploration
+    - Research Journal
+    - wardrobe choice
+    - mirror clue discovery
+    - basement-laboratory foreshadowing
+    - conditional grooming opportunity
+    - time-pressure teaching
+    accessible_space:
+    - BEDROOM
+    - SALON
+    - ENTRY_HALL
+    inaccessible_space:
+    - REST_OF_HOUSE
+    - BASEMENT_LAB_INTERIOR
+    - BATHROOM_INTERIOR
+    required:
+    - wardrobe
+    - K1_BLOODIED_COAT prop/state
+    - CLEAN_COAT choice
+    - hallway mirror
+    - basement laboratory door
+    - bathroom door
+    - Poole reminder route
+    - front exit
+    production_rule: >
+      K1 exposes only Jekyll's bedroom and a compact lower-floor route through salon and entry hall. The basement laboratory
+      and bathroom interiors are not built for K1.
+  K1_ZONE_DAY2_STREET:
+    purpose:
+    - transition to crime scene
+    - optional newspaper
+    - optional ÚLEVA realization
+    required:
+    - short traversal
+    - optional newspaper vendor/stand
+    - route to crime scene
+  K1_ZONE_ROOK_CRIME_SCENE:
+    purpose:
+    - initial Newcomen consultation
+    - coat fail gate
+    - first self-investigation tension
+    - knowledge-legitimacy dialogue
+    required:
+    - Newcomen
+    - Rook body
+    - Rook knife
+    - green Hyde blood at/near body/knife
+    - style-dependent fight traces
+    - dialogue-safe inspection positions
+player:
+  start_character: JEKYLL
+  Jekyll:
+    enabled:
+    - MOVE
+    - LOOK
+    - INTERACT
+    - INSPECT
+    - DIALOGUE_SELECT
+    - CHEMISTRY_INTERACT
+    combat: AVAILABLE_BUT_NOT_PRIMARY
+    design_intent: Jekyll communicates control, preparation and analysis, but Day-2 attention support is constrained by existing
+      AuthorPacket state.
+  Hyde:
+    enabled_after: K1_FIRST_TRANSFORMATION
+    enabled:
+    - MOVE
+    - LOOK
+    - INTERACT
+    - COMBAT
+    - HYDE_MOBILITY
+    - DIALOGUE_SELECT_IF_AUTHORED
+    design_intent: Hyde is immediately stronger and more direct than Jekyll, but his first fight exposes inexperience against
+      an expert human knife fighter.
+  form_rules:
+  - Jekyll is mandatory for the experiment and all Day-2 home/police content.
+  - Hyde is mandatory during the Rook conflict.
+  - The first serum transformation never causes a blackout.
+  - The overnight fade is a narrative ellipsis, not a memory blackout.
+  - The canonical first Rook knife wound exists only while Hyde is wounded; by the Day-2 wake Jekyll has no matching wound
+    or scar.
+  - Blood/clothing/environment evidence already shed or damaged does not heal when Hyde reverts.
+  - When Form becomes HYDE, activate the Hyde visual-language layer; remove it when Form returns to JEKYLL.
+runtime_dependencies:
+  required:
+  - StoryFlowController
+  - ManuscriptTimeSystem
+  - AuthoredClockController
+  - AuthorPacketConsumer
+  - ManuscriptRenderController
+  - AuthorWeatherController
+  - MotifRuntimeState
+  - MotifResolver
+  - SerumSystem
+  - SerumRecipeMasterySystem
+  - TransformationSystem
+  - FormController
+  - HydeDependenceResolver
+  - PersistentStateSystem
+  - EncounterController
+  - CombatSystem
+  - InteractionSystem
+  - DialogueController
+  - ObjectiveSystem
+  - WorldMemorySystem
+  - IncidentLedgerSystem
+  - KnowledgeLegitimacySystem
+  - NewspaperSystem
+  - ResearchJournalSystem
+  - JournalUIController
+  - ResearchSystem
+  - CheckpointSystem
+  - SaveGameState
+  - ChapterTransitionSystem
+  - CinematicController
+  - FormVisualLanguageController
+  - PresentationStateController
+  - AudioStateController
+  - DebugStoryOverlay
+  - CombatStateSystem
+  - CombatTelemetryClassifier
+  - AuthorStateHUD
+  - WardrobeInteractionController
+  optional_for_first_greybox:
+  - final facial animation
+  - final newspaper UI art
+  - final manuscript distortion shaders
+  - final weather VFX
+  - final music
+entry_state:
+  checkpoint: CP_K1_START
+  initialize_from_master:
+    Form: JEKYLL
+    SerumStock: 0
+    ManuscriptDay: 1
+    TimeOfDay: NIGHT
+    K1LocalClockMinutes: 1260
+    Exposure: 0
+    Integration: 20
+    HydeDependence: 0
+    SerumTolerance: 0
+    Craving: 0
+    RecentViolence: 0
+    RecentTransformLoad: 0
+    SerumInstabilityScar: 0
+    PoliceHeat: 0
+    UnderworldHeat: 0
+    CrowtherPressure: 0
+  resource_context:
+    Lab: PROFESSIONAL
+    ProfessionalLabAccess_required: true
+    BASE_REAGENT: AVAILABLE_UNLIMITED_WHILE_PROFESSIONAL_LAB_ACCESSIBLE
+    CATALYST: AVAILABLE_UNLIMITED_WHILE_PROFESSIONAL_LAB_ACCESSIBLE
+    STABILIZER: NOT_USED_IN_K1_SERUM_RECIPE
+    SerumRecipeLevel: SERUM_RECIPE_L1
+    CarriedSerumCap: 1
+    note: The first K1 experiment is an authored professional-lab story experiment. BASE_REAGENT and CATALYST availability
+      cannot softlock this batch.
+  packet_validation:
+    AuthorPacket_required: true
+    MotifPacket_required: true
+    required_motifs:
+    - LÁTKA
+    - PROMĚNA
+    - BOLEST
+    - ÚLEVA
+    failure: DEVELOPMENT_ERROR_OR_RELOAD_S0_WRITE_LOCK
+  world_flags:
+    K1PacketApplied: false
+    K1BrewChoiceResolved: false
+    K1SerumPrepared: false
+    K1SerumConsumed: false
+    K1FirstTransformComplete: false
+    K1BeggarEncounterResolved: false
+    K1RookOpeningResolved: false
+    K1CanonicalFirstStabResolved: false
+    K1HydeKnifeHits: 0
+    HydeGreenBloodAtScene: false
+    K1BloodiedCoatExists: false
+    K1RookConflictStarted: false
+    K1ImmediateThreatEnded: false
+    K1RookPostFightExpressionResolved: false
+    RookDead: false
+    LedgerMissing: false
+    K1WorldReactionCommitted: false
+    K1OvernightReversionResolved: false
+    K1Day2WakeComplete: false
+    K1PooleMessageReceived: false
+    K1PooleSawLabHandleGreenResidue: false
+    K1PooleWipedLabHandleClean: false
+    K1Day2BodyObservationResolved: false
+    K1HomeExplorationCount: 0
+    K1HomeLeavePressure: false
+    K1HomeExitCommitted: false
+    K1LabDoorInspected: false
+    K1LabHandleGreenResidueNoticed: false
+    K1LucidMirrorThoughtPlayed: false
+    K1Washed: false
+    K1CoatRiskRecognized: false
+    K1EquippedCoat: NONE
+    K1AuthorLapseCoatAcknowledged: false
+    K1PreExperimentJournalOpened: false
+    K1BrewObservationRecorded: false
+    ResearchJournalIntroduced: false
+    K1ResearchGranted: false
+    K1NewspaperRead: false
+    K1ReliefResolved: false
+    K1InterpretResolved: false
+    K1GreenBloodExamined: false
+    K1HydeBloodSampleCollected: false
+    K1GangViolenceHypothesisRaised: false
+    K1CrimeSceneConsultationComplete: false
+    K1RookSoldierTaken: false
+    HydeVisualLanguageActive: false
+    K1SelectedRookOpening: NONE
+    K1RookResolutionStyle: NONE
+    K1SelectedRookPostFightExpression: NONE
+    K1SelectedInterpretation: NONE
+author_packet_application:
+  apply_at: K1_BOOT
+  channels:
+    CognitiveImprint:
+      resolver: author_packet.CognitionBand
+      effect: Resolve through author_packet.CognitionBand. K1 uses it to determine whether Jekyll independently calls attention
+        to available evidence; it does not erase evidence or make an impossible inference true.
+    ManuscriptFidelity:
+      effect: Controls authored optional detail density and clue salience. It never changes the physical truth that the canonical
+        Rook stab damaged the previous-night coat and shed green Hyde blood; K1 defines how that truth is surfaced in Day-2
+        house presentation.
+    ManuscriptDistortion:
+      effect: Changes uncanny presentation/expression without changing K1 topology or fixed truths.
+    ManuscriptOverdrive:
+      effect: May activate only declared K1 NOISE slots and competing authored detail; it never removes the mirror discovery
+        route or the coat/crime-scene physical evidence.
+    AuthorWeather:
+      blend_rule: FinalChannel = .50*chapter_weather_baseline.K1 + .50*AuthorWeather
+      baseline:
+        Fog: 45
+        Storm: 35
+        Brightness: 25
+        Wind: 30
+        Rain: 25
+        Gloom: 55
+        Unnaturalness: 20
+  TLD_declared_render_slots:
+    K1_FLAVOR_LAB_DETAIL:
+      criticality: FLAVOR
+      story_effect: NONE
+    K1_FLAVOR_ROOK_DISTRICT_DETAIL:
+      criticality: FLAVOR
+      story_effect: NONE
+    K1_NOISE_LAB_OVERDRIVE:
+      criticality: NOISE
+      story_effect: NONE
+    K1_NOISE_ROOK_OVERDRIVE:
+      criticality: NOISE
+      story_effect: NONE
+    K1_FLAVOR_DAY2_HOME_DETAIL:
+      criticality: FLAVOR
+      story_effect: NONE
+    K1_NOISE_DAY2_HOME_OVERDRIVE:
+      criticality: NOISE
+      story_effect: ATTENTION_COMPETITION_ONLY
+    K1_FLAVOR_CRIME_SCENE_DETAIL:
+      criticality: FLAVOR
+      story_effect: NONE
+  time_of_day_composition:
+    day_1: NIGHT overlays AuthorWeather in professional lab and street/alley.
+    day_2: MORNING begins at 08:30 Jekyll wake and continues through house/street/crime scene.
+    rule: TimeOfDay changes lighting/time context, not AuthorWeather source values or physical evidence.
+  topology_rule: AuthorPacket presentation may alter salience and Jekyll commentary, but cannot remove mandatory beats or
+    rewrite fixed evidence truth.
+  visual_language_composition: AuthorWeather/Fidelity/Distortion/Overdrive configure the manuscript scene first. Hyde perception
+    is then applied as a form-specific presentation layer. Stevenson state may change the underlying atmosphere but cannot
+    change RED/GOLD semantic meaning.
+objectives:
+  OBJ_K1_COMPLETE_EXPERIMENT:
+    display_intent: COMPLETE_THE_EXPERIMENT
+    active_after: K1_PLAYER_HANDOFF_JEKYLL
+    complete_when: K1SerumPrepared == true
+  OBJ_K1_TAKE_SERUM:
+    display_intent: TEST_THE_SERUM
+    active_when: K1SerumPrepared == true
+    complete_when: K1FirstTransformComplete == true
+  OBJ_K1_GET_OUTSIDE:
+    display_intent: GET_OUT
+    active_after: K1_FIRST_TRANSFORMATION
+    complete_when: K1_ZONE_NIGHT_STREET reached
+  OBJ_K1_SURVIVE_ROOK:
+    display_intent: SURVIVE
+    active_when: K1RookConflictStarted == true
+    complete_when: K1ImmediateThreatEnded == true
+  OBJ_K1_RECOVER:
+    display_intent: PULL_YOURSELF_TOGETHER
+    active_after: K1_JEKYLL_WAKE_DAY2
+    complete_when: K1Day2BodyObservationResolved == true
+  OBJ_K1_PREPARE_TO_LEAVE:
+    display_intent: GET_READY
+    active_after: K1_POOLE_MESSAGE
+    complete_when: K1EquippedCoat != NONE AND K1ResearchGranted == true
+  OBJ_K1_GO_TO_SCENE:
+    display_intent: MEET_INSPECTOR_NEWCOMEN
+    active_when: K1Day2BodyObservationResolved == true
+    complete_when: K1_ZONE_ROOK_CRIME_SCENE reached
+  OBJ_K1_ASSIST_NEWCOMEN:
+    display_intent: ASSIST_THE_INSPECTOR
+    active_after: K1_CRIME_SCENE_SAFE_ENTRY
+    complete_when: K1CrimeSceneConsultationComplete == true
+  UI_rule: Final wording/art TBD. No objective tells the player to read the newspaper or fulfill ÚLEVA.
+interaction_catalog:
+  INT_K1_EXPERIMENT_BENCH:
+    zone: K1_ZONE_PROFESSIONAL_LAB
+    enabled_during:
+    - K1_EXPERIMENT_GAMEPLAY
+    actions:
+    - K1_PRECISE
+    - K1_FAST
+    - K1_RISKY
+    rule: Exactly one K1_BREW approach is committed.
+  INT_K1_SERUM_DOSE:
+    zone: K1_ZONE_EXPERIMENT_CHAMBER
+    enabled_when: K1SerumPrepared == true AND Form == JEKYLL
+    action: TAKE_FIRST_SERUM
+    dose_policy: AUTHORED_STANDARD_FIRST_EXPERIMENT
+    interaction_mode: PLAYER_COMMITTED_INTERACTION
+    cancel_before_commit: true
+    after_commit: LOCK_TO_K1_FIRST_SERUM_ADMINISTRATION_AND_TRANSFORMATION
+  INT_K1_RESEARCH_JOURNAL:
+    mode: MENU_UI
+    action: OPEN_RESEARCH_JOURNAL
+    available_from: K1_PLAYER_HANDOFF_JEKYLL
+    optional: true
+    time_cost: 0
+
+    rule: >
+      The Research Journal is player-openable from the game menu while Jekyll is playable.
+      It is not tied to a physical journal prop or room location.
+      Entries are added automatically by authored discoveries.
+      Opening the journal never creates knowledge, research tags or progression.
+  INT_K1_BEGGAR:
+    zone: K1_ZONE_NIGHT_STREET
+    mode: TIMED_LIVE_CHOICE
+    actions:
+    - INTIMIDATE_OR_ROAR
+    - SHOVE_OR_STRIKE
+    timeout: SHOVE_OR_STRIKE
+    accessibility: quick_action_system.NO_TIMER disables timeout
+  INT_K1_POSTBOX:
+    zone: K1_ZONE_NIGHT_STREET
+    optional: true
+    action: DESTROY
+    effect: local destruction/noise only; no new global stat
+  INT_K1_WARDROBE:
+    zone: K1_ZONE_DAY2_HOUSE
+    mandatory_before_exit: true
+    actions:
+    - EQUIP_CLEAN_COAT
+    - EQUIP_K1_BLOODIED_COAT
+    rule: This is a K1-specific evidence choice, not a general wardrobe progression system.
+  INT_K1_HALLWAY_MIRROR:
+    zone: K1_ZONE_DAY2_HOUSE
+    optional: true
+    available_fidelity:
+    - RICH
+    - THIN
+    - FRAGMENTARY
+    action: INSPECT_REFLECTION
+    effect: May resolve K1CoatRiskRecognized according to coat state + AuthorPacket manifestation.
+  INT_K1_BASEMENT_LAB_DOOR:
+    zone: K1_ZONE_DAY2_HOUSE
+    optional: true
+    action: INSPECT_DOOR
+    prompt_by_fidelity:
+      FRAGMENTARY: DVEŘE
+      THIN: DVEŘE DO LABORATOŘE
+      RICH: DVEŘE DO LABORATOŘE
+    green_residue_detail:
+      condition: CognitionBand == LUCID OR ManuscriptOverdrive in [BUSY, OVERWRITTEN]
+      visual: GREEN_RESIDUE_ON_HANDLE
+      on_notice: K1LabHandleGreenResidueNoticed = true
+    rule: >
+      The basement laboratory interior is inaccessible in K1. Green residue is optional foreshadowing and creates no objective.
+  INT_K1_BATHROOM_WASH:
+    zone: K1_ZONE_DAY2_HOUSE
+    optional: true
+    enabled_if:
+    - ManuscriptFidelity == FRAGMENTARY
+    - K1HomeExitCommitted == false
+    - K1HomeLeavePressure == false
+    player_facing: JÍT SE UMÝT
+    action: WASH_AND_DRESS
+    presentation:
+    - fade_out
+    - water_audio
+    - washing_audio
+    - dressing_audio
+    - fade_in
+    authored_time: +20 minutes
+    writes:
+    - K1Washed = true
+    context_effect:
+      route_check: GLOBAL
+      modifier: +5
+      applies_to: >
+        Society-relevant authored route checks where grooming and personal presentation can reasonably affect the NPC response.
+      rule: >
+        This contributes to the existing route_check ContextMod. It does not change Society rank and does not create a
+        Newcomen-specific temporary stat.
+      status: TUNING
+    rule: >
+      Washing changes Jekyll's presentation only. It does not clean or repair K1_BLOODIED_COAT and does not choose a coat.
+  INT_K1_NEWSPAPER:
+    zone: K1_ZONE_DAY2_STREET
+    optional: true
+    action: READ_NEWSPAPER
+    effect: Legitimize PUBLIC Rook reputation facts; trigger K1_RELIEF_BEAT and ÚLEVA if read.
+  INT_K1_NEWCOMEN:
+    zone: K1_ZONE_ROOK_CRIME_SCENE
+    mandatory: true
+    action: BEGIN_INITIAL_CONSULTATION
+    pre_dialogue_gate: K1_CRIME_SCENE_COAT_GATE
+  INT_K1_GREEN_BLOOD_SAMPLE:
+    zone: K1_ZONE_ROOK_CRIME_SCENE
+    optional: true
+    enabled_during: K1_NEWCOMEN_CRIME_SCENE_DIALOGUE after GREEN_BLOOD evidence is examined
+    action: COLLECT_SAMPLE
+    effect: Set K1HydeBloodSampleCollected=true and add HYDE_BLOOD_SAMPLE x1 to the research/sample inventory.
+    rule: Collection is optional in K1 and is not required to complete the chapter.
+  INT_K1_ROOK_SOLDIER:
+    zone: K1_ZONE_ROOK_CRIME_SCENE
+    mandatory: true
+    action: AUTHORED_MOMENT_ROOK_SOLDIER
+    enabled_during: K1_NEWCOMEN_CRIME_SCENE_DIALOGUE after CLOSING_LEDGER
+    presentation: >
+      Newcomen is called away by a constable. Jekyll is briefly alone with the body;
+      the camera settles on the inner coat pocket and a small lead rook figure.
+      Jekyll takes it and says quietly: "Interesting."
+    effect: Add RLS_SOLDIER_01_ROOK to FoundStevensonSoldiers; set K1RookSoldierTaken=true.
+    rule: >
+      Authored moment, not free-roam loot, so it cannot be missed. No counter, quest text,
+      marker, achievement or explanation. No numeric state change.
+motif_realization:
+  source_packet:
+  - LÁTKA
+  - PROMĚNA
+  - BOLEST
+  - ÚLEVA
+  tutorial_exception: LÁTKA, PROMĚNA and BOLEST receive guaranteed authored realization in K1. ÚLEVA is intentionally optional
+    in v1.5 so the first manuscript chapter can teach that motif completion is not required for mission completion.
+  multi_motif_action_allowed: true
+  motifs:
+    LÁTKA:
+      required_beat: K1_FIRST_SERUM_ADMINISTRATION
+      meaning: The medicine motif becomes Jekyll's serum.
+      resolve: FULFILLED
+    PROMĚNA:
+      required_beat: K1_FIRST_TRANSFORMATION
+      meaning: The bodily-state change becomes literal transformation.
+      resolve: FULFILLED
+    BOLEST:
+      required_window:
+      - K1_FIRST_TRANSFORMATION
+      - K1_ROOK_CANONICAL_FIRST_STAB
+      - K1_ROOK_SYSTEMIC_COMBAT
+      finalize_by: K1_ROOK_THREAT_ENDS
+      meaning: Stevenson's pain is displaced into transformation pain and violent conflict.
+      allowed_resolution:
+      - FULFILLED
+      - TWISTED
+      MISSED_allowed_in_K1_tutorial: false
+    ÚLEVA:
+      optional_beat: K1_RELIEF_BEAT
+      trigger: K1NewspaperRead == true
+      meaning: If Jekyll reads that Rook was a dangerous underworld figure, he involuntarily feels relief that Hyde did not
+        kill a random innocent person.
+      if_triggered: FULFILLED
+      if_not_triggered_at_K1_exit: MISSED
+      main_story_required: false
+brew_flow:
+  source: story.K1.decisions.K1_BREW
+  lab: PROFESSIONAL
+  preparation_interaction:
+    model: JOURNAL_GUIDED_SEQUENCE
+    complexity: SIMPLE
+    base_inputs:
+    - BASE_REAGENT x1
+    - CATALYST x1
+    source: professional_lab_stock
+    exact_station_steps: LEVEL_TLD_OR_IMPLEMENTATION_DETAIL
+    no_freeform_recipe_generation: true
+    no_arbitrary_ingredient_combinations: true
+  first_batch_rule: K1 first experiment prepares one immediately usable dose. It is an authored first-experiment batch and
+    does not depend on later freeform purchasing/inventory routes.
+  routes:
+    K1_PRECISE:
+      authored_preparation_minutes: 20
+      resolver: AUTHORED_ROUTE_RESULT
+      results:
+        STRONG:
+          Potency: 70
+          Purity: 80
+        COSTLY:
+          Potency: 65
+          Purity: 65
+      note: Do not invent a third FAILED story outcome; if exact check gating is later specified, it must preserve K1 progression.
+    K1_FAST:
+      authored_preparation_minutes: 8
+      fixed:
+        Potency: 70
+        Purity: 55
+    K1_RISKY:
+      authored_preparation_minutes: 12
+      fixed:
+        Potency: 85
+        Purity: 35
+        SerumInstabilityScar: 15
+  on_successful_preparation:
+  - create one K1 first-experiment serum dose
+  - set SerumStock = 1
+  - set K1SerumPrepared = true
+  - call SerumRecipeMasterySystem eligibility check without exceeding one credit for K1
+  - complete OBJ_K1_COMPLETE_EXPERIMENT
+  no_farming: true
+  player_facing_labels_hidden: true
+  choice_presentation_source: brew_choice_presentation
+  post_brew_observation_pending: Store selected K1_BREW method for later empirical journal entry; do not reveal the internal
+    option name or exact Potency/Purity to the player.
+first_serum_use:
+  preconditions:
+  - Form == JEKYLL
+  - K1SerumPrepared == true
+  - SerumStock >= 1
+  - TransformWindow == K1_EXPERIMENT_OPEN
+  dose_size: STANDARD
+  authored_time:
+    inspect_and_commit_minutes: 2
+    transformation_onset_minutes: 4
+    rule: These minutes advance K1LocalClockMinutes at the authored commit/transition; they do not replace SerumSystem mechanics.
+  status: TLD_AUTHORED_FIRST_EXPERIMENT_DEFAULT
+  runtime_order:
+  - consume one serum dose
+  - SerumStock -= 1
+  - calculate EffectiveDrive / TransformFuelGain / ToxicityGain / SerumToleranceGain through SerumSystem
+  - evaluate serum toxicity hard fail
+  - call HydeDependence.VOLUNTARY_TRANSFORM
+  - apply RecentTransformLoad voluntary gain
+  - set Form = HYDE
+  - set K1FirstTransformComplete = true
+  - resolve motif LÁTKA if not already resolved
+  - resolve motif PROMĚNA
+  blackout: false
+  postcondition: SerumStock == 0 under current K1 authored first-batch design
+  interaction:
+    player_initiated: true
+    auto_consume: false
+    can_cancel_before_commit: true
+    commit_point: dose touches/drink animation reaches authored commit marker
+    post_commit: cannot cancel; serum is consumed and transformation sequence begins
+  presentation:
+    dramatic: true
+    music_hook: K1_SERUM_COMMIT_BUILD
+    audio_hook: K1_SERUM_CONSUMPTION
+    camera_hook: TBD
+    animation_hook: TBD
+    rule: Final score, sound, camera and animation timing are downstream; TLD only requires a clear dramatic escalation around
+      the voluntary act of drinking.
+hyde_street_flow:
+  entry: K1_HYDE_FIRST_HANDOFF
+  purpose: Give Hyde a short uncontrolled social/physical release before he instinctively seeks a darker, less observed space.
+  beggar_encounter:
+    mode: LIVE_TIMED_CHOICE
+    player_control: true
+    timer_source: quick_action_system
+    choices:
+    - id: K1_BEGGAR_INTIMIDATE
+      player_intent: ROAR_OR_THREATEN
+      effect: beggar retreats; authored noise/witness reaction only
+    - id: K1_BEGGAR_VIOLENCE
+      player_intent: SHOVE_OR_STRIKE
+      effect: Hyde knocks the man down and continues
+    timeout: K1_BEGGAR_VIOLENCE
+    no_timer_accessibility: Choice remains until selected; no automatic violence.
+  optional_property_release:
+    id: K1_POSTBOX_DESTRUCTION
+    interaction: single DESTROY action
+    effect: destructible feedback/local disturbance only
+    rule: Do not present fake synonym choices such as SMASH vs DESTROY.
+  alley_seek:
+    rule: After the street release beat, authored navigation naturally draws Hyde toward a dark alley/court. No explanatory
+      voiceover is required.
+    destination: K1_ZONE_DARK_ALLEY_ROOK
+combat_contract:
+  scope: K1 local implementation target pending global Master combat_system sync.
+  presentation:
+    visible_player_health_bar: false
+    visible_enemy_health_bar: false
+    condition_readability:
+    - animation
+    - stance
+    - breathing/audio
+    - wounds
+    - stagger
+    - enemy behavior
+  player_defense:
+  - DODGE
+  - PARRY_OR_DEFLECT
+  Hyde_offense:
+  - STRIKE
+  - HEAVY_STRIKE
+  - GRAB
+  - SHOVE
+  - ENVIRONMENTAL_IMPACT
+  quick_action_relation: Combat may use the global quick_action_system for dangerous reaction windows, but the Rook encounter
+    is not a scripted sequence of predetermined QTEs. Rook attacks originate from systemic combat AI after the authored first
+    stab.
+  K1_knife_model:
+    start_before_Rook: 0
+    canonical_first_stab_sets: 1
+    first_stab_result: SURVIVE_AND_REMAIN_COMBAT_CAPABLE
+    second_clean_penetrating_hit_result: FAIL_PLAYER_DEATH
+    nonpenetrating_damage: uses global condition/stagger; does not increment K1HydeKnifeHits
+  Rook_condition:
+    health_bar: false
+    resolution: hidden combat condition/stagger/injury state reaches INCAPACITATED
+    rule: Rook is dangerous through technique/lethality rather than inflated durability.
+  invariants:
+  - The canonical first stab cannot be avoided or converted into a death.
+  - After the first stab, further knife attacks must be defendable through the combat system.
+  - A second clean penetrating hit is lethal.
+  - Rook must be clearly unable to attack before K1ImmediateThreatEnded=true.
+  - Combat style is inferred from behavior, not chosen from a menu.
+Rook_encounter:
+  actor: NPC_ROOK
+  identity: Experienced local enforcer/collector connected to Crowther’s criminal network; not a top boss.
+  form_policy: HYDE_LOCKED
+  entry_condition: Form == HYDE AND K1FirstTransformComplete == true
+  design_contrast:
+    Hyde: superhuman physical force; first-night inexperience; broad attacks; dangerous recovery windows
+    Rook: ordinary human durability; many years of street-fighting experience; knife skill; distance management; feints and
+      counters
+  live_approach:
+    cutscene: false
+    player_control: MOVE_LOOK + LIVE_DIALOGUE_CHOICE
+    provisional_Rook_lines:
+    - “Hej.”
+    - “S tebou mluvím.”
+    - “Tady nemáš co dělat.”
+    choice_window:
+      uses: quick_action_system
+      choices:
+      - id: K1_ROOK_OPEN_ROAR
+        player_facing: ZAŘVAT
+        Hyde_output: nonverbal or barely human roar
+      - id: K1_ROOK_OPEN_SPEAK
+        player_facing: PROMUVIT
+        provisional_Hyde_line: “Uhni.”
+        performance: guttural / barely human
+      - id: K1_ROOK_OPEN_ATTACK
+        player_facing: ZAÚTOČIT
+        Hyde_output: immediate forward attack
+      timeout_default: K1_ROOK_OPEN_ATTACK
+      NO_TIMER_rule: No automatic selection; the encounter holds in live threat space until the player chooses.
+    branch_responses:
+      K1_ROOK_OPEN_ROAR: Rook flinches/reassesses for a beat, then commits with the knife.
+      K1_ROOK_OPEN_SPEAK: Rook reacts to the unnatural voice, closes distance and commits with the knife.
+      K1_ROOK_OPEN_ATTACK: Rook uses experience to sidestep/counter Hyde’s crude forward commitment.
+    convergence: K1_ROOK_CANONICAL_FIRST_STAB
+  canonical_first_stab:
+    avoidable: false
+    lethal: false
+    live_gameplay_not_cutscene: true
+    writes:
+    - K1HydeKnifeHits = 1
+    - K1CanonicalFirstStabResolved = true
+    - HydeGreenBloodAtScene = true
+    - K1BloodiedCoatExists = true
+    body_effect: Hyde is wounded during the fight but remains combat-capable.
+    blood: visibly unnatural GREEN Hyde blood is shed onto authored scene evidence and the previous-night coat.
+    Rook_reaction_line: “Co jsi zač?”
+    teaching: The player learns Hyde can survive one penetrating wound but is not invulnerable.
+  systemic_combat:
+    scripted_qte_sequence: false
+    visible_player_health_bar: false
+    visible_Rook_health_bar: false
+    Rook_AI_intent:
+    - stab
+    - slash
+    - feint into stab
+    - backstep
+    - sidestep
+    - counter heavy recovery
+    - maintain knife distance
+    Hyde_actions:
+    - strike
+    - heavy strike
+    - dodge
+    - parry/deflect
+    - grab
+    - shove
+    - environmental impact
+    second_penetrating_hit:
+      condition: K1HydeKnifeHits >= 1 AND Rook lands another clean penetrating knife hit
+      result: FAIL_PLAYER_DEATH
+    nonpenetrating_impacts: Use global combat stagger/condition rules; they do not create extra K1 knife-wound counters.
+    no_health_bar_readability: Animation, stance, audio, wounds, stagger and Rook behavior communicate condition.
+  style_inference:
+    player_facing_menu: false
+    status: TUNING
+    telemetry:
+    - successful parry/deflect/dodge ratio
+    - heavy/grab usage
+    - environmental destruction
+    - collateral/noise
+    - continued high-force attacks after Rook is functionally losing
+    - post-fight expression
+    outputs:
+      K1_CONTROLLED: lower collateral; measured counters/control; minimum unnecessary force
+      K1_CHAOTIC: high movement/collateral/noise/environmental destruction
+      K1_BRUTAL: sustained excessive force and predatory pressure beyond what is needed to dominate
+    writes: Use current master K1_CONTROLLED / K1_CHAOTIC / K1_BRUTAL consequence tables until upstream sync changes them.
+  threat_end:
+    condition: Rook is incapacitated/disarmed and no longer performing an attack-capable combat state.
+    writes:
+    - K1ImmediateThreatEnded = true
+    readability: Knife out of reach; Rook grounded/collapsed; combat behavior and audio clearly stop.
+  post_fight_expression:
+    occurs_after: K1ImmediateThreatEnded == true
+    mode: LIVE_SHORT_CHOICE
+    timer_seconds: TUNING_3_TO_5
+    choices:
+    - id: K1_ROOK_AFTER_SILENCE
+      player_facing: MLČET
+      effect: no added authored noise
+    - id: K1_ROOK_AFTER_ROAR
+      player_facing: ZAŘVAT
+      effect: additional noise / possible witness-audio hook
+    - id: K1_ROOK_AFTER_SPEAK
+      player_facing: PROMUVIT
+      provisional_Hyde_line: “Měl jsi odejít.”
+      effect: marks emerging human-like intention; no automatic branch
+    timeout_default: K1_ROOK_AFTER_SILENCE
+    provisional_Rook_lines:
+    - “Dost.”
+    - “Co jsi zač?”
+    - “Počkej.”
+    rule: This choice may contribute telemetry but never makes Rook a renewed threat.
+  fixed_death:
+    requires: K1ImmediateThreatEnded == true AND K1RookPostFightExpressionResolved == true
+    RookDead: true
+    rule: Rook dies in a distinct authored post-threat beat. Exact physical choreography remains downstream.
+  ledger:
+    after_death: LedgerMissing = true
+    exact_disappearance_mechanism: TBD
+    rule: The ledger cannot be recovered in K1; its absence seeds later Crowther investigation.
+world_memory_commit:
+  trigger: K1_ROOK_FIXED_DEATH
+  fixed_writes:
+    RookDead: true
+    LedgerMissing: true
+    PoliceHeat: 25
+    UnderworldHeat: 25
+    CrowtherPressure: 10
+    IncidentID: INC_K1_ROOK
+    HydeGreenBloodAtScene: true
+    K1BloodiedCoatExists: true
+  incident_ledger:
+    IncidentID: INC_K1_ROOK
+    source: HYDE
+    chapter: K1
+    victim_status: DEAD
+    publicness: PUBLIC_BY_NEWSPAPER_BEAT
+    police_awareness: true
+    underworld_awareness: true
+    newspaper_coverage: true
+    exact_witnesses: Derived from beggar/street noise/post-fight roar and authored witness slots; exact witness identities
+      TBD.
+    physical_evidence:
+    - ROOK_KNIFE
+    - ROOK_BLOOD
+    - HYDE_GREEN_BLOOD
+    - K1_FIGHT_TRACE_PROFILE
+    - scene-authored environmental damage
+    Jekyll_link: NOT_AUTOMATICALLY_ESTABLISHED
+  rule: Incident creation does not add extra Exposure beyond explicit K1 combat-style writes. HYDE_GREEN_BLOOD is a fixed
+    K1 clue from the canonical first stab.
+overnight_reversion_flow:
+  trigger: K1_ROOK_FIXED_DEATH complete
+  presentation: FADE_TO_BLACK
+  blackout: false
+  meaning: Narrative ellipsis. Jekyll/Hyde memory is not erased.
+  system_resolution:
+  - advance authored offscreen time sufficient for remaining first-dose Hyde state to exhaust through a valid non-magical
+    reversion route
+  - resolve Form -> JEKYLL through Transformation/Reversion systems
+  - set K1OvernightReversionResolved = true
+  - remove Hyde visual-language layer
+  - do not require additional violence
+  - preserve all world evidence already shed/damaged
+  - heal/remove the authored first Hyde knife wound by Day-2 wake with no Jekyll scar
+  physiology_contract:
+    Day2_Jekyll_wound: NONE
+    Day2_Jekyll_scar: NONE
+    shed_Hyde_blood_persists: true
+    bloodied_coat_persists: true
+    rule: The body recovers across reversion/overnight passage; external evidence does not.
+  day_advance: K1_JEKYLL_WAKE_DAY2 commits ManuscriptDay 2 at 08:30.
+post_reversion_aftermath:
+  K1_JEKYLL_WAKE_DAY2:
+    forced: true
+    time_write:
+      event: ADVANCE_MANUSCRIPT_DAY
+      ManuscriptDay: 2
+      TimeOfDay: MORNING
+      K1LocalClockMinutes: 510
+      DisplayTime: 08:30
+    presentation: Poole repeatedly knocks/wakes Jekyll. Jekyll wakes physically intact despite remembering the knife wound.
+    checkpoint: CP_K1_DAY2_WAKE
+  K1_POOLE_MESSAGE:
+    forced: true
+    delivery_actor: POOLE
+    provisional_content: A constable/police messenger came on Inspector Newcomen’s behalf. Newcomen wants Dr. Jekyll at the
+      Rook scene before late morning.
+    rule: No telephone is required for this beat; exact messenger wording remains dialogue content.
+  K1_DAY2_BODY_OBSERVATION:
+    forced: true
+    player_choice: false
+    facts:
+    - Jekyll remembers Rook’s knife entering Hyde
+    - Jekyll has no open wound
+    - Jekyll has no scar
+    purpose: Establish post-transform physiology before the coat/world evidence can be compared.
+  K1_RESEARCH_AUTO_UPDATE_DAY2:
+    trigger: K1Day2BodyObservationResolved == true
+    player_choice: false
+    method_dependent: true
+
+    journal_updates:
+    - selected brew-method observation
+    - confirmed first transformation
+    - awareness persisted through the transformation
+    - Hyde sustained the canonical knife wound
+    - Jekyll has no corresponding wound or scar after reversion
+
+    research_tags:
+    - RD_BASE_TRANSFORMATION
+    - RD_POST_TRANSFORM_PHYSIOLOGY
+
+    actions:
+    - set K1BrewObservationRecorded = true
+    - set K1ResearchGranted = true
+
+    rule: >
+      Research Journal content updates automatically when Jekyll reaches an authored
+      discovery or observation. The player never has to manually write an entry.
+      Opening or reading the journal does not grant research, consume manuscript time,
+      or gate progression.
+day2_house_flow:
+  entry: K1_POOLE_MESSAGE complete
+  start_clock: about 08:40
+  purpose: >
+    Let the player inhabit a small readable portion of Jekyll's home, process the previous night and prepare for Newcomen
+    under authored time pressure.
+  accessible_route:
+  - BEDROOM
+  - SALON
+  - ENTRY_HALL
+  - FRONT_EXIT
+  core_interactions:
+  - WARDROBE
+  - BASEMENT_LAB_DOOR
+  always_optional:
+  - HALLWAY_MIRROR
+  fidelity_manifestation:
+    RICH:
+      lab_door_prompt: DVEŘE DO LABORATOŘE
+      bathroom_wash_available: false
+    THIN:
+      lab_door_prompt: DVEŘE DO LABORATOŘE
+      bathroom_wash_available: false
+    FRAGMENTARY:
+      lab_door_prompt: DVEŘE
+      bathroom_wash_available: true
+  cognition_manifestation:
+    LUCID:
+      lab_handle_detail: GREEN_RESIDUE_ON_HANDLE
+      pre_exit_mirror_thought:
+        trigger: >
+          First authored approach to the front exit after dressing, if K1LucidMirrorThoughtPlayed == false.
+        intent: JEKYLL_WANTS_TO_LOOK_AT_HIMSELF_BEFORE_LEAVING
+        objective_created: false
+        mirror_highlighted: false
+        auto_interaction: false
+        on_fire: K1LucidMirrorThoughtPlayed = true
+    STRAINED:
+      lab_handle_detail: NONE
+      pre_exit_mirror_thought: NONE
+    IMPAIRED:
+      lab_handle_detail: NONE
+      pre_exit_mirror_thought: NONE
+  free_exploration:
+    anchors:
+    - WARDROBE
+    - BASEMENT_LAB_DOOR
+    - HALLWAY_MIRROR
+    - FRAGMENTARY_BATHROOM_WASH
+    rule: >
+      Only authored first-use interactions advance K1LocalClockMinutes. Walking, standing still and revisiting inspected objects
+      do not consume manuscript time.
+  bathroom_wash:
+    availability: ManuscriptFidelity == FRAGMENTARY
+    player_facing: JÍT SE UMÝT
+    implementation: ABSTRACT_FADE_AND_AUDIO
+    authored_time: +20 minutes
+    result: K1Washed = true
+    route_check_context:
+      ContextMod: +5
+      applies_to: >
+        Any Society-relevant authored route check while the grooming advantage remains contextually applicable.
+      rule: >
+        Use the global route_check resolver. Do not add Society rank and do not create an NPC-specific modifier.
+      status: TUNING
+    coat_invariant: >
+      K1_BLOODIED_COAT remains bloodied and torn. Washing Jekyll never cleans the coat.
+  required_before_exit:
+  - K1PooleMessageReceived == true
+  - K1EquippedCoat != NONE
+  - K1ResearchGranted == true
+  time_pressure:
+    '10:15': If still home, Poole reminds Jekyll that Inspector Newcomen is waiting.
+    '10:30': Set K1HomeLeavePressure = true; foreground exit and suppress nonessential interaction prompts.
+    essential_exception: Wardrobe/mirror/research remain usable if needed to avoid an impossible or unfair state.
+    late_coat_discovery_rule: >
+      K1HomeLeavePressure never disables wardrobe or mirror access. If the player notices the bloodied coat in the mirror
+      at or after 10:30, the player may freely walk back to the wardrobe and equip CLEAN_COAT before leaving.
+    home_exit_commit_rule: >
+      Clothing choice remains changeable until the front-door transition actually commits K1_DAY2_LEAVE_HOME. Time pressure
+      is narrative pressure, not a lockout.
+    no_safety_confirmation: >
+      Recognizing the coat risk does not force a clean coat and does not add a special leave-confirmation prompt. A player may
+      knowingly leave in K1_BLOODIED_COAT and accept the consequence.
+  Jekyll_mood: >
+    Distracted and unsettled by the contradiction between the remembered knife wound and his intact body. Cognition affects
+    how much of the surrounding evidence Jekyll himself foregrounds.
+coat_evidence_contract:
+  scope: K1-specific consequence interaction; not a general clothing progression system.
+  physical_truth:
+    source: K1_ROOK_CANONICAL_FIRST_STAB
+    K1_BLOODIED_COAT:
+      knife_tear: true
+      dried_Hyde_blood: true
+      blood_color: GREEN
+      persists_to_Day2: true
+    CLEAN_COAT:
+      available_at_home: true
+      incriminating_Rook_evidence: false
+    Jekyll_body_on_Day2:
+      wound: false
+      scar: false
+  author_packet_manifestation:
+    CognitionBand:
+      LUCID: When the relevant evidence is sufficiently manifested, Jekyll actively comments on the contradiction and sets
+        K1CoatRiskRecognized=true.
+      STRAINED: Jekyll does not automatically foreground the risk; player observation/inspection is required.
+      IMPAIRED: No automatic warning/comment/attention cue. The existing impaired-cognition author-state debuff remains visible
+        to the player.
+    ManuscriptFidelity:
+      RICH: Knife tear and green stain are directly readable during wardrobe/close coat presentation. Mirror can also confirm
+        them.
+      THIN: Ordinary dressing does not foreground the blood detail. Interacting with the hallway mirror while wearing/holding
+        the bloodied coat reveals the tear and green stain.
+      FRAGMENTARY: Use the same guaranteed mirror discovery route as the minimum fair authored manifestation; no extra direct
+        highlight is required.
+    ManuscriptOverdrive: May add competing authored house detail/noise but cannot disable wardrobe or mirror.
+    ManuscriptDistortion: May alter uncanny expression but cannot change coat state, blood color or consequence.
+  recognition:
+    on_success: set K1CoatRiskRecognized = true
+    does_not_force_safe_choice: true
+    wardrobe_return_while_home: ALWAYS_AVAILABLE
+    rule: >
+      Even after recognizing the risk, the player may deliberately equip K1_BLOODIED_COAT. If recognition occurs late at the
+      hallway mirror, wardrobe remains accessible until K1HomeExitCommitted=true so the player can still change normally.
+  crime_scene_fail:
+    trigger: K1EquippedCoat == K1_BLOODIED_COAT when the player initiates INT_K1_NEWCOMEN
+    reason: The coat has a knife tear and unusual green blood matching the unusual green blood already present at the Rook
+      scene.
+    dialogue_bypass: true
+    sequence:
+    - interrupt normal Newcomen dialogue before substantive questioning
+    - if K1CoatRiskRecognized == false, pulse/highlight the already-visible existing AuthorPacket cognition/debuff indicator
+    - display blocking acknowledgment UI with intent AUTHOR_OVERLOOKED_INCRIMINATING_DETAIL
+    - player must click/acknowledge the notice
+    - Newcomen notices the direct evidence match
+    - trigger FAIL_DEFINITIVE_CAPTURE
+    author_lapse_UI:
+      new_stat_created: false
+      source: existing negative AuthorPacket presentation/cognition state shown during Day-2 play
+      display_intent: STEVENSON_OVERLOOKED_AN_OBVIOUS_DETAIL
+      exact_copy: TBD_UI_COPY
+      only_blame_author_if: K1CoatRiskRecognized == false
+      if_player_already_recognized: Skip author-lapse blame; player knowingly brought the incriminating coat.
+      eligible_existing_states:
+      - CognitionBand == IMPAIRED
+      - ManuscriptFidelity in [THIN, FRAGMENTARY]
+      - ManuscriptOverdrive == OVERWRITTEN
+      proc_rule: If K1CoatRiskRecognized == false and at least one eligible negative author state is active, pulse the already-visible
+        state indicator and frame the consequence as an AUTHOR_LAPSE. No new gameplay debuff/stat is created.
+      if_no_negative_author_state: Do not falsely blame Stevenson; the player simply failed to act on plainly available evidence.
+        Capture result is unchanged.
+    reload: CP_K1_DAY2_WAKE
+  author_state_UI:
+    visible_during_Day2: true
+    source_states:
+    - CognitionBand
+    - ManuscriptFidelity
+    - ManuscriptOverdrive
+    rule: If a negative/limiting existing AuthorPacket state is active, its indicator is visible during Day-2 home/street
+      play before the coat consequence. The crime-scene fail only pulses/activates that already-known indicator; it does not
+      invent a hidden debuff after the fact.
+    shipping_copy_and_iconography: TBD_UI
+crime_scene_investigation:
+  entry: K1_ZONE_ROOK_CRIME_SCENE
+  actor: INSPECTOR_NEWCOMEN
+  scope: Initial on-site consultation in K1. Broader follow-up investigation remains available for K2 after upstream sync.
+  pre_dialogue_gate: K1_CRIME_SCENE_COAT_GATE
+  scene_truths:
+  - Rook is dead
+  - Rook knife is present
+  - unusual green Hyde blood is present on the scene and on Rook's knife
+  - Rook's ledger is missing
+  - fight-trace profile reflects inferred K1_CONTROLLED / K1_CHAOTIC / K1_BRUTAL outcome
+  dialogue_inputs:
+  - Reason
+  - Society
+  - Chemistry
+  - CognitionBand/JekyllCognitionMod
+  - K1NewspaperRead
+  - K1ReliefResolved
+  - knowledge_legitimacy state
+  - K1RookResolutionStyle
+  - scene evidence profile
+  - NewcomenSuspicion
+  - Exposure
+  branching_policy:
+    clean_coat_core: >
+      All clean-coat players receive the same two main investigation rounds and closing beat. Do not build separate full prose
+      trees for every Stevenson/Jekyll state.
+    bloodied_coat: Normal investigation dialogue is bypassed by K1_CRIME_SCENE_COAT_GATE and immediate capture.
+    newspaper: >
+      Reading the newspaper unlocks exactly one additional legitimate reconstruction response: the GANG_VIOLENCE hypothesis.
+      It does not replace the base dialogue.
+    relief: >
+      K1ReliefResolved may make Jekyll's delivery/performance steadier, but does not create a separate dialogue tree or change
+      which base lines are spoken.
+    skills: >
+      Reason, Society, Chemistry and Cognition modify credibility, reaction and suspicion where declared. Skill-based dialogue
+      routes use the global route_check resolver and applicable ContextMod sources; they do not create Newcomen-specific skill
+      formulas. They should not multiply the scene into bespoke prose branches unless later dialogue production deliberately
+      adds a small variant.
+  performance_state:
+    if_K1ReliefResolved: STEADIER
+    otherwise: UNEASY_BUT_FUNCTIONAL
+    rule: Performance/animation only; no additional dialogue branch is required.
+  provisional_opening:
+  - speaker: NEWCOMEN
+    line: "Doktore Jekylle. Děkuji, že jste přišel."
+  - speaker: NEWCOMEN
+    line: "Máme mrtvého, nůž a jednu věc, kterou si neumím vysvětlit. Začněme tou."
+  conversation_rounds:
+    GREEN_BLOOD:
+      Newcomen_setup:
+      - speaker: NEWCOMEN
+        line: "Tady je Rookova krev. A tohle zelené je něco jiného."
+      - speaker: NEWCOMEN
+        line: "Stejná látka je i na ostří jeho nože. Co z toho vyvozujete?"
+      on_enter: set K1GreenBloodExamined = true
+      choices:
+        K1_SCENE_CAUTIOUS_MEDICAL:
+          intent: LIMIT_TO_SUPPORTED_INFERENCE
+          benefits: Reason
+          knowledge_risk: LOW
+          player_line: "Že ten nůž zasáhl ještě někoho. Víc bych bez rozboru netvrdil."
+          Newcomen_response: "Rozumné."
+        K1_SCENE_CHEMISTRY:
+          intent: ACKNOWLEDGE_ANOMALY_WITHOUT_CLAIMING_ORIGIN
+          benefits: Chemistry
+          knowledge_risk: LOW
+          player_line: "Chová se to jako krev, ale takovou barvu jsem nikdy neviděl. Bez rozboru nic víc neřeknu."
+          Newcomen_response: "Právě proto jsem vás sem zavolal."
+        K1_SCENE_TOO_PRECISE:
+          intent: OVERREVEAL_HYDE_ONLY_KNOWLEDGE
+          knowledge_risk: HIGH
+          player_line: "Rook ho bodl jednou do boku. Nezastavilo ho to."
+          Newcomen_response: "Do boku? To je velmi přesná domněnka, doktore."
+          rule: Route through knowledge_legitimacy.TOO_PRECISE unless equivalent detail is legitimately supported by current evidence.
+      optional_sample_followup:
+        interaction: INT_K1_GREEN_BLOOD_SAMPLE
+        player_prompt: ODEBRAT VZOREK
+        on_collect:
+        - set K1HydeBloodSampleCollected = true
+        - add HYDE_BLOOD_SAMPLE x1
+        Jekyll_line: "Vezmu si malé množství. V laboratoři snad zjistím víc."
+        Newcomen_line: "Vezměte si ho. A dejte mi vědět, co najdete."
+        on_skip: Continue without sample; K1 remains completable.
+    FIGHT_RECONSTRUCTION:
+      Newcomen_setup:
+      - speaker: NEWCOMEN
+        line: "Rook měl nůž. Přesto skončil odzbrojený a mrtvý. Co vám říká zbytek místa?"
+      choices:
+        K1_SCENE_VISIBLE_RECONSTRUCTION:
+          intent: LIMIT_TO_VISIBLE_RECONSTRUCTION
+          benefits: Reason
+          knowledge_risk: LOW
+          player_line: "Že bojoval s někým podstatně silnějším. Pořadí jednotlivých úderů bych z toho nevymýšlel."
+          Newcomen_response: "Ani já ne."
+        K1_SCENE_GANG_VIOLENCE:
+          availability: K1NewspaperRead == true
+          legitimacy_source: NEWSPAPER_PUBLIC_FACT
+          intent: PROPOSE_PLAUSIBLE_CRIMINAL_CONTEXT
+          benefits: Society
+          knowledge_risk: LOW
+          player_line: "Ranní list ho spojuje s vymahači. Tohle mohlo být vyřizování účtů mezi jeho vlastními lidmi."
+          Newcomen_response: "Vyřizování účtů?"
+          Jekyll_followup: "Možnost. Ne důkaz."
+          writes:
+          - K1GangViolenceHypothesisRaised = true
+          rule: >
+            This option exists only because the newspaper made Rook's criminal reputation legitimate Jekyll knowledge. It is
+            a hypothesis, not a confirmed solution to the murder.
+        K1_SCENE_EXACT_RECONSTRUCTION:
+          intent: RECONSTRUCT_TOO_EXACTLY
+          knowledge_risk: HIGH
+          player_line: "Rook zaútočil první. Jednou protivníka bodl. Ten ho pak odzbrojil a zabil až potom."
+          Newcomen_response: "To je pozoruhodně přesná rekonstrukce."
+          rule: Hyde-only sequencing routes through knowledge_legitimacy.TOO_PRECISE and raises suspicion.
+    CLOSING_LEDGER:
+      fixed_exchange:
+      - speaker: NEWCOMEN
+        line: "Ještě jedna věc. Rook prý nosil účetní knihu. Nenašli jsme ji."
+      - speaker: JEKYLL
+        line: "Pak může být důležitější než ten nůž."
+      if_sample_collected:
+      - speaker: NEWCOMEN
+        line: "Až budete vědět něco o tom zeleném vzorku, chci to slyšet."
+      - speaker: JEKYLL
+        line: "Samozřejmě."
+  style_evidence:
+    K1_CONTROLLED: localized struggle; comparatively limited collateral; knife threat and powerful counterforce still evident
+    K1_CHAOTIC: broader damage footprint/noise; multiple displaced/broken objects; less tidy reconstruction
+    K1_BRUTAL: strong excessive-force indicators and pronounced impact damage; scene suggests violence exceeded simple defensive
+      necessity
+  sample_research_seed:
+    sample_id: HYDE_BLOOD_SAMPLE
+    acquired_if: K1HydeBloodSampleCollected == true
+    player_knowledge_in_K1: UNKNOWN_USE
+    K1_rule: >
+      K1 may establish that the sample is chemically anomalous, but must not reveal the STABILIZER recipe or suppressor chain.
+      The sample is a future research seed, not an immediate crafting tutorial.
+    downstream_hidden_recipe_note:
+      status: FUTURE_AUTHORED_RESEARCH_UNLOCK_REQUIRES_MASTER_SYNC
+      recipe_when_later_discovered:
+        inputs:
+        - HYDE_BLOOD_SAMPLE x1
+        - CATALYST x1
+        output: STABILIZER x1
+      suppressor_link: STABILIZER later combines with SERUM_BASE under the existing suppressor requirements.
+      unlock_rule: >
+        A later authored research hint/journal discovery must make this combination available. Do not allow blind arbitrary
+        chemistry-combination fishing in K1.
+      fail_forward_if_K1_sample_missed: >
+        Before STABILIZER becomes progression-critical, a later authored route must allow Jekyll to reacquire a Hyde-blood
+        sample. Missing the optional K1 sample must not require replaying K1.
+  completion:
+    writes:
+    - K1CrimeSceneConsultationComplete = true
+    rule: Exact NewcomenSuspicion deltas are TUNING unless already canonical in the synchronized master.
+    exit: K1_POST_INVESTIGATION
+interpretation_flow:
+  conversation_id: K1_JEKYLL_INTERPRET
+  availability: K1ReliefResolved == true
+  preconditions:
+  - K1NewspaperRead == true
+  - K1ReliefResolved == true
+  - Form == JEKYLL
+  choices: *id001
+  rule: If newspaper/ÚLEVA is skipped, interpretation is not shown and does not block K1 exit.
+  on_complete: K1InterpretResolved = true
+research_handoff:
+  grant_at: K1_RESEARCH_AUTO_UPDATE_DAY2
+  canonical_tags:
+  - RD_BASE_TRANSFORMATION
+  - RD_POST_TRANSFORM_PHYSIOLOGY
+  method_dependent_observation: K1_BrewObservation
+  resolver: ResearchSystem
+  journal_resolver: ResearchJournalSystem
+  rule: The Day-2 journal entry records the selected K1_BREW method, confirmed transformation, the canonical Rook knife wound
+    as Hyde, and the absence of any corresponding Jekyll wound/scar after reversion. It grants only the canonical K1 research
+    tags already declared; the knife observation is content under post-transform physiology, not a new undeclared RD tag.
+  master_sync_note: Exact ResearchProgress aggregation from RD tag values is not explicit in the current master. Do not hardcode
+    ResearchProgress gain until that resolver rule is synchronized.
+dialogue_contracts:
+  K1_ROOK_LIVE_APPROACH:
+    status: TLD_PROVISIONAL_LINES_INCLUDED
+    not_a_cutscene: true
+    Rook_lines:
+    - Hej.
+    - S tebou mluvím.
+    - Tady nemáš co dělat.
+    Hyde_choices:
+    - ZAŘVAT
+    - PROMUVIT — provisional “Uhni.”
+    - ZAÚTOČIT
+    timeout: ZAÚTOČIT
+    rule: Final performance wording belongs in dialogue content; timing/branch function is TLD-canonical.
+  K1_ROOK_POST_FIGHT:
+    status: TLD_PROVISIONAL_LINES_INCLUDED
+    Rook_lines:
+    - Dost.
+    - Co jsi zač?
+    - Počkej.
+    Hyde_choices:
+    - MLČET
+    - ZAŘVAT
+    - PROMUVIT — provisional “Měl jsi odejít.”
+  K1_POOLE_DAY2:
+    status: TEXT_TBD
+    must_establish:
+    - Poole woke Jekyll after a bad night
+    - a police messenger/constable came
+    - Inspector Newcomen expects Jekyll at the Rook scene
+    - Jekyll should leave by late morning
+  K1_NEWSPAPER_REACTION:
+    status: OPTIONAL_TEXT_TBD
+    must_establish:
+    - Rook was dangerous/criminal according to public reporting
+    - if read, Jekyll experiences involuntary relief
+    - the relief does not justify the killing
+  K1_NEWCOMEN_CRIME_SCENE:
+    status: TLD_PRELIMINARY_FULL_EXCHANGE_INCLUDED_FINAL_PERFORMANCE_PROSE_TBD
+    branch_budget:
+    - same core dialogue for all clean-coat states
+    - bloodied coat bypasses dialogue into capture
+    - newspaper unlocks one GANG_VIOLENCE response
+    - relief changes performance tone only
+    - skills modify credibility/reaction rather than spawning full alternate trees
+    must_establish:
+    - green blood is unusual and appears on Rook's knife
+    - Rook was armed with a knife
+    - the struggle involved extraordinary force
+    - Jekyll must distinguish visible/public inference from Hyde-only knowledge
+    - Jekyll may optionally collect HYDE_BLOOD_SAMPLE
+    - missing ledger remains an investigation hook
+    reads:
+    - Reason
+    - Society
+    - Chemistry
+    - CognitionBand
+    - KnowledgeLegitimacy
+    - K1RookResolutionStyle
+    - K1NewspaperRead
+    - K1ReliefResolved
+    - NewcomenSuspicion
+    - Exposure
+  K1_JEKYLL_INTERPRET:
+    status: CONDITIONAL_TEXT_TBD
+    available_if: K1ReliefResolved == true
+    choices:
+    - K1_RESPONSIBILITY
+    - K1_RATIONALIZE
+    - K1_SUPPRESS
+sequence:
+- id: K1_BOOT
+  type: SYSTEM
+  entry: loaded from S0_LOAD_K1
+  actions:
+  - validate AuthorPacket and MotifPacket
+  - apply K1 chapter baseline + AuthorWeather blend
+  - resolve ManuscriptFidelity / Distortion / Overdrive presentation configuration
+  - initialize ManuscriptDay=1, TimeOfDay=NIGHT, K1LocalClockMinutes=1260 (21:00)
+  - initialize Form=JEKYLL, SerumStock=0 and K1 runtime flags
+  - create CP_K1_START
+  exit: K1_MANUSCRIPT_ARRIVAL
+- id: K1_MANUSCRIPT_ARRIVAL
+  type: CINEMATIC_TRANSITION
+  player_control: false
+  purpose:
+  - complete S0 -> manuscript transition
+  - establish the professional laboratory at night
+  - show K1 weather/render state without explaining the system
+  exact_shots: TBD
+  exit: K1_PLAYER_HANDOFF_JEKYLL
+- id: K1_PLAYER_HANDOFF_JEKYLL
+  type: SYSTEM
+  player_control: true
+  actions:
+  - enable Jekyll movement/look/interact
+  - activate OBJ_K1_COMPLETE_EXPERIMENT
+  - enable professional-lab experiment bench
+  - make Research Journal available from menu
+  - set ResearchJournalIntroduced = true
+  exit: K1_EXPERIMENT_GAMEPLAY
+- id: K1_OPTIONAL_PRE_EXPERIMENT_JOURNAL
+  type: OPTIONAL_UI_DIEGETIC_INTERACTION
+  player_control: JOURNAL_UI
+  reachable_from:
+  - K1_PLAYER_HANDOFF_JEKYLL
+  - K1_EXPERIMENT_GAMEPLAY
+  actions:
+  - open Jekyll research journal if player chooses
+  - show prior theory/current formula/incomplete procedure hypotheses
+  - set K1PreExperimentJournalOpened = true
+  - do not advance authored clock
+  research_points: 0
+  return_to: K1_EXPERIMENT_GAMEPLAY
+- id: K1_EXPERIMENT_GAMEPLAY
+  type: GAMEPLAY
+  player_control: true
+  journal_hint:
+    trigger: First approach to the experiment bench before selecting a brew method.
+    show_once: true
+    text: "V deníku najdete poznámky k experimentu."
+    blocking: false
+    auto_open_journal: false
+    rule: >
+      All brew choices remain available without opening the journal.
+      Reading provides context about the established procedure and untested
+      hypotheses, but does not reveal exact outcomes.
+  available_choices:
+  - internal_id: K1_PRECISE
+    player_facing_intent: FOLLOW_RECORDED_PROCEDURE
+  - internal_id: K1_FAST
+    player_facing_intent: ATTEMPT_RAPID_PREPARATION
+  - internal_id: K1_RISKY
+    player_facing_intent: INTRODUCE_UNTESTED_COMPOUND
+  presentation_rule: Never display PRECISE / FAST / RISKY or exact Potency/Purity in normal K1 UI.
+  on_choice: K1_BREW_RESOLVE
+- id: K1_BREW_RESOLVE
+  type: DECISION_RESOLVER
+  actions:
+  - commit exactly one K1_BREW choice
+  - resolve selected authored Potency/Purity result
+  - apply SerumInstabilityScar +15 only for K1_RISKY
+  - create one immediately usable first-experiment serum dose
+  - set SerumStock = 1
+  - set K1BrewChoiceResolved = true
+  - set K1SerumPrepared = true
+  - 'advance authored clock by method: PRECISE +20 / FAST +8 / RISKY +12 minutes'
+  - call SerumRecipeMastery eligibility check
+  - complete OBJ_K1_COMPLETE_EXPERIMENT
+  - activate OBJ_K1_TAKE_SERUM
+  - store selected brew method for Day-2 journal observation
+  exit: K1_FIRST_SERUM_READY
+- id: K1_FIRST_SERUM_READY
+  type: GAMEPLAY
+  player_control: true
+  rules:
+  - Jekyll may inspect the prepared serum and laboratory
+  - progression requires deliberate interaction with and drinking of the dose
+  - player may cancel before the consumption commit point
+  - after commit the serum is spent and transformation is unavoidable
+  - no second batch can be prepared before the first transformation
+  exit_on_serum_use: K1_FIRST_SERUM_ADMINISTRATION
+- id: K1_FIRST_SERUM_ADMINISTRATION
+  type: SYSTEM_AND_PRESENTATION
+  actions:
+  - open K1 experiment TransformWindow
+  - advance authored clock +2 minutes for inspect/commit
+  - consume one STANDARD first-experiment dose
+  - resolve SerumSystem toxicity/tolerance/fuel
+  - if FATAL execute FAIL_SERUM_OVERDOSE
+  - set K1SerumConsumed = true
+  - resolve LÁTKA as FULFILLED
+  - call HydeDependence.VOLUNTARY_TRANSFORM
+  - apply RecentTransformLoad voluntary gain
+  fatal_exit: FAIL_SERUM_OVERDOSE
+  normal_exit: K1_FIRST_TRANSFORMATION
+- id: K1_FIRST_TRANSFORMATION
+  type: CINEMATIC_GAMEPLAY_TRANSITION
+  player_control: LOCKED_THEN_HANDOFF
+  actions:
+  - advance authored clock +4 minutes
+  - transform Jekyll -> Hyde
+  - set Form = HYDE
+  - activate Hyde visual-language layer
+  - set K1FirstTransformComplete = true
+  - resolve PROMĚNA as FULFILLED
+  - open BOLEST realization window
+  - complete OBJ_K1_TAKE_SERUM
+  - activate OBJ_K1_GET_OUTSIDE
+  - create CP_K1_POST_TRANSFORM
+  blackout: false
+  exit: K1_HYDE_FIRST_HANDOFF
+- id: K1_HYDE_FIRST_HANDOFF
+  type: TUTORIAL_GAMEPLAY
+  player_control: true
+  purpose:
+  - make Hyde movement/physicality immediately distinct
+  - introduce form-specific perception without a popup
+  - move Hyde through service exit toward the night street
+  restrictions:
+  - no free reversion
+  - no redose
+  - no route back to unresolved Jekyll chemistry
+  actions:
+  - advance authored clock +10 minutes through first street release/traversal
+  - complete OBJ_K1_GET_OUTSIDE on street arrival
+  exit: K1_BEGGAR_QUICK_CHOICE
+- id: K1_BEGGAR_QUICK_CHOICE
+  type: LIVE_TIMED_CHOICE
+  player_control: MOVE_LOOK + CHOICE
+  optional_encounter: true
+  choices:
+  - id: K1_BEGGAR_INTIMIDATE
+    player_facing: ZAŘVAT / ZASTRAŠIT
+    result: beggar retreats; local noise/witness reaction
+  - id: K1_BEGGAR_VIOLENCE
+    player_facing: STRČIT / UDEŘIT
+    result: Hyde knocks the man down and continues
+  timer_source: quick_action_system
+  timeout_default: K1_BEGGAR_VIOLENCE
+  NO_TIMER_rule: disable automatic timeout; choice remains
+  actions:
+  - set K1BeggarEncounterResolved = true
+  - advance authored clock +2 minutes if encounter occurs
+  exit: K1_OPTIONAL_POSTBOX
+- id: K1_OPTIONAL_POSTBOX
+  type: OPTIONAL_GAMEPLAY_INTERACTION
+  player_control: true
+  action: DESTROY
+  rule: One interaction only. Destruction is physical release/local disturbance, not a new branching stat system.
+  authored_time_if_used: +2 minutes
+  exit: K1_DARK_ALLEY_SETTLE
+- id: K1_DARK_ALLEY_SETTLE
+  type: GAMEPLAY_TRANSITION
+  player_control: true
+  actions:
+  - route Hyde naturally into K1_ZONE_DARK_ALLEY_ROOK
+  - advance authored clock +3 minutes
+  - let Hyde breathing/stance settle without explanatory voiceover
+  exit: K1_ROOK_LIVE_APPROACH
+- id: K1_ROOK_LIVE_APPROACH
+  type: LIVE_DIALOGUE_ENCOUNTER_SETUP
+  player_control: MOVE_LOOK + CHOICE
+  cutscene: false
+  provisional_Rook_lines:
+  - Hej.
+  - S tebou mluvím.
+  - Tady nemáš co dělat.
+  actions:
+  - set K1RookConflictStarted = true
+  - activate OBJ_K1_SURVIVE_ROOK
+  - open live timed Rook opening choice
+  exit: K1_ROOK_OPENING_CHOICE
+- id: K1_ROOK_OPENING_CHOICE
+  type: LIVE_TIMED_CHOICE
+  player_control: MOVE_LOOK + CHOICE
+  choices:
+  - id: K1_ROOK_OPEN_ROAR
+    player_facing: ZAŘVAT
+    result: Rook recoils/reassesses for a beat
+  - id: K1_ROOK_OPEN_SPEAK
+    player_facing: PROMUVIT
+    provisional_line: Uhni.
+    result: Rook reacts to Hyde’s unnatural voice
+  - id: K1_ROOK_OPEN_ATTACK
+    player_facing: ZAÚTOČIT
+    result: Hyde lunges; Rook uses sidestep/counter experience
+  timer_source: quick_action_system
+  timeout_default: K1_ROOK_OPEN_ATTACK
+  NO_TIMER_rule: no automatic selection
+  actions:
+  - store selected opening in K1SelectedRookOpening
+  - set K1RookOpeningResolved = true
+  - advance authored clock about +2 minutes through live approach/opening
+  converge: K1_ROOK_CANONICAL_FIRST_STAB
+- id: K1_ROOK_CANONICAL_FIRST_STAB
+  type: AUTHORED_LIVE_COMBAT_OPENER
+  player_control: true
+  unavoidable: true
+  actions:
+  - Rook lands one nonfatal penetrating knife wound on Hyde
+  - set K1HydeKnifeHits = 1
+  - set K1CanonicalFirstStabResolved = true
+  - set HydeGreenBloodAtScene = true
+  - set K1BloodiedCoatExists = true
+  - spawn/persist green Hyde blood evidence on scene, Rook knife and previous-night coat
+  - Hyde remains combat-capable
+  - 'Rook reacts to the green blood; provisional line: “Co jsi zač?”'
+  rule: This is not a cutscene and not a QTE failure. It is the authored first-combat fact teaching Hyde’s abnormal durability
+    and Rook’s superior technique.
+  exit: K1_ROOK_SYSTEMIC_COMBAT
+- id: K1_ROOK_SYSTEMIC_COMBAT
+  type: HYDE_SYSTEMIC_COMBAT
+  player_control: true
+  form_policy: HYDE_LOCKED
+  visible_health_bars: false
+  combat_rules:
+  - 'Rook attacks systemically with knife AI: distance, feints, stabs, slashes, sidesteps, counters'
+  - Hyde uses strike/heavy/dodge/parry-deflect/grab/shove/environment
+  - second clean penetrating Rook knife hit -> FAIL_PLAYER_DEATH
+  - ordinary nonpenetrating impacts use global combat condition/stagger rules
+  - CONTROLLED / CHAOTIC / BRUTAL are inferred from telemetry; never shown as choices
+  authored_time: advance TUNING 3-8 minutes on fight completion
+  on_Rook_incapacitated: K1_ROOK_THREAT_ENDS
+- id: K1_ROOK_THREAT_ENDS
+  type: STATE_COMMIT
+  actions:
+  - resolve and store inferred K1RookResolutionStyle
+  - apply current master consequence writes for inferred style through correct resolvers
+  - set K1ImmediateThreatEnded = true
+  - complete OBJ_K1_SURVIVE_ROOK
+  - finalize BOLEST as FULFILLED or TWISTED
+  - ensure Rook knife is out of reach and Rook is no longer attack-capable
+  assertions:
+  - Rook is visibly no longer an immediate threat
+  - RookDead is still false
+  exit: K1_ROOK_POST_FIGHT_EXPRESSION
+- id: K1_ROOK_POST_FIGHT_EXPRESSION
+  type: LIVE_SHORT_CHOICE
+  player_control: MOVE_LOOK + CHOICE
+  precondition: K1ImmediateThreatEnded == true
+  provisional_Rook_lines:
+  - Dost.
+  - Co jsi zač?
+  - Počkej.
+  choices:
+  - id: K1_ROOK_AFTER_SILENCE
+    player_facing: MLČET
+    effect: no added authored noise
+  - id: K1_ROOK_AFTER_ROAR
+    player_facing: ZAŘVAT
+    effect: additional authored noise / possible witness-audio hook
+  - id: K1_ROOK_AFTER_SPEAK
+    player_facing: PROMUVIT
+    provisional_line: Měl jsi odejít.
+    effect: emerging intentional speech; no new branch
+  timeout_default: K1_ROOK_AFTER_SILENCE
+  actions:
+  - store selected expression in K1SelectedRookPostFightExpression
+  - set K1RookPostFightExpressionResolved = true
+  exit: K1_ROOK_FIXED_DEATH
+- id: K1_ROOK_FIXED_DEATH
+  type: FIXED_STORY_BEAT
+  player_control: LIMITED_OR_LOCKED_TUNING
+  precondition: K1ImmediateThreatEnded == true AND K1RookPostFightExpressionResolved == true
+  actions:
+  - execute authored post-threat Rook death beat
+  - set RookDead = true
+  - set LedgerMissing = true
+  - write fixed PoliceHeat=25
+  - write fixed UnderworldHeat=25
+  - write fixed CrowtherPressure=10
+  - create/update INC_K1_ROOK including HYDE_GREEN_BLOOD
+  - set K1WorldReactionCommitted = true
+  - advance authored clock +3 minutes
+  - create CP_K1_POST_ROOK
+  exact_death_choreography: TBD
+  exit: K1_OVERNIGHT_FADE
+- id: K1_OVERNIGHT_FADE
+  type: FADE_AND_AUTHORED_TIME_SKIP
+  player_control: false
+  actions:
+  - fade to black
+  - resolve non-magical offscreen reversion without memory blackout
+  - set Form = JEKYLL
+  - set K1OvernightReversionResolved = true
+  - disable Hyde visual-language layer
+  - preserve scene blood, knife evidence and bloodied coat
+  - remove first Hyde knife wound from Jekyll body by Day-2 wake; no scar
+  exit: K1_JEKYLL_WAKE_DAY2
+- id: K1_JEKYLL_WAKE_DAY2
+  type: DAY_ADVANCE_AND_WAKE
+  player_control: LOCKED_THEN_HANDOFF
+  actions:
+  - ADVANCE_MANUSCRIPT_DAY exactly once
+  - set ManuscriptDay = 2
+  - set TimeOfDay = MORNING
+  - set K1LocalClockMinutes = 510 (08:30)
+  - set K1Day2WakeComplete = true
+  - Poole knocks repeatedly at bedroom door
+  - create CP_K1_DAY2_WAKE
+  exit: K1_POOLE_MESSAGE
+- id: K1_POOLE_MESSAGE
+  type: DIALOGUE_STORY_BEAT
+  player_control: DIALOGUE_ONLY
+  actor: POOLE
+  actions:
+  - Poole reports that a constable/police messenger came on Inspector Newcomen’s behalf
+  - Newcomen expects Jekyll at the Rook scene before late morning
+  - set K1PooleMessageReceived = true
+  - advance authored clock +10 minutes
+  - activate OBJ_K1_RECOVER and OBJ_K1_PREPARE_TO_LEAVE
+  exact_dialogue: TBD
+  exit: K1_DAY2_BODY_OBSERVATION
+- id: K1_DAY2_BODY_OBSERVATION
+  type: PRESENTATION_GAMEPLAY_BEAT
+  player_control: LIMITED_THEN_FREE
+  actions:
+  - Jekyll remembers the knife wound
+  - confirm no open wound and no scar on Jekyll
+  - set K1Day2BodyObservationResolved = true
+  - advance authored clock +10 minutes
+  - complete OBJ_K1_RECOVER
+  exit: K1_DAY2_HOME_EXPLORATION
+- id: K1_DAY2_HOME_EXPLORATION
+  type: FREE_EXPLORATION_WITH_AUTHORED_CLOCK
+  player_control: true
+  actions:
+  - enable bedroom + salon + entry-hall exploration
+  - enable wardrobe
+  - enable hallway mirror for all Fidelity states
+  - enable basement-laboratory door interaction
+  - enable bathroom wash only if ManuscriptFidelity == FRAGMENTARY
+  - evaluate LUCID authored clue details without creating objective markers
+  - increment K1HomeExplorationCount and authored clock only on first completion of declared anchors
+  - activate OBJ_K1_GO_TO_SCENE
+  branch_nodes:
+  - K1_DAY2_WARDROBE
+  - K1_DAY2_MIRROR
+  - K1_DAY2_LAB_DOOR
+  - K1_DAY2_WASH
+  - K1_RESEARCH_AUTO_UPDATE_DAY2
+  - K1_DAY2_HOME_TIME_PRESSURE
+  exit_when_ready: K1_DAY2_LEAVE_HOME
+- id: K1_DAY2_WARDROBE
+  type: K1_SPECIFIC_EVIDENCE_CHOICE
+  player_control: true
+  enabled_while: K1HomeExitCommitted == false
+  choices:
+  - id: EQUIP_CLEAN_COAT
+    result: K1EquippedCoat = CLEAN_COAT
+  - id: EQUIP_K1_BLOODIED_COAT
+    result: K1EquippedCoat = K1_BLOODIED_COAT
+  authored_time: +10 minutes first use; later coat swaps at home do not repeatedly consume the full first-use time cost
+  rule: No general wardrobe progression system is created. Late mirror discovery never locks the player out of changing coat while still home.
+  return_to: K1_DAY2_HOME_EXPLORATION
+- id: K1_DAY2_MIRROR
+  type: OPTIONAL_INSPECTION
+  player_control: true
+  enabled_while: K1HomeExitCommitted == false
+  actions:
+  - inspect Jekyll reflection/current coat
+  - if K1_BLOODIED_COAT evidence is manifested through current Fidelity route, reveal knife tear + dried green blood
+  - if recognized, set K1CoatRiskRecognized = true
+  - keep K1_DAY2_WARDROBE available even if K1HomeLeavePressure == true
+  - advance authored clock +5 minutes first use
+  return_to: K1_DAY2_HOME_EXPLORATION
+- id: K1_DAY2_LAB_DOOR
+  type: OPTIONAL_INSPECTION
+  player_control: true
+  enabled_while: K1HomeExitCommitted == false
+  actions:
+  - set K1LabDoorInspected = true
+  - if ManuscriptFidelity == FRAGMENTARY, present interaction as DVEŘE
+  - if ManuscriptFidelity in [THIN, RICH], present interaction as DVEŘE DO LABORATOŘE
+  - if CognitionBand == LUCID, manifest subtle green residue on the handle and allow player observation to set
+    K1LabHandleGreenResidueNoticed = true
+  authored_time: +5 minutes first use
+  rule: >
+    Do not open the basement laboratory in K1. Do not create an objective from the green residue.
+  return_to: K1_DAY2_HOME_EXPLORATION
+- id: K1_DAY2_WASH
+  type: CONDITIONAL_OPTIONAL_ABSTRACT_ACTION
+  player_control: true
+  enabled_if:
+  - ManuscriptFidelity == FRAGMENTARY
+  - K1HomeExitCommitted == false
+  - K1HomeLeavePressure == false
+  presentation:
+  - fade_out
+  - play water / washing / dressing audio
+  - fade_in
+  actions:
+  - advance authored clock +20 minutes
+  - set K1Washed = true
+  context_effect:
+    route_check: GLOBAL
+    ContextMod: +5
+    applies_to: >
+      Society-relevant authored route checks where Jekyll's grooming/presentation can reasonably affect the NPC response.
+    rule: >
+      Do not change Society rank and do not create a Newcomen-specific temporary stat.
+    status: TUNING
+  coat_invariant: >
+    K1_BLOODIED_COAT remains torn and bloodied; washing Jekyll never cleans the coat.
+  return_to: K1_DAY2_HOME_EXPLORATION
+- id: K1_RESEARCH_AUTO_UPDATE_DAY2
+  type: SYSTEM
+  player_control: false
+  trigger: K1Day2BodyObservationResolved == true
+
+  actions:
+  - update Research Journal with selected K1 brew-method observation
+  - update Research Journal with confirmed first transformation
+  - update Research Journal with persistent awareness through transformation
+  - update Research Journal with canonical Hyde knife wound
+  - update Research Journal with absence of corresponding Jekyll wound/scar
+  - grant RD_BASE_TRANSFORMATION through ResearchSystem
+  - grant RD_POST_TRANSFORM_PHYSIOLOGY through ResearchSystem
+  - set K1BrewObservationRecorded = true
+  - set K1ResearchGranted = true
+
+  idempotent: true
+
+  rule: >
+    This is an automatic knowledge/research update.
+    No journal-opening animation, player input, authored time cost or checkpoint is required.
+
+  return_to: K1_DAY2_HOME_EXPLORATION
+- id: K1_DAY2_HOME_TIME_PRESSURE
+  type: SYSTEM
+  player_control: true
+  rules:
+  - at authored 10:15 while still home, trigger Poole reminder once
+  - at authored 10:30, set K1HomeLeavePressure = true
+  - after 10:30 suppress nonessential prompts and repeatedly foreground exit
+  - essential wardrobe/mirror interactions remain available
+  - optional Research Journal access remains available through the game menu
+  - if coat danger is recognized late, never force the exit before the player has had the ordinary opportunity to return to wardrobe
+  - time pressure never auto-commits the front door or freezes coat selection
+  return_to: K1_DAY2_HOME_EXPLORATION
+- id: K1_DAY2_LEAVE_HOME
+  type: GATE
+  preconditions:
+  - K1PooleMessageReceived == true
+  - K1EquippedCoat != NONE
+  - K1ResearchGranted == true
+  actions:
+  - set K1HomeExitCommitted = true only when the front-door transition is actually accepted
+  - advance to Day-2 London street
+  - advance authored transit clock +15 minutes
+  rule: Before this commit, the player may always turn back inside and change coat, including after a late mirror discovery.
+  exit: K1_DAY2_STREET
+- id: K1_DAY2_STREET
+  type: TRAVERSAL_WITH_OPTIONAL_CONTENT
+  player_control: true
+  purpose:
+  - walk toward Rook scene
+  - offer optional newspaper without objective marker
+  optional: K1_OPTIONAL_NEWSPAPER
+  exit: K1_CRIME_SCENE_ARRIVAL
+- id: K1_OPTIONAL_NEWSPAPER
+  type: OPTIONAL_INTERACTION
+  player_control: READABLE_UI
+  actions:
+  - present PUBLIC reporting that Rook was a dangerous criminal/underworld figure/collector connected to violent debt enforcement
+  - call knowledge_legitimacy.newspaper_reading
+  - set K1NewspaperRead = true
+  - unlock K1_SCENE_GANG_VIOLENCE as legitimate public-context dialogue knowledge
+  - advance authored clock +5 minutes
+  - trigger K1_RELIEF_BEAT
+  skip_allowed: true
+  return_to: K1_DAY2_STREET
+- id: K1_RELIEF_BEAT
+  type: OPTIONAL_FORCED_EMOTIONAL_BEAT_AFTER_READ
+  player_control: false
+  precondition: K1NewspaperRead == true
+  actions:
+  - Jekyll involuntarily feels relief that Hyde did not kill a random innocent person
+  - resolve ÚLEVA as FULFILLED
+  - set K1ReliefResolved = true
+  rule: Relief does not morally justify the killing.
+  return_to: K1_DAY2_STREET
+- id: K1_CRIME_SCENE_ARRIVAL
+  type: SCENE_ENTRY_GAMEPLAY
+  player_control: true
+  actions:
+  - enter preserved Rook crime scene
+  - Newcomen is visibly waiting for Jekyll
+  - allow limited approach/look before conversation
+  - do not evaluate bloodied-coat fail merely on zone entry
+  exit_on_interact: INT_K1_NEWCOMEN -> K1_CRIME_SCENE_COAT_GATE
+- id: K1_CRIME_SCENE_COAT_GATE
+  type: HARD_CONSEQUENCE_GATE
+  player_control: UI_ACK_IF_FAIL
+  if_bloodied:
+    condition: K1EquippedCoat == K1_BLOODIED_COAT
+    actions:
+    - abort normal consultation before substantive dialogue
+    - if K1CoatRiskRecognized == false and an eligible negative AuthorPacket state is active, pulse the already-visible relevant
+      state/debuff indicator
+    - display blocking consequence notice; use AUTHOR_LAPSE framing only when supported by the active AuthorPacket state
+    - require player acknowledgment click
+    - Newcomen notices knife tear + green blood matching scene evidence
+    - trigger FAIL_DEFINITIVE_CAPTURE
+    reload: CP_K1_DAY2_WAKE
+  if_clean:
+    condition: K1EquippedCoat == CLEAN_COAT
+    exit: K1_NEWCOMEN_CRIME_SCENE_DIALOGUE
+- id: K1_NEWCOMEN_CRIME_SCENE_DIALOGUE
+  type: MULTI_ROUND_INVESTIGATION_DIALOGUE
+  player_control: DIALOGUE_AND_INSPECT
+  actions:
+  - activate OBJ_K1_ASSIST_NEWCOMEN
+  - derive performance only: K1ReliefResolved=true -> STEADIER, otherwise UNEASY_BUT_FUNCTIONAL
+  - run GREEN_BLOOD dialogue round
+  - allow optional INT_K1_GREEN_BLOOD_SAMPLE after green evidence is examined
+  - run FIGHT_RECONSTRUCTION dialogue round
+  - expose K1_SCENE_GANG_VIOLENCE only if K1NewspaperRead == true
+  - run fixed CLOSING_LEDGER exchange
+  - run authored moment INT_K1_ROOK_SOLDIER (silent write; no UI)
+  - read Reason/Society/Chemistry/Cognition and KnowledgeLegitimacy where declared
+  - route unsupported Hyde-only overknowledge through knowledge_legitimacy.TOO_PRECISE
+  - set K1CrimeSceneConsultationComplete = true
+  - complete OBJ_K1_ASSIST_NEWCOMEN
+  exit: K1_POST_INVESTIGATION
+- id: K1_POST_INVESTIGATION
+  type: CONDITIONAL_STORY_GATE
+  player_control: true
+  if_relief: K1_INTERPRET
+  if_no_relief: K1_EXIT_GATE
+- id: K1_INTERPRET
+  type: DIALOGUE_DECISION
+  player_control: DIALOGUE_ONLY
+  precondition: K1ReliefResolved == true
+  choices:
+  - K1_RESPONSIBILITY
+  - K1_RATIONALIZE
+  - K1_SUPPRESS
+  on_select:
+  - store selected interpretation in K1SelectedInterpretation
+  - apply selected Integration write
+  - apply selected dependence event/delta through HydeDependenceResolver
+  - set K1InterpretResolved = true
+  exit: K1_EXIT_GATE
+- id: K1_EXIT_GATE
+  type: GATE
+  preconditions:
+  - Form == JEKYLL
+  - SerumStock == 0
+  - RookDead == true
+  - LedgerMissing == true
+  - K1WorldReactionCommitted == true
+  - K1Day2WakeComplete == true
+  - K1ResearchGranted == true
+  - K1CrimeSceneConsultationComplete == true
+  - K1EquippedCoat != K1_BLOODIED_COAT
+  - LÁTKA resolved
+  - PROMĚNA resolved
+  - BOLEST resolved
+  - 'If K1NewspaperRead == true: ÚLEVA resolved FULFILLED and K1InterpretResolved == true'
+  - 'If K1NewspaperRead == false: resolve ÚLEVA = MISSED'
+  if_fail: deny transition and surface debug reason
+  if_pass: K1_TO_S1_TRANSITION
+- id: K1_TO_S1_TRANSITION
+  type: CHAPTER_TRANSITION
+  player_control: false
+  actions:
+  - after Jekyll has left home, Poole notices the physical green residue on the laboratory handle during his routine household round
+  - set K1PooleSawLabHandleGreenResidue = true
+  - Poole wipes the laboratory handle clean before the next manuscript chapter
+  - set K1PooleWipedLabHandleClean = true
+  - persist K1 manuscript state and INC_K1_ROOK
+  - persist inferred Rook style and Newcomen consultation state
+  - persist research tags and optional newspaper/relief/interpretation state
+  - apply canonical chapter-exit decay where globally specified
+  - load S1
+  next: S1
+checkpoints:
+  CP_K1_START:
+    created_at: K1_BOOT
+    restores:
+    - validated S0 AuthorPacket/MotifPacket
+    - K1 rendered configuration
+    - Form=JEKYLL
+    - SerumStock=0
+    - ManuscriptDay=1
+    - TimeOfDay=NIGHT
+    - K1LocalClockMinutes=1260 (21:00)
+    - no K1 brew choice
+    - no K1 motifs resolved yet
+  CP_K1_POST_TRANSFORM:
+    created_at: K1_FIRST_TRANSFORMATION
+    purpose: Retry Hyde street/Rook sequence without replaying the laboratory experiment.
+    restores:
+    - selected brew result
+    - consumed serum
+    - Form=HYDE
+    - ManuscriptDay=1
+    - TimeOfDay=NIGHT
+    - K1LocalClockMinutes at post-transform authored value
+    - current serum toxicity/tolerance/fuel state
+    - LÁTKA resolved
+    - PROMĚNA resolved
+    - Rook encounter not yet committed
+    - K1HydeKnifeHits=0
+  CP_K1_POST_ROOK:
+    created_at: K1_ROOK_FIXED_DEATH
+    purpose: Preserve Rook death/world-memory evidence before overnight transition.
+    restores:
+    - inferred K1RookResolutionStyle and its writes
+    - RookDead=true
+    - LedgerMissing=true
+    - PoliceHeat=25
+    - UnderworldHeat=25
+    - CrowtherPressure=10
+    - INC_K1_ROOK committed
+    - HydeGreenBloodAtScene=true
+    - K1BloodiedCoatExists=true
+    - ManuscriptDay=1
+    - Form=HYDE before overnight reversion resolution
+  CP_K1_DAY2_WAKE:
+    created_at: K1_JEKYLL_WAKE_DAY2
+    purpose: Primary retry point for Day-2 home, coat attention failure, optional newspaper and crime-scene consultation.
+    restores:
+    - Form=JEKYLL
+    - ManuscriptDay=2
+    - TimeOfDay=MORNING
+    - K1LocalClockMinutes=510 (08:30)
+    - K1Day2WakeComplete=true
+    - Jekyll body has no Rook knife wound/scar
+    - K1_BLOODIED_COAT exists with knife tear + green Hyde blood
+    - Rook scene retains green Hyde blood
+    - Poole message not yet resolved
+    - K1EquippedCoat=NONE
+    - K1CoatRiskRecognized=false
+    - K1HomeExitCommitted=false
+    - K1GreenBloodExamined=false
+    - K1HydeBloodSampleCollected=false
+    - K1GangViolenceHypothesisRaised=false
+  CP_K1_PRE_CRIME_SCENE:
+    created_at: K1_CRIME_SCENE_ARRIVAL
+    purpose: Retry Newcomen consultation without replaying transit/newspaper if coat state is already safe.
+    create_only_if: K1EquippedCoat == CLEAN_COAT
+    restores:
+    - K1NewspaperRead/K1ReliefResolved current state
+    - K1EquippedCoat=CLEAN_COAT
+    - K1CrimeSceneConsultationComplete=false
+    - K1GreenBloodExamined=false
+    - K1HydeBloodSampleCollected=false
+    - K1GangViolenceHypothesisRaised=false
+    - current NewcomenSuspicion/Exposure
+  CP_K1_COMPLETE:
+    created_at: K1_EXIT_GATE
+    restores:
+    - all K1 persistent writes
+    - inferred Rook style
+    - Newcomen consultation result
+    - newspaper/relief/interpretation state
+    - research tags
+    - Form=JEKYLL
+    - SerumStock=0
+fail_handling:
+  canonical_hard_fails:
+    FAIL_PLAYER_DEATH: true
+    FAIL_DEFINITIVE_CAPTURE: true
+    FAIL_SERUM_OVERDOSE: true
+  K1_specific_fail_sources:
+    SECOND_ROOK_KNIFE_WOUND: routes to FAIL_PLAYER_DEATH
+    BLOODIED_COAT_AT_ROOK_SCENE: routes to FAIL_DEFINITIVE_CAPTURE after required UI acknowledgment
+  reload_policy: RELOAD_LAST_VALID_AUTHORED_CHECKPOINT
+  routing:
+    serum_overdose_before_first_transform: CP_K1_START
+    second_Rook_knife_wound_or_other_death_during_Rook: CP_K1_POST_TRANSFORM
+    failure_between_Rook_death_and_Day2_wake: CP_K1_POST_ROOK
+    bloodied_coat_capture_at_crime_scene: CP_K1_DAY2_WAKE
+    crime_scene_dialogue_hard_fail_with_clean_coat: CP_K1_PRE_CRIME_SCENE if valid, otherwise CP_K1_DAY2_WAKE
+  rule: Reload reconstructs snapshot state and must not duplicate brew mastery credit, motif resolution, Rook outcome writes,
+    incident creation, day advancement, research awards or optional newspaper legitimacy.
+save_contract:
+  save_at:
+  - CP_K1_START
+  - CP_K1_POST_TRANSFORM
+  - CP_K1_POST_ROOK
+  - CP_K1_DAY2_WAKE
+  - CP_K1_PRE_CRIME_SCENE
+  - CP_K1_COMPLETE
+  minimum_persisted_runtime:
+  - current sequence node
+  - ManuscriptDay
+  - TimeOfDay
+  - K1LocalClockMinutes
+  - K1Day2WakeComplete
+  - AuthorPacket-derived K1 render configuration
+  - selected K1_BREW option/result
+  - SerumStock
+  - SerumTolerance
+  - ActiveToxicLoad
+  - TransformFuel
+  - Form
+  - K1BeggarEncounterResolved
+  - K1RookOpeningResolved
+  - K1CanonicalFirstStabResolved
+  - K1HydeKnifeHits
+  - K1RookResolutionStyle
+  - K1RookPostFightExpressionResolved
+  - Exposure
+  - Integration
+  - HydeDependence
+  - RecentViolence
+  - RecentTransformLoad
+  - SerumInstabilityScar
+  - RookDead
+  - LedgerMissing
+  - PoliceHeat
+  - UnderworldHeat
+  - CrowtherPressure
+  - HydeGreenBloodAtScene
+  - K1BloodiedCoatExists
+  - K1EquippedCoat
+  - K1CoatRiskRecognized
+  - K1AuthorLapseCoatAcknowledged
+  - INC_K1_ROOK
+  - motif realization states
+  - K1PooleMessageReceived
+  - K1HomeExplorationCount
+  - K1HomeLeavePressure
+  - K1NewspaperRead
+  - K1ReliefResolved
+  - K1InterpretResolved
+  - K1HomeExitCommitted
+  - K1GreenBloodExamined
+  - K1HydeBloodSampleCollected
+  - K1GangViolenceHypothesisRaised
+  - K1CrimeSceneConsultationComplete
+  - knowledge legitimacy state
+  - research tags
+  - K1_BrewObservation
+  - K1PreExperimentJournalOpened
+  - K1BrewObservationRecorded
+  - ResearchJournalIntroduced
+  - last valid checkpoint id
+  - K1SelectedRookOpening
+  - K1SelectedRookPostFightExpression
+  - K1SelectedInterpretation
+  idempotency: true
+  implementation_status: DESIGN_CONTRACT_ONLY_CPP_SAVE_IMPLEMENTATION_DEFERRED
+presentation_hooks:
+  principle: Presentation reacts to state; it must not create new story topology or rewrite physical evidence.
+  manuscript_time:
+  - Day 1 laboratory/street/alley remains nocturnal.
+  - Day 2 begins at 08:30 authored morning conditions while retaining AuthorWeather influence.
+  - House clocks/windows/transitions may communicate K1LocalClockMinutes; permanent clock HUD is optional.
+  - At 10:15 Poole reminder and at 10:30 leave pressure communicate authored time without a real-time countdown.
+  first_experiment:
+  - Potency/Purity may subtly influence serum appearance/handling without exposing raw stats before unlock.
+  - Risky procedure must be described as an untested compound/additive, not CATALYST, to avoid collision with the base reagent
+    category.
+  transformation:
+  - communicate pain, bodily discontinuity and form change
+  - Distortion may alter intensity/style
+  - must remain readable enough to teach the first transformation
+  Hyde:
+  - movement responsiveness and heavy physicality
+  - camera/body language
+  - impact feedback
+  - form-specific constrained near-monochrome/duotone perception layer
+  - authored RED semantic accents for violence/blood/immediate physical threat
+  - authored GOLD accents for selected instinct-relevant objects/targets/cues
+  - accent colors never auto-mark every interactable
+  - Stevenson-derived weather/distortion remains visible beneath Hyde perception
+  Rook:
+  - live approach is not a cinematic; choice UI overlays gameplay
+  - canonical first stab must read as Rook technique overcoming Hyde inexperience, not as Hyde being physically weak
+  - green Hyde blood is clearly unnatural
+  - no visible health bars
+  - second penetrating knife hit must read as lethal danger
+  - threat-active and threat-ended states must be visually distinct
+  - fixed death beat must be separated from the moment Rook stops being a threat
+  Day2_body:
+  - Jekyll may instinctively touch/check the remembered wound area
+  - 'skin is intact: no wound, no scar'
+  - contrast with damaged/bloodied coat is a core observation
+  coat_clue:
+  - 'RICH: knife tear and green stain are directly readable in close wardrobe presentation'
+  - 'THIN: mirror interaction is the authored reveal route'
+  - 'FRAGMENTARY: mirror remains the minimum fair reveal route'
+  - IMPAIRED cognition removes automatic Jekyll warning; the existing author-state debuff remains visible
+  - no special glow/quest marker identifies the coat as evidence
+  author_lapse_fail:
+  - when Newcomen interaction begins in the bloodied coat, normal dialogue is interrupted
+  - if the danger was never recognized, pulse the existing author cognition/debuff indicator
+  - show blocking acknowledgment UI; player must click it before arrest sequence continues
+  - the notice explains that Stevenson/Jekyll overlooked an obvious incriminating detail; exact final copy TBD
+  newspaper_relief:
+  - newspaper is optional and not objective-marked
+  - if read, relief registers before any interpretation choice
+  - if skipped, no substitute beat forces ÚLEVA
+  research_journal:
+  - pre-experiment journal reading is optional and consumes no manuscript time
+  - Day-2 observations and canonical research tags resolve automatically at K1_RESEARCH_AUTO_UPDATE_DAY2
+  - journal records brew method, first transformation, knife wound as Hyde and no matching Jekyll wound/scar
+  - Research Journal and Research UI are accessed voluntarily through the game menu while Jekyll is playable
+  - no sitting, physical journal interaction, manual writing or forced UI opening is required
+  Jekyll_visual_rule: No K1-specific palette override. Use normal authored manuscript scene rendering.
+cinematic_contract:
+  CINE_K1_ARRIVAL:
+    final_shots: TBD
+  CINE_K1_FIRST_TRANSFORMATION:
+    final_shots: TBD
+    must:
+    - preserve state writes even if skipped
+    - end in playable Hyde
+  K1_ROOK_LIVE_APPROACH:
+    cinematic: false
+    rule: No camera takeover. Rook walks into the player-controlled scene and live choices appear while time/tension continues.
+  K1_ROOK_CANONICAL_FIRST_STAB:
+    cinematic: false
+    rule: Authored live opener. Branch-specific movement may use short non-locking animation alignment but cannot become a
+      full cutscene.
+  CINE_K1_ROOK_DEATH:
+    final_shots: TBD
+    must:
+    - occur after immediate threat ended
+    - set RookDead exactly once
+  CINE_K1_OVERNIGHT_FADE:
+    final_shots: TBD
+    must:
+    - fade after Rook aftermath
+    - resolve reversion without labeling it a blackout
+    - preserve external evidence
+  CINE_K1_DAY2_WAKE:
+    final_shots: TBD
+    must:
+    - Poole knock/wake
+    - show or permit immediate checking of intact body
+    - hand control back in Jekyll bedroom
+  CINE_K1_TO_S1:
+    final_shots: TBD
+  skip_policy: Skipping presentation may never skip state writes, evidence persistence, motif resolution, research awards
+    or day advancement.
+audio_contract:
+  final_assets: TBD
+  required_events:
+  - K1_MANUSCRIPT_ARRIVAL
+  - K1_LAB_AMBIENCE
+  - K1_SERUM_PREPARED
+  - K1_SERUM_CONSUMED
+  - K1_TRANSFORMATION
+  - K1_HYDE_HANDOFF
+  - K1_NIGHT_STREET
+  - K1_BEGGAR_CHOICE
+  - K1_ROOK_APPROACH
+  - K1_ROOK_FIRST_STAB
+  - K1_HYDE_GREEN_BLOOD_REACTION
+  - K1_ROOK_COMBAT
+  - K1_ROOK_THREAT_END
+  - K1_ROOK_POST_FIGHT
+  - K1_ROOK_DEATH
+  - K1_OVERNIGHT_FADE
+  - K1_POOLE_KNOCK
+  - K1_DAY2_HOME
+  - K1_MIRROR_DISCOVERY
+  - K1_AUTHOR_LAPSE_NOTICE
+  - K1_NEWSPAPER
+  - K1_RELIEF
+  - K1_NEWCOMEN_CRIME_SCENE
+  - K1_RESEARCH_JOURNAL_OPEN
+  - K1_RESEARCH_ENTRY_WRITE
+  - K1_RESEARCH_UI_REVEAL
+  - K1_TO_S1
+UI_placeholders:
+  final_UI_design: TBD; functional author-state/debuff feedback is required, visual style is not.
+  widgets:
+    WBP_InteractionPrompt: contextual interaction
+    WBP_ObjectiveText: objective display
+    WBP_BrewChoice: player-facing experimental procedures only; never PRECISE / FAST / RISKY labels
+    WBP_HydeTutorial: minimal first-Hyde control hints
+    WBP_DialogueChoice: contextual Rook/Newcomen/Jekyll choices; no CONTROLLED/CHAOTIC/BRUTAL labels
+    WBP_NewspaperPlaceholder: optional readable newspaper presentation
+    WBP_MotifDebugOrPlaceholder: motif realization feedback
+    WBP_DebugStoryOverlay: developer state inspection
+    WBP_ResearchJournal: diegetic journal pages, hypotheses and observations
+    WBP_ResearchProgress: Research progress displayed when the player voluntarily opens the Research Journal; opening grants no tags or progress
+    WBP_HydePerceptionDebug: debug-only display of active Hyde visual-language state and semantic accent tags; not a shipping
+      HUD requirement
+    WBP_AuthorStateIndicator: existing AuthorPacket/cognition state indicator; impaired state is visibly present during Day-2
+      play
+    WBP_AuthorLapseNotice: blocking acknowledgment notice shown only when a missed author-state attention failure becomes
+      consequential
+    WBP_RookLiveChoice: timed live choice overlay that does not take control away from movement/look
+    WBP_CombatCondition: NO HEALTH BAR; placeholder only if needed for debug, not shipping
+debug:
+  overlay_fields:
+  - current sequence node
+  - current objective
+  - ManuscriptDay
+  - TimeOfDay
+  - K1LocalClockMinutes
+  - K1Day2WakeComplete
+  - CognitiveImprint
+  - CognitionBand
+  - JekyllCognitionMod
+  - ConditionImprint
+  - BleedImprint
+  - ChemicalImprint
+  - ManuscriptFidelity
+  - ManuscriptDistortion
+  - ManuscriptOverdrive
+  - AuthorWeather channels
+  - Form
+  - TransformWindow
+  - SerumStock
+  - active serum Potency
+  - active serum Purity
+  - ActiveToxicLoad
+  - SerumTolerance
+  - TransformFuel
+  - Exposure
+  - Integration
+  - HydeDependence
+  - RecentViolence
+  - RecentTransformLoad
+  - SerumInstabilityScar
+  - selected K1_BREW
+  - K1BeggarEncounterResolved
+  - selected Rook opening
+  - K1CanonicalFirstStabResolved
+  - K1HydeKnifeHits
+  - K1RookResolutionStyle
+  - selected Rook post-fight expression
+  - RookDead
+  - LedgerMissing
+  - HydeGreenBloodAtScene
+  - K1BloodiedCoatExists
+  - K1EquippedCoat
+  - K1CoatRiskRecognized
+  - K1AuthorLapseCoatAcknowledged
+  - K1HomeExplorationCount
+  - K1HomeLeavePressure
+  - K1LabDoorInspected
+  - K1LabHandleGreenResidueNoticed
+  - K1PooleSawLabHandleGreenResidue
+  - K1PooleWipedLabHandleClean
+  - K1LucidMirrorThoughtPlayed
+  - K1Washed
+  - PoliceHeat
+  - UnderworldHeat
+  - CrowtherPressure
+  - INC_K1_ROOK exists
+  - motif states
+  - K1NewspaperRead
+  - K1ReliefResolved
+  - K1InterpretResolved
+  - K1CrimeSceneConsultationComplete
+  - research tags
+  - current checkpoint
+  - K1_BrewObservation
+  - K1BrewObservationRecorded
+  - ResearchJournalIntroduced
+  - HydeVisualLanguageActive
+  debug_actions:
+  - force_K1_PRECISE_STRONG
+  - force_K1_PRECISE_COSTLY
+  - force_K1_FAST
+  - force_K1_RISKY
+  - jump_to_first_transformation
+  - jump_to_beggar
+  - jump_to_Rook_live_approach
+  - force_Rook_open_ROAR
+  - force_Rook_open_SPEAK
+  - force_Rook_open_ATTACK
+  - force_Rook_canonical_first_stab
+  - force_Rook_second_stab_death
+  - force_K1_CONTROLLED
+  - force_K1_CHAOTIC
+  - force_K1_BRUTAL
+  - force_Rook_threat_ended
+  - force_Rook_after_SILENCE
+  - force_Rook_after_ROAR
+  - force_Rook_after_SPEAK
+  - force_Rook_fixed_death
+  - jump_to_overnight_fade
+  - jump_to_K1_DAY2_WAKE
+  - force_CognitionBand_LUCID
+  - force_CognitionBand_STRAINED
+  - force_CognitionBand_IMPAIRED
+  - force_Fidelity_RICH
+  - force_Fidelity_THIN
+  - force_Fidelity_FRAGMENTARY
+  - equip_K1_BLOODIED_COAT
+  - equip_CLEAN_COAT
+  - force_coat_recognized
+  - reset_coat_recognized
+  - jump_to_hallway_mirror
+  - jump_to_basement_lab_door
+  - force_lab_handle_green_residue_noticed
+  - force_K1Washed
+  - force_K1LocalClock_1015
+  - force_K1LocalClock_1030
+  - force_newspaper_read
+  - skip_newspaper
+  - jump_to_crime_scene
+  - trigger_author_lapse_coat_fail
+  - jump_to_Newcomen_dialogue
+  - force_K1_SCENE_CAUTIOUS_MEDICAL
+  - force_K1_SCENE_CHEMISTRY
+  - force_K1_SCENE_TOO_PRECISE
+  - force_K1_SCENE_REASON
+  - force_K1_SCENE_SOCIAL
+  - force_K1_SCENE_LIE
+  - force_K1_SCENE_EXACT
+  - force_RESPONSIBILITY
+  - force_RATIONALIZE
+  - force_SUPPRESS
+  - print_incident_INC_K1_ROOK
+  - print_research_state
+  - print_author_packet_state
+  - reload_CP_K1_START
+  - reload_CP_K1_POST_TRANSFORM
+  - reload_CP_K1_POST_ROOK
+  - reload_CP_K1_DAY2_WAKE
+  - reload_CP_K1_PRE_CRIME_SCENE
+  - toggle_Hyde_visual_language_debug
+  - highlight_HYDE_ACCENT_RED_tags
+  - highlight_HYDE_ACCENT_GOLD_tags
+  logging_categories:
+  - StoryFlow
+  - ManuscriptTime
+  - AuthoredClock
+  - AuthorPacket
+  - ManuscriptRender
+  - Serum
+  - Transformation
+  - HydeDependence
+  - Combat
+  - CombatTelemetry
+  - Encounter
+  - WorldMemory
+  - KnowledgeLegitimacy
+  - Newspaper
+  - Motif
+  - Research
+  - Checkpoint
+  - ResearchJournal
+  - JournalUI
+  - FormVisualLanguage
+  - AuthorStateUI
+  - WardrobeK1
+  - RouteCheck
+  - HomeExplorationK1
+greybox_build_spec:
+  must_exist:
+  - professional laboratory shell
+  - experiment bench and serum interaction
+  - transformation safe volume
+  - service exit + compact Hyde street block
+  - beggar live-choice anchor
+  - one optional destructible street object
+  - dark alley/Rook combat space
+  - Rook knife actor/weapon
+  - green Hyde blood evidence placeholder on scene/knife/coat
+  - Rook threat-ended staging anchor
+  - fixed Rook death anchor
+  - overnight fade/stream transition hook
+  - Jekyll bedroom Day-2 wake
+  - compact Day-2 salon + entry hall route
+  - basement-laboratory door interaction anchor
+  - bathroom-door abstract wash interaction anchor
+  - Poole door/knock/message anchor
+  - Jekyll home shell with wardrobe, hallway mirror, study/journal and front exit
+  - K1_BLOODIED_COAT and CLEAN_COAT interaction states
+  - authored home clock/time-pressure hooks
+  - short Day-2 London street route
+  - optional newspaper interaction
+  - Rook crime-scene shell
+  - Newcomen dialogue/inspection anchor
+  - author-lapse blocking UI placeholder
+  - Research Journal interaction and Research UI placeholder
+  - combat collision/NavMesh/checkpoint hooks
+  - placeholder Hyde grading state
+  - at least one HYDE_ACCENT_RED and one HYDE_ACCENT_GOLD test actor
+  may_be_primitive_meshes:
+  - lab furniture
+  - chemical props
+  - street/yard shell
+  - beggar proxy
+  - postbox proxy
+  - Rook proxy
+  - knife proxy
+  - Jekyll home furniture
+  - mirror
+  - wardrobe
+  - coat props
+  - newspaper vendor/stand
+  - Rook corpse proxy
+  - Newcomen proxy
+  no_art_blockers:
+  - final Victorian assets
+  - final Hyde model
+  - final Rook model
+  - final Newcomen/Poole models
+  - final transformation VFX
+  - final green blood material
+  - final newspaper art
+  - final home art
+  - final lighting/weather/sound/music
+  - final journal prop/pages/UI
+  - final Hyde post-process material
+  - final semantic accent material/VFX
+  success_definition: A developer can enter K1 from the S0 packet, prepare and deliberately drink the first serum, transform
+    to Hyde, play the street/beggar beat, enter a live non-cutscene Rook approach, resolve one of the timed opening reactions
+    into the canonical first stab, fight Rook systemically without health bars, die on a second clean penetrating knife hit,
+    infer a Rook combat style, finish the fixed post-threat death, fade to Day 2, wake as unscarred Jekyll, explore the home
+    under authored time pressure, discover or miss the bloodied-coat risk according to AuthorPacket manifestation, optionally
+    read the newspaper, hard-fail on bringing the bloodied coat to the matching green-blood crime scene, or safely complete
+    the initial Newcomen consultation in a clean coat and exit K1 without duplicate state writes.
+edge_cases:
+- id: EC_K1_001
+  case: Opening or reading the pre-experiment journal never advances manuscript time or grants ResearchProgress, including on repeated access.
+- id: EC_K1_002
+  case: Player idles in laboratory/street/house; manuscript clock does not advance.
+- id: EC_K1_003
+  case: Player selects FAST/RISKY/PRECISE then reloads; committed method and authored time restore from checkpoint without
+    duplicate mastery credit.
+- id: EC_K1_004
+  case: Serum overdose occurs before transformation; reload routes to CP_K1_START.
+- id: EC_K1_005
+  case: NO_TIMER accessibility is active during beggar choice; timeout violence is disabled.
+- id: EC_K1_006
+  case: Player never interacts with optional postbox; Rook sequence remains reachable.
+- id: EC_K1_007
+  case: Player destroys postbox; no global destruction stat or new branch is invented.
+- id: EC_K1_008
+  case: Rook live-choice timer expires; ATTACK is selected automatically unless NO_TIMER is active.
+- id: EC_K1_009
+  case: Player attempts to walk away during Rook live approach; encounter geometry/actor behavior keeps the conflict live
+    without cinematic lock.
+- id: EC_K1_010
+  case: ROAR/SPEAK/ATTACK opening variants all converge to the canonical first stab.
+- id: EC_K1_011
+  case: Canonical first stab cannot kill Hyde and cannot be parried away.
+- id: EC_K1_012
+  case: After the canonical first stab, a second clean penetrating knife hit kills Hyde and reloads CP_K1_POST_TRANSFORM.
+- id: EC_K1_013
+  case: Nonpenetrating Rook impacts do not increment K1HydeKnifeHits.
+- id: EC_K1_014
+  case: No visible health bar is required for either Hyde or Rook; debug may still expose hidden condition state.
+- id: EC_K1_015
+  case: Rook becomes incapacitated but knife remains within reach; THREAT_ENDED cannot commit until attack capability is truly
+    gone.
+- id: EC_K1_016
+  case: Player continues striking during a near-loss state; telemetry may push style toward BRUTAL but fixed death still waits
+    for explicit THREAT_ENDED.
+- id: EC_K1_017
+  case: Post-fight expression timer expires; SILENCE resolves by default.
+- id: EC_K1_018
+  case: Post-fight ROAR increases authored noise/witness hook but does not revive Rook or create a new combat phase.
+- id: EC_K1_019
+  case: Rook fixed-death presentation is skipped; RookDead/LedgerMissing/world-memory writes still occur once.
+- id: EC_K1_020
+  case: Reload at CP_K1_POST_ROOK preserves green blood and bloodied coat evidence.
+- id: EC_K1_021
+  case: Overnight fade is skipped; non-magical reversion and Day-2 state still resolve correctly.
+- id: EC_K1_022
+  case: Day-2 wake reload cannot increment ManuscriptDay a second time.
+- id: EC_K1_023
+  case: Jekyll body check occurs after wake and always finds no wound/scar from the canonical first stab.
+- id: EC_K1_024
+  case: External green blood and coat damage are not removed by reversion.
+- id: EC_K1_025
+  case: Player equips CLEAN_COAT without ever recognizing the bloodied coat; this is safe and does not require recognition.
+- id: EC_K1_026
+  case: Player recognizes bloodied coat then deliberately equips it; author-lapse blame is suppressed, but crime-scene capture
+    still occurs.
+- id: EC_K1_027
+  case: 'RICH + LUCID: Jekyll may automatically comment on coat evidence when it is presented.'
+- id: EC_K1_028
+  case: 'RICH + IMPAIRED: evidence remains visually readable to the player but Jekyll gives no automatic warning.'
+- id: EC_K1_029
+  case: 'THIN: wardrobe does not foreground green stain; hallway mirror reveals it.'
+- id: EC_K1_030
+  case: 'FRAGMENTARY: minimum fair mirror reveal route remains available despite reduced optional detail.'
+- id: EC_K1_031
+  case: OVERWRITTEN adds competing house noise/detail but cannot remove mirror/wardrobe or change coat evidence.
+- id: EC_K1_032
+  case: Player reaches 10:30 without ever opening the Research Journal; Day-2 research has already resolved automatically after body observation, and journal access does not block leaving.
+- id: EC_K1_033
+  case: Player reaches 10:30 wearing bloodied coat; wardrobe/mirror remain usable so the game does not force an unavoidable
+    capture.
+- id: EC_K1_034
+  case: Player leaves home before 10:15 after completing required state; no artificial waiting is required.
+- id: EC_K1_035
+  case: Player skips newspaper; K1 continues, ÚLEVA resolves MISSED at exit, and interpretation is not required.
+- id: EC_K1_036
+  case: Player reads newspaper; PUBLIC facts are legitimized, relief triggers, and interpretation becomes required before
+    exit.
+- id: EC_K1_037
+  case: Player reads newspaper while wearing bloodied coat; relief can resolve before later crime-scene capture.
+- id: EC_K1_038
+  case: Bloodied-coat crime-scene fail begins before substantive Newcomen dialogue.
+- id: EC_K1_039
+  case: If coat risk was not recognized, author-state/debuff indicator pulses and acknowledgment UI must be clicked before
+    arrest.
+- id: EC_K1_040
+  case: If coat risk was recognized, the game does not falsely claim Stevenson forgot; capture still proceeds.
+- id: EC_K1_041
+  case: Player dismisses/tries to skip author-lapse UI; capture sequence cannot continue until the required acknowledgment
+    state is recorded.
+- id: EC_K1_042
+  case: Clean-coat player uses Hyde-only knowledge in Newcomen dialogue; KnowledgeLegitimacySystem applies TOO_PRECISE consequence
+    rather than coat fail.
+- id: EC_K1_043
+  case: Newcomen dialogue is reloaded from CP_K1_PRE_CRIME_SCENE; newspaper legitimacy and current suspicion restore exactly
+    once.
+- id: EC_K1_044
+  case: Green Hyde blood remains physically green and is not automatically recolored by HYDE_ACCENT_RED during Hyde POV.
+- id: EC_K1_045
+  case: 'Colorblind accessibility: green-blood clue remains supported by knife tear, unusual material/context and dialogue;
+    hue alone is not mandatory.'
+- id: EC_K1_046
+  case: Player discovers the bloodied coat in the hallway mirror at or after 10:30; leave pressure remains active but wardrobe
+    stays usable and the player can still equip CLEAN_COAT before committing the front door.
+- id: EC_K1_047
+  case: Late mirror recognition does not auto-equip CLEAN_COAT and does not add a safety confirmation; knowingly leaving in the
+    bloodied coat remains possible.
+- id: EC_K1_048
+  case: K1HomeExitCommitted remains false until the front-door transition is accepted; authored time pressure never commits it automatically.
+- id: EC_K1_049
+  case: Clean-coat Newcomen dialogue uses the same base rounds whether or not newspaper was read; newspaper adds only the
+    K1_SCENE_GANG_VIOLENCE option.
+- id: EC_K1_050
+  case: K1ReliefResolved changes Jekyll performance tone to STEADIER without spawning a separate dialogue tree.
+- id: EC_K1_051
+  case: Player skipped newspaper; gang-violence response is unavailable and Jekyll cannot cite Rook's criminal reputation as
+    legitimate knowledge.
+- id: EC_K1_052
+  case: Player reads newspaper; gang-violence response is available as a hypothesis and does not become a confirmed solution.
+- id: EC_K1_053
+  case: Player collects HYDE_BLOOD_SAMPLE; collection occurs once and the sample persists without duplicate gain on reload.
+- id: EC_K1_054
+  case: Player declines HYDE_BLOOD_SAMPLE; K1 remains completable and later suppressor progression must provide an authored
+    reacquisition route before the sample becomes mandatory.
+- id: EC_K1_055
+  case: K1 never reveals HYDE_BLOOD_SAMPLE + CATALYST -> STABILIZER through blind crafting; the recipe remains a later authored
+    research unlock.
+- id: EC_K1_056
+  case: Hallway mirror remains interactable in RICH, THIN and FRAGMENTARY Fidelity; Fidelity changes clue salience rather than removing the mirror interaction.
+- id: EC_K1_057
+  case: FRAGMENTARY lab-door interaction is labeled only DVEŘE; THIN/RICH identify it as DVEŘE DO LABORATOŘE without opening the basement.
+- id: EC_K1_058
+  case: CognitionBand=LUCID may manifest green residue on the laboratory-door handle, but noticing it creates no objective and no automatic deduction.
+- id: EC_K1_059
+  case: FRAGMENTARY bathroom wash consumes authored time and sets K1Washed once; repeated interaction cannot farm ContextMod or time writes.
+- id: EC_K1_060
+  case: Washing Jekyll while wearing K1_BLOODIED_COAT does not clean the coat and therefore does not prevent the crime-scene capture consequence.
+- id: EC_K1_061
+  case: K1Washed contributes only to applicable Society-relevant global route_check ContextMod and never changes Society rank or Chemistry/Reason checks.
+- id: EC_K1_062
+  case: At 10:30 the optional bathroom wash is suppressed, but wardrobe/mirror/research remain available for fair coat correction.
+acceptance_tests:
+- id: AT_K1_001
+  test: K1 parses/boots with a valid S0 AuthorPacket and MotifPacket.
+- id: AT_K1_002
+  test: K1 begins on ManuscriptDay 1, NIGHT, at 21:00 in the PROFESSIONAL laboratory.
+- id: AT_K1_003
+  test: Jekyll starts with SerumStock=0 and Form=JEKYLL.
+- id: AT_K1_004
+  test: Optional pre-experiment journal can be ignored without softlock.
+- id: AT_K1_005
+  test: Optional pre-experiment journal reading consumes zero manuscript time on every access.
+- id: AT_K1_006
+  test: Normal UI never displays PRECISE / FAST / RISKY internal labels.
+- id: AT_K1_007
+  test: K1_RISKY player-facing text uses an untested compound/additive, not CATALYST.
+- id: AT_K1_008
+  test: PRECISE / FAST / RISKY preparation advances authored clock +20 / +8 / +12 minutes respectively.
+- id: AT_K1_009
+  test: Exact Potency/Purity remain hidden from normal K1 UI before the relevant research unlock.
+- id: AT_K1_010
+  test: Serum preparation creates exactly one immediately usable first-experiment dose.
+- id: AT_K1_011
+  test: Player must deliberately drink the prepared serum; no auto-consumption occurs.
+- id: AT_K1_012
+  test: Serum commit can be canceled before the commit marker and not after it.
+- id: AT_K1_013
+  test: First transformation produces Form=HYDE without blackout.
+- id: AT_K1_014
+  test: Hyde visual-language layer activates after Form becomes HYDE.
+- id: AT_K1_015
+  test: LÁTKA and PROMĚNA resolve through the first serum use/transformation.
+- id: AT_K1_016
+  test: Hyde exits through a compact authored night-street route, not open-world London.
+- id: AT_K1_017
+  test: Beggar encounter presents a live timed choice without entering a cutscene.
+- id: AT_K1_018
+  test: Beggar timeout resolves to impulsive violence in normal timer mode.
+- id: AT_K1_019
+  test: NO_TIMER accessibility prevents automatic beggar timeout resolution.
+- id: AT_K1_020
+  test: Optional property destruction is a single destroy interaction and is not required.
+- id: AT_K1_021
+  test: Hyde is routed naturally toward the dark alley without explanatory voiceover.
+- id: AT_K1_022
+  test: Rook approach is live gameplay with movement/look retained.
+- id: AT_K1_023
+  test: Rook provisional approach establishes 'Hej / S tebou mluvím / Tady nemáš co dělat' intent.
+- id: AT_K1_024
+  test: Rook opening offers ROAR / SPEAK / ATTACK player-facing reactions.
+- id: AT_K1_025
+  test: Rook opening timeout resolves to ATTACK unless NO_TIMER is active.
+- id: AT_K1_026
+  test: ROAR, SPEAK and ATTACK opening branches all converge to K1_ROOK_CANONICAL_FIRST_STAB.
+- id: AT_K1_027
+  test: Canonical first stab is nonfatal, unavoidable and occurs in live gameplay rather than a full cutscene.
+- id: AT_K1_028
+  test: Canonical first stab sets K1HydeKnifeHits=1.
+- id: AT_K1_029
+  test: Canonical first stab creates visible green Hyde blood at the scene and on the previous-night coat.
+- id: AT_K1_030
+  test: Rook reacts to the abnormal blood and Hyde remains combat-capable.
+- id: AT_K1_031
+  test: Rook combat uses systemic AI rather than a fixed QTE sequence.
+- id: AT_K1_032
+  test: Rook uses knife distance, feints/counters and can punish Hyde's heavy recovery.
+- id: AT_K1_033
+  test: Hyde can strike, heavy strike, dodge, parry/deflect, grab, shove and use environmental impacts through the combat
+    system.
+- id: AT_K1_034
+  test: Neither Hyde nor Rook requires a visible health bar.
+- id: AT_K1_035
+  test: A second clean penetrating Rook knife hit triggers FAIL_PLAYER_DEATH.
+- id: AT_K1_036
+  test: Death from second Rook stab reloads CP_K1_POST_TRANSFORM.
+- id: AT_K1_037
+  test: Nonpenetrating impacts do not increment the K1 knife-hit counter.
+- id: AT_K1_038
+  test: CONTROLLED / CHAOTIC / BRUTAL are inferred from combat telemetry and never shown as player-facing fight choices.
+- id: AT_K1_039
+  test: Inferred combat style applies the corresponding canonical K1 consequence writes through proper resolvers.
+- id: AT_K1_040
+  test: Rook threat end cannot commit while Rook can still attack or reach the knife.
+- id: AT_K1_041
+  test: K1ImmediateThreatEnded becomes true before RookDead.
+- id: AT_K1_042
+  test: Post-fight expression offers SILENCE / ROAR / SPEAK and does not revive combat.
+- id: AT_K1_043
+  test: Post-fight choice timeout defaults to SILENCE.
+- id: AT_K1_044
+  test: Rook fixed death occurs only after threat end and post-fight expression resolution.
+- id: AT_K1_045
+  test: RookDead, LedgerMissing, PoliceHeat=25, UnderworldHeat=25 and CrowtherPressure=10 commit exactly once.
+- id: AT_K1_046
+  test: INC_K1_ROOK records green Hyde blood as fixed physical evidence.
+- id: AT_K1_047
+  test: Skipping the Rook death presentation cannot skip state writes.
+- id: AT_K1_048
+  test: K1 fades to black after the Rook aftermath instead of requiring a playable escape route.
+- id: AT_K1_049
+  test: Overnight transition is a narrative ellipsis and never sets first-transformation blackout.
+- id: AT_K1_050
+  test: Overnight transition resolves Form back to JEKYLL non-magically before Day-2 wake.
+- id: AT_K1_051
+  test: Day-2 wake advances ManuscriptDay to 2 exactly once and sets 08:30 MORNING.
+- id: AT_K1_052
+  test: Jekyll wakes with no wound and no scar from the canonical Rook stab.
+- id: AT_K1_053
+  test: External green blood and the damaged previous-night coat persist into Day 2.
+- id: AT_K1_054
+  test: Poole wakes Jekyll and reports a police messenger/constable acting for Inspector Newcomen.
+- id: AT_K1_055
+  test: Poole message does not require a telephone.
+- id: AT_K1_056
+  test: Day-2 home becomes explorable after Poole/body-observation beats.
+- id: AT_K1_057
+  test: Authored house interactions advance local time; idle time does not.
+- id: AT_K1_058
+  test: At 10:15 authored time Poole can issue a reminder if Jekyll is still home.
+- id: AT_K1_059
+  test: At 10:30 authored time nonessential home prompts are suppressed and leaving is foregrounded.
+- id: AT_K1_060
+  test: Essential wardrobe/mirror interactions and optional menu access to the Research Journal remain available after 10:30.
+- id: AT_K1_061
+  test: Completing the Day-2 body observation automatically records brew method, transformation, the Hyde knife wound and absence of Jekyll scar without opening the journal.
+- id: AT_K1_062
+  test: K1_RESEARCH_AUTO_UPDATE_DAY2 grants RD_BASE_TRANSFORMATION and RD_POST_TRANSFORM_PHYSIOLOGY exactly once without player input or manuscript time cost.
+- id: AT_K1_063
+  test: Research Journal access is available from K1_PLAYER_HANDOFF_JEKYLL; opening, closing or reloading cannot duplicate research tags or progress, and the Day-2 update never forces the UI open.
+- id: AT_K1_064
+  test: Wardrobe offers CLEAN_COAT and K1_BLOODIED_COAT without creating a general wardrobe system.
+- id: AT_K1_065
+  test: K1_BLOODIED_COAT contains a knife tear and dried green Hyde blood.
+- id: AT_K1_066
+  test: RICH Fidelity makes coat damage/blood directly readable in close wardrobe presentation.
+- id: AT_K1_067
+  test: THIN Fidelity does not foreground the blood during ordinary dressing; hallway mirror reveals it.
+- id: AT_K1_068
+  test: FRAGMENTARY Fidelity retains the hallway mirror as a minimum fair discovery route.
+- id: AT_K1_069
+  test: LUCID cognition can cause Jekyll to comment when the relevant evidence is manifested.
+- id: AT_K1_070
+  test: STRAINED cognition requires player observation/inspection rather than guaranteed automatic warning.
+- id: AT_K1_071
+  test: IMPAIRED cognition gives no automatic warning and keeps the existing cognition/debuff indicator visible.
+- id: AT_K1_072
+  test: Overdrive/Distortion cannot erase the coat evidence or disable mirror/wardrobe.
+- id: AT_K1_073
+  test: Recognizing the coat risk sets K1CoatRiskRecognized=true but does not force a clean coat.
+- id: AT_K1_074
+  test: Player can safely leave home wearing CLEAN_COAT even if the bloodied coat was never recognized.
+- id: AT_K1_075
+  test: Player may intentionally leave wearing K1_BLOODIED_COAT.
+- id: AT_K1_076
+  test: Newspaper is optional and is not required by the main objective.
+- id: AT_K1_077
+  test: Reading newspaper legitimizes PUBLIC Rook reputation facts.
+- id: AT_K1_078
+  test: Reading newspaper triggers involuntary relief and resolves ÚLEVA=FULFILLED.
+- id: AT_K1_079
+  test: Skipping newspaper does not trigger relief and resolves ÚLEVA=MISSED at K1 exit.
+- id: AT_K1_080
+  test: Skipping ÚLEVA does not block successful K1 completion.
+- id: AT_K1_081
+  test: If relief occurs, RESPONSIBILITY / RATIONALIZE / SUPPRESS interpretation is required before K1 exit.
+- id: AT_K1_082
+  test: If relief never occurs, interpretation UI is not shown and is not required.
+- id: AT_K1_083
+  test: Crime scene contains Rook knife, Rook blood, green Hyde blood and style-dependent fight traces.
+- id: AT_K1_084
+  test: Beginning INT_K1_NEWCOMEN while wearing K1_BLOODIED_COAT aborts normal consultation; merely entering the crime-scene
+    zone does not.
+- id: AT_K1_085
+  test: Bloodied-coat fail does not allow Society/Reason/Chemistry dialogue to explain away the direct evidence match.
+- id: AT_K1_086
+  test: If coat risk was never recognized and an eligible negative AuthorPacket state is active, the already-visible relevant
+    author-state/debuff indicator pulses before arrest.
+- id: AT_K1_087
+  test: Author-lapse notice requires a player acknowledgment click before capture sequence continues.
+- id: AT_K1_088
+  test: Author-lapse notice uses existing AuthorPacket/Cognition state and creates no new gameplay stat.
+- id: AT_K1_089
+  test: If the player had recognized the coat risk, or no eligible negative AuthorPacket state is active, the UI does not
+    falsely claim Stevenson forgot.
+- id: AT_K1_090
+  test: Bloodied-coat crime-scene fail triggers FAIL_DEFINITIVE_CAPTURE and reloads CP_K1_DAY2_WAKE.
+- id: AT_K1_091
+  test: Clean-coat arrival creates CP_K1_PRE_CRIME_SCENE and proceeds to Newcomen dialogue.
+- id: AT_K1_092
+  test: Newcomen dialogue reads Reason, Society, Chemistry, Cognition and KnowledgeLegitimacy only where declared.
+- id: AT_K1_093
+  test: Unsupported Hyde-only knowledge routes through knowledge_legitimacy.TOO_PRECISE.
+- id: AT_K1_094
+  test: Newcomen consultation reads inferred combat-style scene evidence without knowing the hidden style label.
+- id: AT_K1_095
+  test: Successful Newcomen consultation sets K1CrimeSceneConsultationComplete=true.
+- id: AT_K1_096
+  test: Successful K1 exits with Form=JEKYLL and SerumStock=0.
+- id: AT_K1_097
+  test: K1 exit requires RookDead, LedgerMissing, research commit and crime-scene consultation.
+- id: AT_K1_098
+  test: K1 exit does not require ÚLEVA if newspaper was skipped.
+- id: AT_K1_099
+  test: Reloading any checkpoint does not duplicate incident, day advancement, research, motif or interpretation writes.
+- id: AT_K1_100
+  test: Green Hyde blood remains physically green and is not automatically converted to HYDE_ACCENT_RED.
+- id: AT_K1_101
+  test: Mandatory recognition/consequence information does not rely on green hue alone.
+- id: AT_K1_102
+  test: Jekyll receives no K1-specific palette override.
+- id: AT_K1_103
+  test: Hyde RED/GOLD semantic accents remain authored-tag-only and do not create interactions.
+- id: AT_K1_104
+  test: Standing idle, pausing, opening menus and reloading never advance K1LocalClockMinutes.
+- id: AT_K1_105
+  test: K1 can complete with ÚLEVA=MISSED, demonstrating motifs are not mandatory mission objectives.
+- id: AT_K1_106
+  test: Any negative AuthorPacket state used to justify an AUTHOR_LAPSE is already visibly indicated during Day-2 play before
+    the crime-scene consequence.
+- id: AT_K1_107
+  test: Wardrobe remains usable after 10:30 while K1HomeExitCommitted=false.
+- id: AT_K1_108
+  test: Discovering coat evidence in the mirror after 10:30 still permits an ordinary return to wardrobe and clean-coat swap.
+- id: AT_K1_109
+  test: No forced coat change or extra leave-confirmation appears after K1CoatRiskRecognized=true.
+- id: AT_K1_110
+  test: K1HomeExitCommitted is set only by accepting K1_DAY2_LEAVE_HOME, never by the authored clock.
+- id: AT_K1_111
+  test: Bloodied-coat interaction with Newcomen still bypasses normal dialogue, pulses eligible existing author-state feedback,
+    requires acknowledgment and ends in FAIL_DEFINITIVE_CAPTURE with reload to CP_K1_DAY2_WAKE.
+- id: AT_K1_112
+  test: Clean-coat dialogue always contains GREEN_BLOOD, FIGHT_RECONSTRUCTION and CLOSING_LEDGER rounds.
+- id: AT_K1_113
+  test: K1_SCENE_GANG_VIOLENCE is unavailable without K1NewspaperRead and available with K1NewspaperRead.
+- id: AT_K1_114
+  test: K1ReliefResolved modifies performance only and does not alter the clean-coat base dialogue topology.
+- id: AT_K1_115
+  test: Unsupported exact description of Rook attacking first, one stab and post-disarm killing routes through KnowledgeLegitimacy.TOO_PRECISE.
+- id: AT_K1_116
+  test: INT_K1_GREEN_BLOOD_SAMPLE can grant exactly one HYDE_BLOOD_SAMPLE and is optional for K1 completion.
+- id: AT_K1_117
+  test: K1 does not expose the hidden HYDE_BLOOD_SAMPLE + CATALYST -> STABILIZER recipe to the player.
+- id: AT_K1_118
+  test: The downstream recipe note specifies HYDE_BLOOD_SAMPLE x1 + CATALYST x1 -> STABILIZER x1 and requires later authored
+    research/hint unlock plus Master synchronization.
+- id: AT_K1_119
+  test: Day-2 home playable space is bounded to bedroom, salon and entry hall; basement laboratory and bathroom interiors are not required.
+- id: AT_K1_120
+  test: Hallway mirror interaction remains available at RICH, THIN and FRAGMENTARY Fidelity.
+- id: AT_K1_121
+  test: FRAGMENTARY labels the basement access only as DVEŘE; THIN/RICH label it DVEŘE DO LABORATOŘE.
+- id: AT_K1_122
+  test: LUCID cognition can manifest a subtle green residue clue on the basement-lab handle without creating an objective or auto-solving its meaning.
+- id: AT_K1_123
+  test: FRAGMENTARY may expose JÍT SE UMÝT as an abstract bathroom-door action using fade/audio instead of a built bathroom interior.
+- id: AT_K1_124
+  test: K1_DAY2_WASH advances authored time +20 minutes, sets K1Washed=true and cannot clean K1_BLOODIED_COAT.
+- id: AT_K1_125
+  test: K1Washed adds TUNING +5 only to applicable Society-relevant global route_check ContextMod; it does not modify Society rank and creates no Newcomen-specific stat.
+- id: AT_K1_NNN
+  test: Every clean-coat player who completes the consultation holds RLS_SOLDIER_01_ROOK exactly once, with no counter, quest text, marker or numeric state change. A bloodied-coat capture writes no soldier.
+production_handoff:
+  ready_for:
+  - K1 greybox across Day-1 lab/street/alley and Day-2 home/street/crime scene
+  - authored manuscript-time/local-clock integration
+  - professional-lab serum preparation prototype
+  - first serum consumption and transformation prototype
+  - Hyde street/beggar quick-choice prototype
+  - live Rook approach choice prototype
+  - systemic Rook knife combat prototype
+  - canonical first-stab + green-blood evidence prototype
+  - combat-style telemetry classifier prototype
+  - fixed post-threat Rook death/world-memory prototype
+  - overnight fade/reversion prototype
+  - Day-2 Poole wake/message prototype
+  - compact Jekyll home exploration/time-pressure prototype
+  - Fidelity-labeled basement-lab door + LUCID handle clue prototype
+  - FRAGMENTARY abstract bathroom-wash + global ContextMod integration
+  - K1-specific wardrobe + mirror evidence interaction
+  - AuthorPacket coat-manifestation prototype
+  - author-lapse blocking UI/debuff-pulse prototype
+  - optional newspaper/ÚLEVA prototype
+  - Newcomen crime-scene dialogue prototype including newspaper-only gang-violence response
+  - optional green Hyde-blood sample collection prototype
+  - knowledge-legitimacy dialogue hooks
+  - Automatic Day-2 Research Journal update
+  - checkpoint/save-state integration
+  - Hyde visual-language and semantic accent hooks
+  not_ready_for:
+  - final Rook/Newcomen/Poole performance prose beyond the v1.5 preliminary lines
+  - final Rook death choreography
+  - final combat animation/frame tuning and AI balance
+  - final CONTROLLED/CHAOTIC/BRUTAL classifier thresholds
+  - final green-blood material/VFX
+  - final author-lapse UI copy/art
+  - final house/environment art
+  - final cinematic shots
+  - final newspaper copy/art
+  - final sound/music
+  - final journal prose/UI art
+  - final Hyde color grade and accent implementation
+known_upstream_dependencies:
+- id: K1_ROOK_SYSTEMIC_STYLE_INFERENCE
+  status: REQUIRES_MASTER_SYNC
+  issue: Current master represents K1_ROOK as explicit CONTROLLED / CHAOTIC / BRUTAL options. K1 v1.5 infers those outputs
+    from systemic combat telemetry.
+  required_fix: Change story.K1 K1_ROOK contract from player-facing route choice to inferred resolver while preserving current
+    consequence tables unless intentionally retuned.
+- id: GLOBAL_COMBAT_SYSTEM
+  status: REQUIRES_MASTER_SYNC
+  issue: K1 v1.5 depends on systemic dodge/parry-deflect/strike/grab combat, hidden condition states and no mandatory health
+    bars.
+  required_fix: Add a minimal global combat_system contract to Master; keep exact frame/tuning data downstream.
+- id: HYDE_GREEN_BLOOD_AND_REVERSION_PHYSIOLOGY
+  status: REQUIRES_MASTER_SYNC
+  issue: K1 v1.5 canonically gives Hyde green blood, one survivable penetrating wound, and no corresponding Jekyll wound/scar
+    after overnight reversion while shed blood persists.
+  required_fix: Add global/form-physiology evidence rule or explicitly scope this as the canonical K1 first-wound precedent.
+- id: K1_OVERNIGHT_REVERSION
+  status: REQUIRES_MASTER_OR_NARRATIVE_FLOW_SYNC
+  issue: K1 no longer plays an escape/reversion route. It fades after Rook and resolves a non-magical offscreen reversion
+    before Day-2 wake.
+  required_fix: Replace K1 playable reversion beat while retaining the invariant that reversion is non-magical and not a blackout.
+- id: K1_OPTIONAL_NEWSPAPER_AND_RELIEF
+  status: REQUIRES_NARRATIVE_FLOW_AND_MASTER_SYNC
+  issue: Newspaper/ÚLEVA are optional in v1.5; skipping them resolves ÚLEVA as MISSED and does not block K1.
+  required_fix: Remove forced-news/forced-relief K1 requirement and make interpretation conditional on relief.
+- id: K1_INITIAL_CRIME_SCENE_CONSULTATION
+  status: REQUIRES_MASTER_AND_K2_SYNC
+  issue: K1 now ends with an initial Newcomen consultation at the Rook scene instead of only a summons. K2 should retain broader
+    follow-up investigation rather than duplicating the same first visit.
+  required_fix: Adjust story.K1/story.K2 topology and Narrative Flow division of police investigation.
+- id: AUTHOR_STATE_UI_FEEDBACK
+  status: TLD_LOCAL_USES_EXISTING_STATE
+  issue: The coat fail uses an already-visible AuthorPacket cognition/debuff indicator and a blocking consequence notice.
+    No new gameplay stat is introduced.
+  required_fix: Confirm shipping UI naming/copy; underlying CognitionBand/JekyllCognitionMod remain existing state.
+- id: S0_AUTHOR_WEATHER_HANDOFF
+  status: SMALL_S0_TLD_SYNC
+  issue: S0 TLD explicit required_fields omits AuthorWeather even though master stores it in AuthorPacket.
+  required_fix: Add AuthorWeather to S0 handoff required_fields.
+- id: RESEARCH_PROGRESS_AGGREGATION
+  status: REQUIRES_MASTER_SYNC_IF_NUMERIC_PROGRESS_UI_IS_USED
+  issue: Master defines RD tag values but not explicit ResearchProgress aggregation.
+  required_fix: Define canonical resolver before hardcoding numeric K1 research total.
+- id: HYDE_FORM_VISUAL_LANGUAGE
+  status: MASTER_SYNCED_WITH_K1_GREEN_BLOOD_LOCAL_EXCEPTION
+  issue: K1 uses existing Hyde visual-language contract; physical green self-blood is not automatically tagged/recolored RED.
+  required_fix: None for semantics; confirm art implementation.
+- id: HYDE_BLOOD_TO_STABILIZER_RECIPE
+  status: FUTURE_RESEARCH_RULE_REQUIRES_MASTER_SYNC
+  issue: K1 v1.5 allows Jekyll to collect HYDE_BLOOD_SAMPLE and records a downstream hidden recipe in which HYDE_BLOOD_SAMPLE
+    plus CATALYST yields STABILIZER after later authored discovery.
+  required_fix: >
+    When the later research beat is designed, synchronize reagent_system/research_journal so the recipe is gated by authored
+    knowledge, consumes one sample plus one CATALYST, outputs one STABILIZER, and provides a later sample reacquisition route
+    if the optional K1 sample was missed.
+- id: K1_MANUSCRIPT_TIME
+  status: MASTER_SYNCED_TLD_V1_5
+  issue: K1 consumes ManuscriptDay/TimeOfDay and uses a TLD-local authored clock.
+  required_fix: None.
+finalization:
+  baseline: K1_TLD_FINAL_V1_5
+  includes:
+  - professional laboratory Day-1 start at 21:00
+  - optional pre-experiment Research Journal
+  - masked PRECISE / FAST / RISKY internal brew IDs with untested-compound wording
+  - deliberate serum drinking and first transformation
+  - Hyde street/beggar/optional destruction beat
+  - live timed Rook approach with ROAR / crude speech / ATTACK and timeout-to-attack
+  - canonical first Rook stab
+  - green Hyde blood on scene/knife/coat
+  - systemic Rook combat with no visible health bars
+  - second penetrating knife hit death
+  - inferred CONTROLLED / CHAOTIC / BRUTAL style
+  - post-threat Hyde expression choice
+  - Rook fixed death after threat end
+  - LedgerMissing + world-memory commit
+  - fade-to-black overnight non-magical reversion
+  - Day-2 wake at 08:30 with no Jekyll wound/scar
+  - Poole police-message beat
+  - first Jekyll-home exploration and authored morning time pressure
+  - late mirror discovery can always return to wardrobe until front-door commit
+  - K1-specific bloodied/clean coat choice
+  - RICH direct coat readability + THIN/FRAGMENTARY mirror discovery route
+  - existing cognition/debuff state as attention support/failure feedback
+  - blocking author-lapse acknowledgment then hard capture on bloodied-coat crime-scene arrival
+  - automatic Day-2 Research Journal update without player interaction
+  - optional newspaper and optional ÚLEVA
+  - initial Newcomen crime-scene consultation with preliminary full exchange and knowledge-legitimacy hooks
+  - newspaper-only GANG_VIOLENCE hypothesis response
+  - optional HYDE_BLOOD_SAMPLE collection and downstream hidden STABILIZER research seed
+  - conditional RESPONSIBILITY / RATIONALIZE / SUPPRESS if relief occurred
+  - K1 -> S1 handoff
+  - checkpoints, hard fails, debug, edge cases and acceptance tests
+  research_progress_numeric_ui: PENDING_MASTER_AGGREGATION_RULE
+  dialogue_file: FINAL_PERFORMANCE_PROSE_NOT_YET_AUTHORED; TLD_PRELIMINARY_ROOK/NEWCOMEN_EXCHANGES_INCLUDED
+  journal_copy: NOT_YET_AUTHORED
+  combat_master_contract: PENDING_MASTER_SYNC
+  Hyde_visual_implementation: FINAL_SHADER_LUT_VFX_TBD; SEMANTICS_MASTER_SYNCED
+brew_choice_presentation:
+  principle: PRECISE / FAST / RISKY are internal IDs only and must never be displayed to the player. The player chooses a
+    concrete experimental procedure. Optional journal reading provides incomplete scientific context, not a correct-answer
+    marker.
+  raw_stat_visibility: Potency/Purity values remain hidden system values in K1. The master only unlocks better Potency/Purity
+    estimation at ResearchProgress 20, so K1 must not expose exact brew numbers through normal player UI unless the master
+    changes.
+  options:
+    K1_PRECISE:
+      player_facing_intent: FOLLOW_RECORDED_PROCEDURE
+      ui_copy_status: TBD
+      journal_context: The current written formula is Jekyll's established baseline and is the most reliable preparation he
+        has so far.
+    K1_FAST:
+      player_facing_intent: ATTEMPT_RAPID_PREPARATION
+      ui_copy_status: TBD
+      journal_context: An older margin note records Jekyll's untested idea that he should try preparing the reaction quickly
+        sometime; it is a hypothesis, not a correction of a known mistake.
+    K1_RISKY:
+      player_facing_intent: INTRODUCE_UNTESTED_COMPOUND
+      ui_copy_status: TBD
+      journal_context: Jekyll has an untested idea that a trace of an additional experimental compound may strengthen the
+        reaction, while its effect on stability is unknown.
+  selection_rule: A player who ignores the journal may choose by intuition. A player who reads it receives authentic prior
+    notes and hypotheses but still has to decide what to test.
+research_journal:
+  role: Diegetic research interface and persistent record of Jekyll's work. It carries pre-game scientific context, optional
+    clues, current hypotheses and empirical observations so exposition does not need to be spoken aloud.
+  pre_experiment_access:
+    forced: false
+    available_from: K1_PLAYER_HANDOFF_JEKYLL
+    returns_to: K1_EXPERIMENT_GAMEPLAY
+    contents:
+    - Jekyll's purpose/theory for the experiment
+    - selected prior attempts before the playable story
+    - current written formula
+    - baseline note supporting FOLLOW_RECORDED_PROCEDURE
+    - untested note proposing rapid preparation sometime
+    - untested compound hypothesis with unknown stability consequence
+    exact_prose: TBD_DIALOGUE_OR_JOURNAL_CONTENT
+    reward: INFORMATION_ONLY
+    research_points: 0
+  automatic_research_update:
+    occurs_during: K1_RESEARCH_AUTO_UPDATE_DAY2
+    trigger: K1Day2BodyObservationResolved == true
+    player_input_required: false
+    journal_open_required: false
+    physical_journal_required: false
+    time_cost: 0
+    idempotent: true
+    presentation: NO_FORCED_UI
+    actions:
+    - record the selected K1 brew method and its observed preparation result
+    - record that transformation occurred while awareness persisted
+    - record that Hyde survived one penetrating knife wound
+    - record that Jekyll woke with no corresponding wound or scar
+    - grant RD_BASE_TRANSFORMATION through ResearchSystem
+    - grant RD_POST_TRANSFORM_PHYSIOLOGY through ResearchSystem
+    - set K1BrewObservationRecorded = true
+    - set K1ResearchGranted = true
+    rule: >
+      Resolve automatically when the Day-2 body observation completes.
+      Sitting down, opening the journal, reading it or manually writing
+      an entry is never required. The update does not open the Research UI,
+      advance manuscript time or create a dedicated checkpoint.
+      Research Journal access is already available from the first Jekyll handoff.
+  method_dependent_observation:
+    state_id: K1_BrewObservation
+    persistent: true
+    values:
+      K1_PRECISE:
+        observation_id: K1_OBS_RECORDED_METHOD
+        meaning: The written baseline procedure produced Jekyll's cleanest/most stable K1 preparation.
+      K1_FAST:
+        observation_id: K1_OBS_RAPID_REACTION
+        meaning: The rapid-preparation hypothesis is now empirically tested; activity remains useful but purity/stability
+          is worse than the baseline.
+      K1_RISKY:
+        observation_id: K1_OBS_UNTESTED_COMPOUND
+        meaning: The added experimental compound is now empirically tested; the response is stronger and markedly less stable.
+    rule: This observation changes journal/research content and may be read by future authored research content. It does not
+      by itself add an undeclared RD tag or extra ResearchProgress in v1.1.
+  canonical_K1_research_awards:
+    tags:
+    - RD_BASE_TRANSFORMATION
+    - RD_POST_TRANSFORM_PHYSIOLOGY
+    timing: K1_RESEARCH_AUTO_UPDATE_DAY2
+    note: The master currently declares these two K1 research tags. Method-dependent observations are recorded separately.
+      If later we want PRECISE/FAST/RISKY to award RD_POTENCY_RESPONSE or RD_PURITY_RESPONSE directly, that must be added
+      to the master.
+  research_progress_ui:
+    status: REQUIRES_MASTER_AGGREGATION_RULE_FOR_EXACT_NUMBER
+    current_master_tag_values:
+      RD_BASE_TRANSFORMATION: 10
+      RD_POST_TRANSFORM_PHYSIOLOGY: 8
+    expected_if_unique_tag_values_sum: 18
+    next_master_unlock:
+      threshold: 20
+      effect: better Potency/Purity estimate
+    rule: The UI may show research progress only through the canonical ResearchSystem resolver. Do not hardcode 18 in gameplay
+      until the master explicitly defines ResearchProgress aggregation from resolved RD tag values.
+  future_use: >
+    The journal is player-openable from the game menu from K1_PLAYER_HANDOFF_JEKYLL
+    whenever Jekyll is playable. Authored discoveries automatically update its
+    pages/sections without requiring the player to open or read them.
+journal_content_contracts:
+  K1_PRE_EXPERIMENT_NOTES:
+    status: TEXT_TBD
+    must_convey:
+    - current written method is the baseline
+    - rapid preparation is an untested idea Jekyll wanted to try sometime
+    - additional experimental compound is untested and may strengthen the reaction at unknown stability cost
+    must_not:
+    - label one option as correct
+    - display PRECISE / FAST / RISKY
+    - display exact Potency/Purity values in normal K1 UI
+  K1_FIRST_RESEARCH_ENTRY:
+    status: TEXT_TBD
+    must_record:
+    - selected preparation method
+    - method-specific empirical outcome
+    - transformation confirmed
+    - awareness persisted
+    - Hyde sustained a penetrating knife wound and remained functional
+    - Jekyll woke with no corresponding wound or scar
+    - external Hyde blood/evidence remained outside the body
+form_visual_language:
+  status: MASTER_SYNCED
+  intended_master_path: form_visual_language.HYDE
+  scope: FORM_HYDE_ONLY
+  Jekyll_rule: K1 defines no form-specific palette override for Jekyll. Jekyll uses the normal authored scene rendering produced
+    by the manuscript, AuthorWeather and other global presentation systems.
+  Hyde:
+    mode: CONSTRAINED_PREDATORY_PERCEPTION
+    base_world:
+      intent: near-monochrome or duotone treatment with strongly reduced ordinary color
+      exact_palette: TBD_VISUAL_DIRECTION
+      readability_rule: environment silhouettes, navigation and combat readability must remain intact
+    semantic_accents:
+      RED:
+        intent: violence / blood / immediate physical threat
+        eligibility: AUTHORED_TAG_ONLY
+        example_tags:
+        - HYDE_ACCENT_RED
+      GOLD:
+        intent: authored instinct-relevant object, target or cue
+        eligibility: AUTHORED_TAG_ONLY
+        example_tags:
+        - HYDE_ACCENT_GOLD
+    tagging_rule: Accent color is never inferred from generic interactability. Only authored/tagged objects or states may
+      receive a semantic accent. A colored accent does not by itself create an interaction, clue, objective or branch.
+    render_order:
+    - resolve manuscript scene presentation including AuthorWeather / ManuscriptDistortion / ManuscriptOverdrive
+    - render underlying authored scene
+    - if Form == HYDE, apply Hyde base perception treatment
+    - apply eligible semantic accent tags without changing their meaning
+    Stevenson_interaction:
+      AuthorWeather: continues to affect the underlying scene and atmosphere
+      ManuscriptDistortion: may warp expression beneath/within the Hyde layer but must not redefine accent semantics
+      ManuscriptOverdrive: may activate only declared authored visual/noise content; it must not automatically color every
+        object or create false gameplay affordances
+      ManuscriptFidelity: may change authored optional detail density; it does not remove the Hyde perception layer while
+        Form == HYDE
+    accessibility:
+      color_alone_is_never_required: true
+      secondary_cue: shape / luminance / outline / animation / audio as appropriate
+    invariants:
+    - Hyde perception changes presentation, not story topology.
+    - Accent semantics remain stable across chapters unless the master explicitly changes them.
+    - Mandatory information cannot rely on hue alone.
+    - No untagged ordinary interactable receives an accent merely because it is interactable.
+    - Exact LUT, post-process, emissive and material values are downstream visual implementation.
+    K1_green_blood_rule:
+      physical_color: GREEN
+      semantic_accent_tag: NONE_BY_DEFAULT
+      rule: K1 Hyde blood is a physical narrative evidence color and must remain recognizably green. Do not automatically
+        recolor it with HYDE_ACCENT_RED. RED remains the semantic accent for authored violence/blood/threat targets that are
+        explicitly tagged; the green self-blood clue is intentionally exceptional physical evidence.
+      accessibility: 'Green hue is not the sole clue: unusual material/placement, knife tear and dialogue/context support
+        recognition.'

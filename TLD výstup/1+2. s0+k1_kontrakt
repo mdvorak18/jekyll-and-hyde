@@ -1,0 +1,1210 @@
+# Pomocný kumulativní souhrn S0 + K1 pro psaní dalších kapitol
+# Autorita: master a TLD. Bez nových mechanik, větví a požadavků na ukládání.
+schema:
+  id: JH_K1_OUTPUT_CONTRACT
+  version: '3.1'
+  date: '2026-09-24'
+  status: POMOCNY_SOUHRN_PRO_PSANI
+  scope: Stav návrhu po S0 a K1; podklad pro S1 a pozdější kapitoly.
+  next_chapter: S1
+  next_manuscript_chapter: K2
+purpose_and_rules:
+  purpose: Výpisky z masteru a TLD pro tvorbu dalších kapitol. Nejde o další autoritativní designový dokument, specifikaci
+    save systému ani konkrétní rozehranou hru.
+  authority: Autoritou zůstávají master a příslušná TLD včetně jejich výslovně uvedených schválených revizí. Tento souhrn
+    je nemění. Známé rozpory mezi zdroji jsou označené níže.
+  level_of_detail: Pro dialog stačí existující intent, podmínka dostupnosti a deklarovaný mechanický či příběhový důsledek.
+    Přesná replika, dabing a způsob prezentace budou doplněny později.
+  no_extra_branching: Tento přehled nepřidává větve podle jednotlivých vět, sledování každé repliky, historii výměn kabátu
+    ani nové systémové proměnné. Další kapitoly mohou používat již deklarované výsledky a flagy.
+  dialogue_changes: Změna formulace při zachování intentu, podmínek a důsledku nevyžaduje změnu tohoto souhrnu. Novou
+    mechanickou volbu by bylo třeba nejprve vědomě navrhnout v TLD.
+  cumulative_document: Po každé kapitole aktualizovat jeden společný souhrn. Předchozí navržené události, možnosti a
+    důsledky ponechat v dokumentu i tehdy, když je mezilehlá kapitola nevyužívá.
+  retention_meaning: Ponechání informace v tomto pracovním dokumentu není nový požadavek na to, co musí ukládat engine.
+    Technické požadavky platí jen v rozsahu zdrojových dokumentů.
+  future_use: Například S3 může navázat na již deklarovanou SelectedS0FannyOption, i když ji S1 nevyužila. Nevytváří
+    to automaticky novou větev v S1.
+  unknowns: Chybějící finální text neznamená chybějící intent. Za otevřené se zde označují pouze skutečně neurčené podmínky,
+    důsledky nebo rozpory zdrojů.
+  size: Souhrn vynechává prostorové a produkční detaily, kameru, art, opakované popisy a plné globální vzorce. Konkrétní
+    mechanismus při změně dohledat ve zdroji.
+  not_actual_playthrough: Domény možností v tomto souboru neříkají, co konkrétní hráč vybral. Úspěšné invarianty jsou
+    oddělené od proměnlivých výsledků.
+sources:
+- file: 2(2). K1_tld
+  sha256: 40f3701c2fc655ee483a95ba9d38ba14dc206eaafcfffb001183e07b3917eb51
+- file: JH_MASTER(2).yaml
+  sha256: 0d8201b138d2c60230878a98a28c35661652b281c439b2dbccae11edfedb197d
+- file: 1. S0_tld
+  sha256: ba5b511905248bab633ab71bc1e70b1e730d3bc791ba637c9a29afe0ca4979c5
+- file: JH_Narrative Flow(1).yaml
+  sha256: 683c63cf26310205fd10e2d6206b6a2c8785fa6d30900fa5984d9b4e220bf6e9
+narrative_handoff:
+  summary: Jekyll připravil a vypil první sérum. Jako Hyde přežil Rookovo bodnutí, přemohl jej a Rook zemřel až po skončení
+    bezprostředního ohrožení. Účetní kniha chybí. Po nočním návratu do Jekyllovy podoby nemá ráno ránu ani jizvu, ale
+    krev a kabát přetrvávají. Dokončil první konzultaci s Newcomenem. Následuje návrat ke Stevensonovi v S1.
+  memory: První proměna ani noční střih nejsou blackout; vzpomínka na události zůstává.
+  S1: Vrátit se ke Stevensonovu uloženému stavu a zpracování motivů; rukopisný stav uchovat odděleně.
+  K2: Pokračovat ve vyšetřování po již uskutečněné první konzultaci. Neopakovat první představení zelené krve a chybějící
+    knihy jako dosud neznámou událost. Po Jekyllově odchodu z domu Poole během své obchůzky viděl zelenou stopu na klice
+    domácí laboratoře a kliku dočista otřel. Pokud K1LabHandleGreenResidueNoticed == true, Jekyll si v K2 může při opětovném
+    prozkoumání nyní čisté kliky uvědomit, že stopu někdo odstranil, a odemknout pozdější konfrontaci s Poolem.
+S0_summary:
+  source: 1. S0_tld; schválené lokální revize Fanny jsou explicitně uvedené níže.
+  fixed_success:
+    S0InitialChoiceResolved: true
+    S0MedRouteLocked: true
+    S0MedicationExperienced: true
+    S0FannyIntentResolved: true
+    S0WriteCommitted: true
+    motifs_acquired:
+    - LÁTKA
+    - PROMĚNA
+    - BOLEST
+    - ÚLEVA
+    next: K1
+  narrative: Stevenson byl nemocný již před úvodem. Fanny se o jeho nemoci nedozvídá poprvé. Na každé úspěšné větvi skutečně
+    užije lék, proběhne samostatná vztahová volba s Fanny a začne psát.
+  medication_route:
+    id: S0_MED
+    options:
+    - S0_WAIT_FANNY
+    - S0_ANALGESIC
+    - S0_STIMULANT
+  self_medication:
+    SELF_ANALGESIC:
+      master_option: S0_ANALGESIC
+      action: TAKE_ANALGESIC_A
+      parameter_source: story.S0.decisions.S0_MED.options.S0_ANALGESIC.parametric_drops
+      valid_range:
+      - 0
+      - 20
+      medication_id: ANALGESIC_A
+    SELF_STIMULANT:
+      master_option: S0_STIMULANT
+      action: TAKE_STIMULANT_S
+      parameter_source: story.S0.decisions.S0_MED.options.S0_STIMULANT.parametric_drops
+      valid_range:
+      - 0
+      - 20
+      medication_id: STIMULANT_S
+  self_medication_rule: Dávku a klasifikaci určuje existující MedicationSystem. Tento souhrn nepřidává nové požadavky
+    na podrobné logování jeho výpočtu.
+  wait_fanny:
+    action: WAIT_FANNY
+    writes:
+      Pain: 5
+      Fatigue: 5
+      FannyBond: 3
+    medication_followup:
+      required: true
+      administered_by: FANNY
+      conversation_before_administration: true
+      choice_id: S0_FANNY_MEDICATION_REQUEST
+      options:
+        S0_FANNY_LAUDANUM:
+          player_line: Laudanum.
+          medication_id: ANALGESIC_A
+          dose_policy: EXACT_CANONICAL_TARGET
+          expected_classification: CORRECT
+          relationship:
+            FannyBond: 3
+            direction: SUPPORT
+            meaning: Stevenson acknowledges the pain and accepts Fanny's care.
+        S0_FANNY_COCAINE:
+          player_line: Cocaine.
+          medication_id: STIMULANT_S
+          dose_policy: EXACT_CANONICAL_TARGET
+          expected_classification: CORRECT
+          relationship:
+            FannyBond: -1
+            direction: MILD_STRAIN
+            meaning: Fanny understands why he wants to keep writing, but sees him pushing through real pain.
+        S0_FANNY_CHOOSE:
+          player_line: Fanny, choose.
+          medication_id: ANALGESIC_A
+          dose_policy: EXACT_CANONICAL_TARGET
+          expected_classification: CORRECT
+          relationship:
+            FannyBond: 4
+            direction: SUPPORT
+            meaning: Stevenson explicitly entrusts the care decision to Fanny.
+  relationship_choice:
+    conversation_id: S0_FANNY_COMMON
+    dialogue_source: JH_AMDD_S0_dialogue_v1_0.yaml
+    options:
+      S0_TRUTH:
+        intent: TRUTH
+        FannyBond: 6
+        Agitation: -5
+        direction: SUPPORT
+        post_choice_presence: LISTENS_BEFORE_WRITING
+      S0_MINIMIZE:
+        intent: MINIMIZE
+        FannyBond: 2
+        direction: SUPPORT
+        post_choice_presence: LEAVES_TO_SLEEP
+      S0_HELP:
+        intent: ASK_HELP
+        FannyBond: 5
+        direction: SUPPORT
+        post_choice_presence: STAYS_A_MOMENT
+    rule: All three choices are relationship-positive in S0, but they express different kinds of closeness. TRUTH is
+      openness, MINIMIZE is protective reassurance without full disclosure, and ASK_HELP is direct acceptance of companionship.
+  relationship_rules:
+    state_source: FannyBond
+    initial_value_source: stevenson.raw_initial.FannyBond
+    relationship_labels:
+    - SUPPORTIVE
+    - STRAINED
+    - WITHDRAWN
+    label_behavior_source: medication.Fanny_assistance
+    thresholds: MASTER_TBD
+    S0_rule:
+      direct_bucket_switch_from_single_choice: false
+      resolve_numeric_writes_first: true
+      note: S0 begins from a strong relationship. Choice writes create cumulative direction for later chapters. Do not
+        force SUPPORTIVE / STRAINED / WITHDRAWN from one S0 choice until canonical thresholds exist.
+    S0_wait_route_base_write:
+      FannyBond: 3
+      source: current master story.S0.S0_WAIT_FANNY
+    S0_medication_request_writes_pending_master_sync:
+      S0_FANNY_LAUDANUM:
+        FannyBond: 3
+        direction: SUPPORT
+      S0_FANNY_COCAINE:
+        FannyBond: -1
+        direction: MILD_STRAIN
+      S0_FANNY_CHOOSE:
+        FannyBond: 4
+        direction: SUPPORT
+    S0_relationship_choice_writes_pending_master_sync:
+      S0_TRUTH:
+        FannyBond: 6
+        Agitation: -5
+        direction: SUPPORT
+      S0_MINIMIZE:
+        FannyBond: 2
+        direction: SUPPORT
+        FannyPostDialogueMode: LEAVES_TO_SLEEP
+      S0_HELP:
+        FannyBond: 5
+        direction: SUPPORT
+        FannyPostDialogueMode: STAYS_A_MOMENT
+    cumulative_rule: WAIT_FANNY route-commit bond write, Fanny medication-request bond write, and later relationship-choice
+      bond write are separate one-time writes and therefore accumulate. Self-medication routes skip the Fanny medication-request
+      bond write.
+  historical_presence: FannyPostDialogueMode popisuje výsledek S0 vztahové volby. Nepředepisuje její fyzickou pozici
+    při budoucím návratu ve S1.
+  medication_constraints:
+  - Přesně jedna potvrzená top-level route; WAIT_FANNY není idle timeout.
+  - S0_WAIT_FANNY vyžaduje právě jednu ze tří medikačních žádostí před podáním.
+  - Fannyho podání je v této kapitole EXACT_CANONICAL_TARGET a CORRECT; nejde o obecné pravidlo pro celou hru.
+  - Samoléčba neobsahuje Fanny medication-request zápisy.
+  - Pozdější TRUTH/MINIMIZE/HELP je oddělená volba s vlastními důsledky.
+  - Žádná druhá dávka v S0; fatal větev není úspěšný výstup.
+  motif_acquisition:
+    BOLEST:
+      acquisition_event: S0_MOTIF_PAIN_BEAT
+      required_for_write: true
+      causal_meaning: Stevenson's bodily pain
+    LÁTKA:
+      acquisition_event: S0_MEDICATION_ACTUALLY_ADMINISTERED
+      required_for_write: true
+      causal_meaning: actual medicine enters Stevenson's body
+    PROMĚNA:
+      acquisition_event: S0_MEDICATION_STATE_CHANGE_PERCEIVED
+      required_for_write: true
+      causal_meaning: chemically altered bodily state
+    ÚLEVA:
+      acquisition_event: S0_RELIEF_PERCEIVED
+      required_for_write: true
+      causal_meaning: relief or temporary capacity after treatment
+  motif_order:
+    experience:
+    - BOLEST
+    - LÁTKA
+    - PROMĚNA
+    - ÚLEVA
+    packet:
+    - LÁTKA
+    - PROMĚNA
+    - BOLEST
+    - ÚLEVA
+    rule: Získání motivu v S0 a jeho realizace v K1 jsou dva různé dějové výsledky. ÚLEVA acquired v S0 neznamená ÚLEVA
+      FULFILLED v K1.
+  write_lock:
+    ordering:
+    - APPLY_S0_STATE
+    - CALCULATE_DERIVED_STATE
+    - GENERATE_AUTHOR_PACKET
+    - COMMIT_MOTIFS
+    - SAVE
+    - CLEAR_ACUTE_EFFECTS
+    - TRANSITION_TO_K1
+    required_packet_data:
+    - CognitiveImprint
+    - ConditionImprint
+    - BleedImprint
+    - ChemicalImprint
+    - MotifPacket
+    - ManuscriptFidelity
+    - ManuscriptDistortion
+    - ManuscriptOverdrive
+    - AuthorWeather
+    rule: Podle S0 TLD se AuthorPacket generuje z aktivních účinků před jejich vyčištěním; K1 používá tento původní otisk.
+  failure_routing:
+    canonical_hard_fail:
+      id: FAIL_STEVENSON_FATAL
+      allowed_in_S0: true
+      source: hard_fail_matrix.S0
+    medication_emergency:
+      source: medication.emergency_if
+      on_trigger:
+      - evaluate medication.rescue_if
+      - if rescue valid apply medication.rescue_writes
+      - if rescue invalid and fatal handler resolves fatal, execute FAIL_STEVENSON_FATAL
+    fail_screen: TBD
+    rule: TLD does not invent new fatal thresholds. All thresholds come from MedicationSystem/master. If StevensonFatal
+      occurs after S0_MED has been committed, reload CP_S0_MED_ROUTE_LOCKED so the selected route remains locked and
+      the player retries that route from a clean snapshot.
+    reload_policy: RELOAD_LAST_VALID_AUTHORED_CHECKPOINT
+    expected_S0_medication_fatal_target: CP_S0_MED_ROUTE_LOCKED
+    fallback_if_route_checkpoint_missing: CP_S0_START
+  success_cannot_infer:
+  - Konkrétní množství léku jen z volby ANALGESIC/STIMULANT.
+  - Jednu S0 vztahovou volbu z konečného FannyBond.
+  - Přítomnost/pozici Fanny v S1 z jejího přechodného režimu po S0.
+  - SUPPORTIVE/STRAINED/WITHDRAWN bez kanonických prahů.
+  optional_interactions:
+    INT_S0_WINDOW: FLAVOR_ONLY
+    INT_S0_FIREPLACE: FLAVOR_ONLY
+    INT_S0_WATER: FLAVOR_ONLY
+    INT_S0_FANNY_POST: SHORT_CONTEXTUAL_EXCHANGE_ONLY
+    manuscript_inspect: Zmíněno mezi volitelnými interakcemi; žádná nová stabilní větev není deklarována.
+K1_success_exit:
+  source_gate:
+  - Form == JEKYLL
+  - SerumStock == 0
+  - RookDead == true
+  - LedgerMissing == true
+  - K1WorldReactionCommitted == true
+  - K1Day2WakeComplete == true
+  - K1ResearchGranted == true
+  - K1CrimeSceneConsultationComplete == true
+  - K1RookSoldierTaken == true
+  - K1EquippedCoat != K1_BLOODIED_COAT
+  - LÁTKA resolved
+  - PROMĚNA resolved
+  - BOLEST resolved
+  - 'If K1NewspaperRead == true: ÚLEVA resolved FULFILLED and K1InterpretResolved == true'
+  - 'If K1NewspaperRead == false: resolve ÚLEVA = MISSED'
+  fixed_state:
+    Form: JEKYLL
+    SerumStock: 0
+    ManuscriptDay: 2
+    TimeOfDay: MORNING
+    RookDead: true
+    LedgerMissing: true
+    K1WorldReactionCommitted: true
+    K1FirstTransformComplete: true
+    K1CanonicalFirstStabResolved: true
+    K1HydeKnifeHits: 1
+    K1ImmediateThreatEnded: true
+    K1OvernightReversionResolved: true
+    K1Day2WakeComplete: true
+    K1PooleMessageReceived: true
+    K1PooleSawLabHandleGreenResidue: true
+    K1PooleWipedLabHandleClean: true
+    K1Day2BodyObservationResolved: true
+    K1BrewObservationRecorded: true
+    K1ResearchGranted: true
+    ResearchJournalIntroduced: true
+    K1HomeExitCommitted: true
+    K1EquippedCoat: CLEAN_COAT
+    K1GreenBloodExamined: true
+    K1CrimeSceneConsultationComplete: true
+    HydeGreenBloodAtScene: true
+    K1BloodiedCoatExists: true
+    HydeVisualLanguageActive: false
+    K1RookSoldierTaken: true
+    FoundStevensonSoldiers: [RLS_SOLDIER_01_ROOK]
+  time_rule: Přenést skutečný K1LocalClockMinutes. 08:30 je čas probuzení, nikoli konce kapitoly. MORNING je authored
+    TimeOfDay, nikoli odhad z minut.
+  body: Jekyll nemá odpovídající otevřenou ránu ani jizvu. Počet bodnutí je historický stav K1, nikoli nová aktivní Jekyllova
+    rána.
+  world_commit_values:
+    RookDead: true
+    LedgerMissing: true
+    PoliceHeat: 25
+    UnderworldHeat: 25
+    CrowtherPressure: 10
+    IncidentID: INC_K1_ROOK
+    HydeGreenBloodAtScene: true
+    K1BloodiedCoatExists: true
+  world_commit_note: PoliceHeat=25, UnderworldHeat=25 a CrowtherPressure=10 jsou pevné zápisy při Rookově smrti. Dále
+    zachovat resolverem vyřešený stav; nezaměňovat PoliceHeat s NewcomenSuspicion.
+  boundary: Úspěšný konec K1 a přechod do S1. TLD v přechodu volá globální chapter-exit decay; jde o existující pravidlo,
+    nikoli nový požadavek tohoto souhrnu.
+  authored_time:
+    model: AUTHORED_DISCRETE_CLOCK
+    day_1_start: '21:00'
+    day_2_wake: '08:30'
+    day_2_home_window: '08:40-10:30'
+    warning: '10:15'
+    leave_pressure: '10:30'
+    rules:
+    - Standing idle, pausing, menus, walking in circles and reloading do not advance the K1 clock.
+    - Declared authored interactions advance the clock once on their commit/completion point.
+    - The overnight fade jumps to the authored Day-2 wake snapshot; it is not simulated minute by minute.
+    - Journal opening, journal hint and automatic research update cost 0 minutes.
+    - Time pressure never auto-commits the front door, coat choice or any journal action.
+    - K1LocalClockMinutes is carried as the actual authored value; 08:30 is the wake time, not the chapter end time.
+  time_commit_summary:
+  - Day 1: brew 20/8/12 minutes by method; serum commit +2; transformation +4; street +10; optional beggar +2; optional postbox +2; alley +3; Rook opening +2; fight TUNING_3_TO_8; fixed death +3.
+  - Overnight: authored offscreen transition to Day 2 at 08:30.
+  - Day 2: Poole +10; body observation +10; wardrobe +10 first use; mirror +5 first use; lab door +5 first use; FRAGMENTARY wash +20; newspaper +5; transit +15; consultation TUNING_15_TO_25.
+  - No-time events: journal hint, opening/reading the journal, automatic research update.
+K1_variable_results:
+  brew:
+    selection:
+    - K1_PRECISE
+    - K1_FAST
+    - K1_RISKY
+    result_variants:
+      K1_PRECISE:
+        action: PRECISE
+        strong:
+          Potency: 70
+          Purity: 80
+        costly:
+          Potency: 65
+          Purity: 65
+      K1_FAST:
+        action: FAST_FALLBACK
+        fixed:
+          Potency: 70
+          Purity: 55
+      K1_RISKY:
+        action: RISKY
+        fixed:
+          Potency: 85
+          Purity: 35
+          SerumInstabilityScar: 15
+    observation:
+      state_id: K1_BrewObservation
+      persistent: true
+      values:
+        K1_PRECISE:
+          observation_id: K1_OBS_RECORDED_METHOD
+          meaning: The written baseline procedure produced Jekyll's cleanest/most stable K1 preparation.
+        K1_FAST:
+          observation_id: K1_OBS_RAPID_REACTION
+          meaning: The rapid-preparation hypothesis is now empirically tested; activity remains useful but purity/stability
+            is worse than the baseline.
+        K1_RISKY:
+          observation_id: K1_OBS_UNTESTED_COMPOUND
+          meaning: The added experimental compound is now empirically tested; the response is stronger and markedly less
+            stable.
+      rule: This observation changes journal/research content and may be read by future authored research content. It
+        does not by itself add an undeclared RD tag or extra ResearchProgress in v1.1.
+    rule: Metoda má vlastní pozorování a parametry připravené dávky. Dávka je do konce K1 spotřebovaná; její parametry
+      nejsou nová zásoba séra.
+  rook:
+    style:
+    - K1_CONTROLLED
+    - K1_CHAOTIC
+    - K1_BRUTAL
+    opening:
+    - K1_ROOK_OPEN_ROAR
+    - K1_ROOK_OPEN_SPEAK
+    - K1_ROOK_OPEN_ATTACK
+    post_fight:
+    - K1_ROOK_AFTER_SILENCE
+    - K1_ROOK_AFTER_ROAR
+    - K1_ROOK_AFTER_SPEAK
+    rule: Styl je odvozený z boje. Úvodní a závěrečná volba samy neurčují styl. Každá úspěšná varianta končí Rookovou
+      smrtí po konci ohrožení.
+    evidence_profiles:
+      K1_CONTROLLED: localized struggle; comparatively limited collateral; knife threat and powerful counterforce still
+        evident
+      K1_CHAOTIC: broader damage footprint/noise; multiple displaced/broken objects; less tidy reconstruction
+      K1_BRUTAL: strong excessive-force indicators and pronounced impact damage; scene suggests violence exceeded simple
+        defensive necessity
+  newspaper_relief_interpretation:
+  - K1NewspaperRead: false
+    K1ReliefResolved: false
+    K1InterpretResolved: false
+    K1SelectedInterpretation: NONE
+    ULEVA: MISSED
+    K1GangViolenceHypothesisRaised: false
+  - K1NewspaperRead: true
+    K1ReliefResolved: true
+    K1InterpretResolved: true
+    K1SelectedInterpretation:
+    - K1_RESPONSIBILITY
+    - K1_RATIONALIZE
+    - K1_SUPPRESS
+    ULEVA: FULFILLED
+    K1GangViolenceHypothesisRaised: true nebo false podle skutečně vybrané odpovědi
+  sample:
+    not_collected:
+      K1HydeBloodSampleCollected: false
+      HYDE_BLOOD_SAMPLE_acquired: 0
+    collected:
+      K1HydeBloodSampleCollected: true
+      HYDE_BLOOD_SAMPLE_acquired: 1
+    rule: Přenést i skutečný inventář. K1 vzorek nespotřebovává a neodemyká jeho recept.
+  home_optional_flags:
+  - K1CoatRiskRecognized
+  - K1LabDoorInspected
+  - K1LabHandleGreenResidueNoticed
+  - K1LucidMirrorThoughtPlayed
+  - K1Washed
+  - K1HomeLeavePressure
+  home_rule: Čistý kabát neznamená, že hráč odhalil nebezpečí starého kabátu. Volitelné prohlídky nejsou podmínkou výstupu.
+  journal: K1PreExperimentJournalOpened může být true i false. Výběr metody ani ranní research na otevření deníku nezávisí.
+    Jednorázový hint pouze nabízí informace.
+K1_motifs_and_research:
+  motifs:
+    LÁTKA:
+    - FULFILLED
+    PROMĚNA:
+    - FULFILLED
+    BOLEST:
+    - FULFILLED
+    - TWISTED
+    ÚLEVA:
+    - FULFILLED if newspaper read
+    - MISSED otherwise
+  tags:
+  - RD_BASE_TRANSFORMATION
+  - RD_POST_TRANSFORM_PHYSIOLOGY
+  grant: K1_RESEARCH_AUTO_UPDATE_DAY2 po pozorování těla, právě jednou; žádné sezení, otevření deníku, ruční psaní ani
+    vlastní časový náklad.
+  numeric_progress: Uchovat výsledek ResearchSystem; hodnotu 18 neprohlašovat za pevný výstup, dokud není explicitně
+    sjednocené sčítání tagů.
+  no_bonus: Opakované čtení a reload nezískávají další tagy/progress. Metodické pozorování není samo nový RD tag.
+K1_other_choices_and_observations:
+  pre_experiment_journal:
+    required: false
+    hint: V deníku najdete poznámky k experimentu.
+    hint_behavior: Jednou při prvním přístupu k přípravě pokusu před výběrem metody; neblokuje a neotevírá deník automaticky.
+    effect: Všechny metody jsou dostupné i bez čtení. Text dává kontext zavedeného postupu a hypotéz, ne přesné výsledky.
+      Otevření/čtení nemá časový náklad ani research odměnu.
+    scope_note: >
+      Toto je K1 mechanika v Jekyllově laboratorní části. Nejde o S1
+      Stevensonovu akci a v S1 se K1 Research Journal neotevírá jako
+      povinný nebo automatický krok.
+  automatic_research:
+    trigger: K1Day2BodyObservationResolved == true
+    meaning: >
+      Hra automaticky zapíše Jekyllova ranní pozorování a udělí deklarované
+      K1 research tags. Hráč nemusí sednout, otevřít deník ani ručně psát.
+    player_access: >
+      Hráč si může záznam později dobrovolně otevřít z menu; otevření pouze
+      zobrazí již zapsané informace a nic nového neodemkne.
+    time_cost: 0
+    research_tags:
+    - RD_BASE_TRANSFORMATION
+    - RD_POST_TRANSFORM_PHYSIOLOGY
+    not_S1: >
+      V S1 hraje hráč za Stevensona. S1 pracuje s novými Stevensonovými
+      akcemi a motivy; automatický K1 research není S1 akcí.
+  brew_mastery:
+    source: brew_flow.on_successful_preparation; master.serum_recipe_mastery
+    rule:
+      initial: 0
+      gain_rule: 'Gain at most 1 mastery credit per manuscript chapter for the first stable successful serum brew.
+
+        Repeated reload/brew farming in the same chapter gives no extra credit.'
+      qualifying_brew: BrewScore >= 55 AND resulting batch is not immediately FATAL
+    meaning: TLD volá kontrolu způsobilosti pro mastery. Úspěšné dokončení K1 samo neznamená automaticky kredit bez splnění
+      resolver podmínek.
+  first_serum:
+    dose_size: STANDARD
+    runtime_order:
+    - consume one serum dose
+    - SerumStock -= 1
+    - calculate EffectiveDrive / TransformFuelGain / ToxicityGain / SerumToleranceGain through SerumSystem
+    - evaluate serum toxicity hard fail
+    - call HydeDependence.VOLUNTARY_TRANSFORM
+    - apply RecentTransformLoad voluntary gain
+    - set Form = HYDE
+    - set K1FirstTransformComplete = true
+    - resolve motif LÁTKA if not already resolved
+    - resolve motif PROMĚNA
+    blackout: false
+    postcondition: SerumStock == 0 under current K1 authored first-batch design
+  beggar:
+    mode: LIVE_TIMED_CHOICE
+    player_control: true
+    timer_source: quick_action_system
+    choices:
+    - id: K1_BEGGAR_INTIMIDATE
+      player_intent: ROAR_OR_THREATEN
+      effect: beggar retreats; authored noise/witness reaction only
+    - id: K1_BEGGAR_VIOLENCE
+      player_intent: SHOVE_OR_STRIKE
+      effect: Hyde knocks the man down and continues
+    timeout: K1_BEGGAR_VIOLENCE
+    no_timer_accessibility: Choice remains until selected; no automatic violence.
+  postbox:
+    id: K1_POSTBOX_DESTRUCTION
+    interaction: single DESTROY action
+    effect: destructible feedback/local disturbance only
+    rule: Do not present fake synonym choices such as SMASH vs DESTROY.
+  rook_opening:
+    uses: quick_action_system
+    choices:
+    - id: K1_ROOK_OPEN_ROAR
+      player_facing: ZAŘVAT
+      Hyde_output: nonverbal or barely human roar
+    - id: K1_ROOK_OPEN_SPEAK
+      player_facing: PROMUVIT
+      provisional_Hyde_line: “Uhni.”
+      performance: guttural / barely human
+    - id: K1_ROOK_OPEN_ATTACK
+      player_facing: ZAÚTOČIT
+      Hyde_output: immediate forward attack
+    timeout_default: K1_ROOK_OPEN_ATTACK
+    NO_TIMER_rule: No automatic selection; the encounter holds in live threat space until the player chooses.
+  rook_post_fight:
+    occurs_after: K1ImmediateThreatEnded == true
+    mode: LIVE_SHORT_CHOICE
+    choices:
+    - id: K1_ROOK_AFTER_SILENCE
+      player_facing: MLČET
+      effect: no added authored noise
+    - id: K1_ROOK_AFTER_ROAR
+      player_facing: ZAŘVAT
+      effect: additional noise / possible witness-audio hook
+    - id: K1_ROOK_AFTER_SPEAK
+      player_facing: PROMUVIT
+      provisional_Hyde_line: “Měl jsi odejít.”
+      effect: marks emerging human-like intention; no automatic branch
+    timeout_default: K1_ROOK_AFTER_SILENCE
+    rule: This choice may contribute telemetry but never makes Rook a renewed threat.
+  rook_rule: Úvodní ani závěrečná volba sama nenahrazuje odvozený styl boje. Rook ve všech úspěšných variantách zemře
+    po konci bezprostředního ohrožení.
+  home:
+    coat: Čistý i zakrvácený kabát jsou dostupné. Rozpoznání nebezpečí nevynucuje bezpečnou volbu. Výběr lze měnit až
+      do potvrzeného odchodu; úspěšná konzultace vyžaduje čistý kabát.
+    mirror: Dobrovolná prohlídka; možnost odhalení důkazu zůstává dostupná i pod časovým tlakem. Výsledkem může být K1CoatRiskRecognized.
+    lab_door: K1LabDoorInspected; při LUCID může být zaznamenáno všimnutí zelené stopy K1LabHandleGreenResidueNoticed.
+      Nevzniká tím úkol ani automatická dedukce. Sklep se v K1 neotevírá.
+    wash:
+      available_if:
+      - ManuscriptFidelity == FRAGMENTARY
+      - K1HomeExitCommitted == false
+      - K1HomeLeavePressure == false
+      effect: K1Washed=true; +20 authored minut při prvním použití.
+      ContextMod:
+        ContextMod: 5
+        applies_to: 'Any Society-relevant authored route check while the grooming advantage remains contextually applicable.
+
+          '
+        rule: 'Use the global route_check resolver. Do not add Society rank and do not create an NPC-specific modifier.
+
+          '
+        status: TUNING
+      limit: Mytí nečistí kabát a nezvyšuje Society rank. Kontextový efekt není automaticky trvalý do dalších kapitol.
+    manifestation:
+      CognitionBand:
+        LUCID: When the relevant evidence is sufficiently manifested, Jekyll actively comments on the contradiction and
+          sets K1CoatRiskRecognized=true.
+        STRAINED: Jekyll does not automatically foreground the risk; player observation/inspection is required.
+        IMPAIRED: No automatic warning/comment/attention cue. The existing impaired-cognition author-state debuff remains
+          visible to the player.
+      ManuscriptFidelity:
+        RICH: Knife tear and green stain are directly readable during wardrobe/close coat presentation. Mirror can also
+          confirm them.
+        THIN: Ordinary dressing does not foreground the blood detail. Interacting with the hallway mirror while wearing/holding
+          the bloodied coat reveals the tear and green stain.
+        FRAGMENTARY: Use the same guaranteed mirror discovery route as the minimum fair authored manifestation; no extra
+          direct highlight is required.
+      ManuscriptOverdrive: May add competing authored house detail/noise but cannot disable wardrobe or mirror.
+      ManuscriptDistortion: May alter uncanny expression but cannot change coat state, blood color or consequence.
+    time_pressure: 10:15 připomenutí, 10:30 tlak k odchodu; sám neuzamkne odchod ani nezabrání nápravě kabátu.
+    lucid_mirror_thought: Jednorázová myšlenka při přiblížení k odchodu po oblečení; žádný povinný vstup do zrcadla ani
+      marker.
+  street_note: Žebrák a schránka nemají tímto souhrnem přidané budoucí callbacky, nové svědky ani statové postihy. Platí
+    pouze deklarované účinky.
+Newcomen_consultation:
+  source: crime_scene_investigation; knowledge_legitimacy v masteru
+  required: První konzultace proběhne v K1 po kontrole kabátu. Rozšířené vyšetřování má navázat později.
+  structure: 'Společný základ: GREEN_BLOOD, FIGHT_RECONSTRUCTION, CLOSING_LEDGER. Nevytvářet zvláštní celý dialog pro
+    každou kombinaci stavu.'
+  state_inputs:
+  - Reason
+  - Society
+  - Chemistry
+  - CognitionBand/JekyllCognitionMod
+  - K1NewspaperRead
+  - K1ReliefResolved
+  - knowledge_legitimacy state
+  - K1RookResolutionStyle
+  - scene evidence profile
+  - NewcomenSuspicion
+  - Exposure
+  performance: 'Úleva mění pouze projev: STEADIER; bez úlevy UNEASY_BUT_FUNCTIONAL. Sama nevytváří další větev textu.'
+  rounds:
+    GREEN_BLOOD:
+      choices:
+        K1_SCENE_CAUTIOUS_MEDICAL:
+          intent: LIMIT_TO_SUPPORTED_INFERENCE
+          benefits: Reason
+          knowledge_risk: LOW
+        K1_SCENE_CHEMISTRY:
+          intent: ACKNOWLEDGE_ANOMALY_WITHOUT_CLAIMING_ORIGIN
+          benefits: Chemistry
+          knowledge_risk: LOW
+        K1_SCENE_TOO_PRECISE:
+          intent: OVERREVEAL_HYDE_ONLY_KNOWLEDGE
+          knowledge_risk: HIGH
+          rule: Route through knowledge_legitimacy.TOO_PRECISE unless equivalent detail is legitimately supported by
+            current evidence.
+      on_enter: set K1GreenBloodExamined = true
+      optional_sample:
+        condition: Po prohlédnutí zelené krve.
+        intent: Odebrat vzorek pro pozdější rozbor.
+        on_collect:
+        - set K1HydeBloodSampleCollected = true
+        - add HYDE_BLOOD_SAMPLE x1
+        on_skip: Continue without sample; K1 remains completable.
+    FIGHT_RECONSTRUCTION:
+      choices:
+        K1_SCENE_VISIBLE_RECONSTRUCTION:
+          intent: LIMIT_TO_VISIBLE_RECONSTRUCTION
+          benefits: Reason
+          knowledge_risk: LOW
+        K1_SCENE_GANG_VIOLENCE:
+          availability: K1NewspaperRead == true
+          legitimacy_source: NEWSPAPER_PUBLIC_FACT
+          intent: PROPOSE_PLAUSIBLE_CRIMINAL_CONTEXT
+          benefits: Society
+          knowledge_risk: LOW
+          writes:
+          - K1GangViolenceHypothesisRaised = true
+          rule: 'This option exists only because the newspaper made Rook''s criminal reputation legitimate Jekyll knowledge.
+            It is a hypothesis, not a confirmed solution to the murder.
+
+            '
+        K1_SCENE_EXACT_RECONSTRUCTION:
+          intent: RECONSTRUCT_TOO_EXACTLY
+          knowledge_risk: HIGH
+          rule: Hyde-only sequencing routes through knowledge_legitimacy.TOO_PRECISE and raises suspicion.
+    CLOSING_LEDGER:
+      intent: Newcomen sdělí, že Rookova účetní kniha chybí; Jekyll označí její možný význam pro vyšetřování.
+      if_sample_collected: Newcomen žádá výsledek budoucího rozboru a Jekyll souhlasí. TLD pro tento příslib nedefinuje
+        samostatný nový flag.
+  too_precise:
+    condition: Jekyll uses PLAYER_SECRET without legitimate source
+    writes:
+      Exposure: 10
+      NewcomenSuspicion: 15
+      ProfessionalStanding: -5
+  completion: K1CrimeSceneConsultationComplete=true. Pozdější kapitoly navazují na již proběhlou konzultaci a deklarované
+    výsledky, nikoli na nový požadavek pamatovat každou větu.
+  text_work_later: Finální repliky mají vyjádřit níže uvedené intenty při zachování podmínek a mechaniky. Jejich samotná
+    formulace nevytváří nové následky.
+knowledge_and_evidence:
+  Jekyll_private:
+  - Pamatuje si proměnu a jednání Hyda.
+  - Zná vlastní postup vaření a ranní absenci rány.
+  Jekyll_legitimate_at_scene:
+  - Zelená krev a Rookův nůž byly předloženy při konzultaci.
+  - Chybějící knihu sdělil Newcomen v závěru konzultace.
+  - Veřejné informace o Rookově kriminální pověsti jsou legitimované čtením novin, pokud je četl.
+  not_automatically_legitimate:
+  - Přesné pořadí útoků a poloha bodnutí známé pouze z Hydeovy zkušenosti.
+  - Soukromá vzpomínka sama neopravňuje Jekylla uvést detail jako nezávislý odborný závěr.
+  Newcomen:
+  - Zná vraždu, nůž, zelenou krev a chybějící knihu.
+  - Nevhodně přesná znalost může podle existujících pravidel zvýšit podezření.
+  - Při odebrání vzorku v závěru očekává informaci o výsledku rozboru.
+  hypothesis: K1GangViolenceHypothesisRaised znamená vyslovenou hypotézu, nikoli dokázané gangové vyřizování účtů.
+  identity_link: INC_K1_ROOK automaticky nepropojuje Jekylla s Hydem. Hráčova soukromá znalost není automaticky legitimní
+    odborné tvrzení.
+  physical_evidence:
+  - ROOK_KNIFE
+  - ROOK_BLOOD
+  - HYDE_GREEN_BLOOD
+  - K1_FIGHT_TRACE_PROFILE
+  - scene-authored environmental damage
+  persistence: Odložení zakrváceného kabátu ani návrat do Jekyllovy podoby nemažou krev, poškození a existenci kabátu.
+    Přesné pozdější umístění kabátu není tímto kontraktem nově určeno.
+numeric_results_reference:
+  all_master_persistent_fields:
+  - Exposure
+  - Integration
+  - HydeDependence
+  - SerumTolerance
+  - Craving
+  - CalmBeats
+  - RecentViolence
+  - RecentTransformLoad
+  - SerumInstabilityScar
+  - SuppressionStrain
+  - PoliceHeat
+  - NewcomenSuspicion
+  - UnderworldHeat
+  - CrowtherPressure
+  - ProfessionalStanding
+  - ResearchProgress
+  additional_serum_fields:
+  - ActiveToxicLoad
+  - TransformFuel
+  rule: Souhrn číselných důsledků číst přes kanonické resolvery. Konečné hodnoty závisí na průchodu; nejsou nově stanovené
+    tímto dokumentem.
+  rook_consequence_reference:
+    K1_CONTROLLED:
+      action: CONTROLLED
+      strong:
+        Exposure: 0
+        Integration: 5
+        dependence_delta: 4
+      costly:
+        Exposure: 5
+        Integration: 2
+        dependence_delta: 6
+    K1_CHAOTIC:
+      action: CHAOTIC
+      strong:
+        Exposure: 5
+        dependence_delta: 7
+      costly:
+        Exposure: 10
+        dependence_delta: 9
+    K1_BRUTAL:
+      action: BRUTAL
+      writes:
+        Exposure: 12
+        Integration: -5
+        RecentViolence: 100
+      dependence_delta: 14
+  rook_note: Jde o tabulky důsledků z masteru, nikoli finální celkové hodnoty. Mapování odvozeného stylu na strong/costly
+    je otevřené.
+  interpretation_reference:
+    K1_RESPONSIBILITY:
+      intent: ACCEPT_RESPONSIBILITY
+      Integration: 10
+      dependence_event: ACCEPT_RESPONSIBILITY
+      relationship_to_relief: REJECT_RELIEF_AS_JUSTIFICATION
+    K1_RATIONALIZE:
+      intent: HE_WAS_EVIL
+      Integration: -6
+      dependence_delta: 6
+      relationship_to_relief: USE_RELIEF_AS_JUSTIFICATION
+    K1_SUPPRESS:
+      intent: REFUSE_TO_THINK
+      Integration: -2
+      dependence_delta: 3
+      relationship_to_relief: REFUSE_TO_EXAMINE_RELIEF
+  too_precise_reference:
+    condition: Jekyll uses PLAYER_SECRET without legitimate source
+    writes:
+      Exposure: 10
+      NewcomenSuspicion: 15
+      ProfessionalStanding: -5
+  too_precise_note: Použít jen na znalost bez legitimního zdroje. TLD neurčuje veškeré počty aplikací a výsledky všech
+    route checks; nevypočítávat smyšlený finální rozsah podezření.
+  exit_decay:
+    RecentViolence: -35
+    RecentTransformLoad: -15
+    SerumInstabilityScar: -10
+  decay_rule: TLD při přechodu do S1 volá kanonický chapter-exit decay. Tabulka uvádí jeho deklarované hodnoty; nepřičítat
+    je podruhé jako nový efekt souhrnu.
+  derived: Craving a jiné odvozené hodnoty řešit kanonickým resolverem; TLD neurčuje všechny konečné číselné výstupy.
+S0_to_S1_continuity:
+  Stevenson_persistent_fields:
+  - Pain
+  - Fever
+  - Fatigue
+  - Agitation
+  - SleepDebt
+  - Bleed
+  - Rebound
+  - MedicationDependence
+  - AnalgesicTolerance
+  - StimulantTolerance
+  - FannyBond
+  rule: Přenést skutečný uložený Stevensonův stav ze S0 a další již aplikované kanonické změny. Neodvozovat FannyBond
+    z hrubé volby a neaplikovat S0 vztahové/medikační zápisy znovu.
+  acute_reset_at_S_entry:
+    Sedation: 0
+    HallucinationSuppression: 0
+    StimulantActivation: 0
+    ActivationFocusMod: 0
+  packet_fields:
+  - CognitiveImprint
+  - ConditionImprint
+  - BleedImprint
+  - ChemicalImprint
+  - MotifPacket
+  - ManuscriptFidelity
+  - ManuscriptDistortion
+  - ManuscriptOverdrive
+  - AuthorWeather
+  packet_rule: AuthorPacket použitý pro K1 uchovat jako historický otisk před vyčištěním akutních účinků. Nevytvářet
+    jej zpětně ze stavu S1. Pro K2 vznikne nový packet při psaní v S1.
+  Fanny_caution: S0 FannyPostDialogueMode je minulý výsledek interakce, nikoli povinnost zachovat stejnou fyzickou pozici
+    Fanny při vstupu do S1.
+  S1_scope: S1 má dle masteru 3 action points. Tento dokument nepřidává nové efekty manuscript feedback; jejich konkrétní
+    zápisy musí stanovit S1.
+  S0_declared_choice_context:
+  - SelectedS0MedOption
+  - medication classification/result
+  - SelectedFannyMedicationRequest
+  - SelectedFannyMedicationID
+  - SelectedS0FannyOption
+  - FannyPostDialogueMode
+  - FannyRelationshipDirection
+  - FannyPresent
+  - S0WriteCommitted
+  - acquired motifs
+declared_state_reference:
+  purpose: Index již deklarovaných stavů a původních save požadavků, aby se neztratily při dalším psaní. Neobsahuje nově
+    navržené logy ani nové požadavky na engine.
+  S0_named_fields:
+  - FannyPresent
+  - S0InitialChoiceResolved
+  - S0MedicationExperienced
+  - S0FannyIntentResolved
+  - S0WriteUnlocked
+  - S0WriteCommitted
+  - S0MedRouteLocked
+  - SelectedS0MedOption
+  - SelectedFannyMedicationRequest
+  - SelectedFannyMedicationID
+  - SelectedS0FannyOption
+  - FannyPostDialogueMode
+  - FannyRelationshipDirection
+  K1_named_fields:
+  - K1RookSoldierTaken
+  - K1PacketApplied
+  - K1BrewChoiceResolved
+  - K1SerumPrepared
+  - K1SerumConsumed
+  - K1FirstTransformComplete
+  - K1BeggarEncounterResolved
+  - K1RookOpeningResolved
+  - K1CanonicalFirstStabResolved
+  - K1HydeKnifeHits
+  - HydeGreenBloodAtScene
+  - K1BloodiedCoatExists
+  - K1RookConflictStarted
+  - K1ImmediateThreatEnded
+  - K1RookPostFightExpressionResolved
+  - RookDead
+  - LedgerMissing
+  - K1WorldReactionCommitted
+  - K1OvernightReversionResolved
+  - K1Day2WakeComplete
+  - K1PooleMessageReceived
+  - K1Day2BodyObservationResolved
+  - K1HomeExplorationCount
+  - K1HomeLeavePressure
+  - K1HomeExitCommitted
+  - K1LabDoorInspected
+  - K1LabHandleGreenResidueNoticed
+  - K1PooleSawLabHandleGreenResidue
+  - K1PooleWipedLabHandleClean
+  - K1LucidMirrorThoughtPlayed
+  - K1Washed
+  - K1CoatRiskRecognized
+  - K1EquippedCoat
+  - K1AuthorLapseCoatAcknowledged
+  - K1PreExperimentJournalOpened
+  - K1BrewObservationRecorded
+  - ResearchJournalIntroduced
+  - K1ResearchGranted
+  - K1NewspaperRead
+  - K1ReliefResolved
+  - K1InterpretResolved
+  - K1GreenBloodExamined
+  - K1HydeBloodSampleCollected
+  - K1GangViolenceHypothesisRaised
+  - K1CrimeSceneConsultationComplete
+  - HydeVisualLanguageActive
+  - K1SelectedRookOpening
+  - K1RookResolutionStyle
+  - K1SelectedRookPostFightExpression
+  - K1SelectedInterpretation
+  master_persistent_fields:
+  - Exposure
+  - Integration
+  - HydeDependence
+  - SerumTolerance
+  - Craving
+  - CalmBeats
+  - RecentViolence
+  - RecentTransformLoad
+  - SerumInstabilityScar
+  - SuppressionStrain
+  - PoliceHeat
+  - NewcomenSuspicion
+  - UnderworldHeat
+  - CrowtherPressure
+  - ProfessionalStanding
+  - ResearchProgress
+  - FoundStevensonSoldiers
+  Stevenson_persistent_fields:
+  - Pain
+  - Fever
+  - Fatigue
+  - Agitation
+  - SleepDebt
+  - Bleed
+  - Rebound
+  - MedicationDependence
+  - AnalgesicTolerance
+  - StimulantTolerance
+  - FannyBond
+  packet_fields:
+  - CognitiveImprint
+  - ConditionImprint
+  - BleedImprint
+  - ChemicalImprint
+  - MotifPacket
+  - ManuscriptFidelity
+  - ManuscriptDistortion
+  - ManuscriptOverdrive
+  - AuthorWeather
+  S0_existing_save_requirements:
+  - S0InitialChoiceResolved
+  - selected S0_MED option
+  - medication classification/result
+  - S0MedicationExperienced
+  - SelectedFannyMedicationRequest
+  - SelectedFannyMedicationID
+  - FannyPresent
+  - S0FannyIntentResolved
+  - selected S0_FANNY option
+  - acquired motifs
+  - current Stevenson state
+  - S0WriteCommitted
+  - AuthorPacket after generation
+  - S0MedRouteLocked
+  - SelectedS0MedOption
+  - last valid authored checkpoint id
+  - SelectedS0FannyOption
+  - FannyPostDialogueMode
+  - FannyRelationshipDirection
+  K1_existing_save_requirements:
+  - K1PooleSawLabHandleGreenResidue
+  - K1PooleWipedLabHandleClean
+  - current sequence node
+  - ManuscriptDay
+  - TimeOfDay
+  - K1LocalClockMinutes
+  - K1Day2WakeComplete
+  - AuthorPacket-derived K1 render configuration
+  - selected K1_BREW option/result
+  - SerumStock
+  - SerumTolerance
+  - ActiveToxicLoad
+  - TransformFuel
+  - Form
+  - K1BeggarEncounterResolved
+  - K1RookOpeningResolved
+  - K1CanonicalFirstStabResolved
+  - K1HydeKnifeHits
+  - K1RookResolutionStyle
+  - K1RookPostFightExpressionResolved
+  - Exposure
+  - Integration
+  - HydeDependence
+  - RecentViolence
+  - RecentTransformLoad
+  - SerumInstabilityScar
+  - RookDead
+  - LedgerMissing
+  - PoliceHeat
+  - UnderworldHeat
+  - CrowtherPressure
+  - HydeGreenBloodAtScene
+  - K1BloodiedCoatExists
+  - K1EquippedCoat
+  - K1CoatRiskRecognized
+  - K1AuthorLapseCoatAcknowledged
+  - INC_K1_ROOK
+  - motif realization states
+  - K1PooleMessageReceived
+  - K1HomeExplorationCount
+  - K1HomeLeavePressure
+  - K1NewspaperRead
+  - K1ReliefResolved
+  - K1InterpretResolved
+  - K1HomeExitCommitted
+  - K1GreenBloodExamined
+  - K1HydeBloodSampleCollected
+  - K1GangViolenceHypothesisRaised
+  - K1CrimeSceneConsultationComplete
+  - knowledge legitimacy state
+  - research tags
+  - K1_BrewObservation
+  - K1PreExperimentJournalOpened
+  - K1BrewObservationRecorded
+  - ResearchJournalIntroduced
+  - last valid checkpoint id
+  - K1SelectedRookOpening
+  - K1SelectedRookPostFightExpression
+  - K1SelectedInterpretation
+  note: Tyto seznamy jsou převzaté ze zdrojů. Implementace save systému není předmětem tohoto pomocného dokumentu.
+future_hooks:
+- hook: LedgerMissing
+  continuation: Vyšetřování knihy a Crowtherovy sítě. K1 knihu nevrací; mechanismus zmizení dosud TBD.
+- hook: HYDE_BLOOD_SAMPLE
+  continuation: Pozdější authored objev může zpřístupnit HYDE_BLOOD_SAMPLE x1 + CATALYST x1 -> STABILIZER x1. Není to
+    znalost/recept odemčený v K1.
+  missing_sample: Před povinným použitím zajistit pozdější cestu k vzorku; nevyžadovat replay K1.
+- hook: Newcomen
+  continuation: Navázat na skutečné podezření, legitimitu odpovědí a případný slib výsledků rozboru.
+- hook: K1RookResolutionStyle
+  continuation: Použít odpovídající stopy a následky; CONTROLLED není ušetření Rooka.
+- hook: K1SelectedInterpretation
+  continuation: Žádná interpretace při přeskočení novin je platný výsledek; nedoplňovat hráči morální postoj zpětně.
+- hook: S0 a pozdější Stevensonovy kapitoly
+  continuation: Zůstávají k dispozici deklarované výsledky medikace a vztahové volby S0. Zda a jak je konkrétní pozdější
+    scéna použije, určí její TLD; žádná další větev nevzniká samotným uvedením v tomto přehledu.
+non_success_branches:
+  rule: Hard fail není alternativní úspěšný vstup S1/K2. Použít reload, nikoli pokračování vězně nebo mrtvé postavy.
+  routing:
+    serum_overdose_before_first_transform: CP_K1_START
+    second_Rook_knife_wound_or_other_death_during_Rook: CP_K1_POST_TRANSFORM
+    failure_between_Rook_death_and_Day2_wake: CP_K1_POST_ROOK
+    bloodied_coat_capture_at_crime_scene: CP_K1_DAY2_WAKE
+    crime_scene_dialogue_hard_fail_with_clean_coat: CP_K1_PRE_CRIME_SCENE if valid, otherwise CP_K1_DAY2_WAKE
+  coat: Zatčení se vyhodnocuje při zahájení interakce s Newcomenem, ne samotným vstupem do zóny.
+consistency_checks:
+- Úspěšný konec => RookDead a LedgerMissing; žádná větev Rook přežil.
+- Úspěšná konzultace => CLEAN_COAT, K1GreenBloodExamined a K1CrimeSceneConsultationComplete.
+- K1NewspaperRead=false => K1ReliefResolved=false, K1InterpretResolved=false, K1SelectedInterpretation=NONE, ÚLEVA=MISSED
+  a K1GangViolenceHypothesisRaised=false.
+- K1NewspaperRead=true při úspěšném konci => ÚLEVA=FULFILLED a přesně jedna ze tří interpretací.
+- K1GangViolenceHypothesisRaised=true => K1NewspaperRead=true; obráceně neplatí.
+- K1HydeBloodSampleCollected=true => K1GreenBloodExamined=true; vyšetření samo neznamená odběr.
+- K1PreExperimentJournalOpened=false je slučitelné se všemi metodami vaření a uděleným ranním research.
+- K1Washed=true vyžaduje původní K1 ManuscriptFidelity=FRAGMENTARY; mytí nečistí kabát.
+- K1LabHandleGreenResidueNoticed předpokládá příslušnou manifestaci a pozorování; nevytváří samo hotovou dedukci.
+- BOLEST není v K1 MISSED; ÚLEVA být MISSED může.
+- Jedna historická bodná rána neznamená aktivní Jekyllovo zranění po návratu.
+- Reload nezdvojuje research, incident, interpretaci, dávku, mastery ani decay.
+- S0_WAIT_FANNY => jedna platná SelectedFannyMedicationRequest + správné medication ID a klasifikace CORRECT.
+- S0_WAIT_FANNY => jedna z deklarovaných medikačních žádostí, příslušný lék a přesná CORRECT dávka podle TLD.
+- S0_FANNY_CHOOSE a S0_FANNY_LAUDANUM mají stejný lék, ale různý intent a vztahový zápis.
+- Pozdější S0_TRUTH/MINIMIZE/HELP je samostatná volba; nemění ID předchozí medikační žádosti.
+- S0_MINIMIZE v aktuálním TLD znamená FannyBond +2 bez staršího Agitation +2.
+- Čtení deníku není podmínkou ranního research. S0 psaní rukopisu je jiná mechanika a zůstává povinným přechodem.
+- Změna přesného textu při stejném intentu a důsledku nepřidává větev ani požadavek na zvláštní evidenci věty.
+source_open_points:
+- id: STRONG_COSTLY_STYLE_MAPPING
+  status: REQUIRES_DESIGN_RESOLUTION
+  detail: TLD odvozuje tři styly z boje, master má u CONTROLLED/CHAOTIC strong/costly. Doplnit způsob určení výsledku;
+    neprohlašovat všechny kombinace za dosažitelné.
+- id: S0_RELATIONSHIP_SYNC
+  status: REQUIRES_MASTER_SYNC
+  detail: S0 TLD schvaluje vlastní WAIT_FANNY medikační podvolby a vztahové zápisy odlišné od staršího masteru. Přebírat
+    skutečný stav S0, ne jej přepočítávat podle staré tabulky.
+- id: PRECISE_RESULT_GATE
+  status: REQUIRES_DESIGN_RESOLUTION
+  detail: K1_PRECISE má STRONG/COSTLY, ale TLD ponechává exact check gating otevřený. Žádnou konkrétní kombinaci AuthorPacket/skill→result
+    zde nevymýšlet.
+- id: BOLEST_RESULT_GATE
+  status: REQUIRES_DESIGN_RESOLUTION
+  detail: BOLEST povoluje FULFILLED/TWISTED, ale chybí úplné mapování konkrétního průchodu na výsledek.
+- id: CONSULTATION_REPEAT_AND_NUMERICS
+  status: REQUIRES_DESIGN_RESOLUTION
+  detail: TLD ponechává konkrétní výsledky některých skill checků a podezření v TUNING. Intenty a společná struktura
+    konzultace již existují; psaní finálních replik není tímto blokované.
+- id: STREET_OPTIONALITY
+  status: SOURCE_AMBIGUITY
+  detail: Beggar je uveden v optional_beats, ale také v hlavním sequence průchodu. Z těchto podkladů nevyvozovat novou
+    garantovanou větev úplného přeskočení.
+source_open_points_note: Jde o mezery/rozpory už existujících podkladů, ne o úkoly přidané kvůli tomuto souhrnu. Řešit
+  cíleně, až ovlivní navrhovanou scénu nebo implementaci.
+upstream_dependencies_from_K1:
+- id: K1_ROOK_SYSTEMIC_STYLE_INFERENCE
+  status: REQUIRES_MASTER_SYNC
+  issue: Current master represents K1_ROOK as explicit CONTROLLED / CHAOTIC / BRUTAL options. K1 v1.5 infers those outputs
+    from systemic combat telemetry.
+  required_fix: Change story.K1 K1_ROOK contract from player-facing route choice to inferred resolver while preserving
+    current consequence tables unless intentionally retuned.
+- id: GLOBAL_COMBAT_SYSTEM
+  status: REQUIRES_MASTER_SYNC
+  issue: K1 v1.5 depends on systemic dodge/parry-deflect/strike/grab combat, hidden condition states and no mandatory
+    health bars.
+  required_fix: Add a minimal global combat_system contract to Master; keep exact frame/tuning data downstream.
+- id: HYDE_GREEN_BLOOD_AND_REVERSION_PHYSIOLOGY
+  status: REQUIRES_MASTER_SYNC
+  issue: K1 v1.5 canonically gives Hyde green blood, one survivable penetrating wound, and no corresponding Jekyll wound/scar
+    after overnight reversion while shed blood persists.
+  required_fix: Add global/form-physiology evidence rule or explicitly scope this as the canonical K1 first-wound precedent.
+- id: K1_OVERNIGHT_REVERSION
+  status: REQUIRES_MASTER_OR_NARRATIVE_FLOW_SYNC
+  issue: K1 no longer plays an escape/reversion route. It fades after Rook and resolves a non-magical offscreen reversion
+    before Day-2 wake.
+  required_fix: Replace K1 playable reversion beat while retaining the invariant that reversion is non-magical and not
+    a blackout.
+- id: K1_OPTIONAL_NEWSPAPER_AND_RELIEF
+  status: REQUIRES_NARRATIVE_FLOW_AND_MASTER_SYNC
+  issue: Newspaper/ÚLEVA are optional in v1.5; skipping them resolves ÚLEVA as MISSED and does not block K1.
+  required_fix: Remove forced-news/forced-relief K1 requirement and make interpretation conditional on relief.
+- id: K1_INITIAL_CRIME_SCENE_CONSULTATION
+  status: REQUIRES_MASTER_AND_K2_SYNC
+  issue: K1 now ends with an initial Newcomen consultation at the Rook scene instead of only a summons. K2 should retain
+    broader follow-up investigation rather than duplicating the same first visit.
+  required_fix: Adjust story.K1/story.K2 topology and Narrative Flow division of police investigation.
+- id: AUTHOR_STATE_UI_FEEDBACK
+  status: TLD_LOCAL_USES_EXISTING_STATE
+  issue: The coat fail uses an already-visible AuthorPacket cognition/debuff indicator and a blocking consequence notice.
+    No new gameplay stat is introduced.
+  required_fix: Confirm shipping UI naming/copy; underlying CognitionBand/JekyllCognitionMod remain existing state.
+- id: S0_AUTHOR_WEATHER_HANDOFF
+  status: SMALL_S0_TLD_SYNC
+  issue: S0 TLD explicit required_fields omits AuthorWeather even though master stores it in AuthorPacket.
+  required_fix: Add AuthorWeather to S0 handoff required_fields.
+- id: RESEARCH_PROGRESS_AGGREGATION
+  status: REQUIRES_MASTER_SYNC_IF_NUMERIC_PROGRESS_UI_IS_USED
+  issue: Master defines RD tag values but not explicit ResearchProgress aggregation.
+  required_fix: Define canonical resolver before hardcoding numeric K1 research total.
+- id: HYDE_FORM_VISUAL_LANGUAGE
+  status: MASTER_SYNCED_WITH_K1_GREEN_BLOOD_LOCAL_EXCEPTION
+  issue: K1 uses existing Hyde visual-language contract; physical green self-blood is not automatically tagged/recolored
+    RED.
+  required_fix: None for semantics; confirm art implementation.
+- id: HYDE_BLOOD_TO_STABILIZER_RECIPE
+  status: FUTURE_RESEARCH_RULE_REQUIRES_MASTER_SYNC
+  issue: K1 v1.5 allows Jekyll to collect HYDE_BLOOD_SAMPLE and records a downstream hidden recipe in which HYDE_BLOOD_SAMPLE
+    plus CATALYST yields STABILIZER after later authored discovery.
+  required_fix: 'When the later research beat is designed, synchronize reagent_system/research_journal so the recipe
+    is gated by authored knowledge, consumes one sample plus one CATALYST, outputs one STABILIZER, and provides a later
+    sample reacquisition route if the optional K1 sample was missed.
+
+    '
+- id: K1_MANUSCRIPT_TIME
+  status: MASTER_SYNCED_TLD_V1_5
+  issue: K1 consumes ManuscriptDay/TimeOfDay and uses a TLD-local authored clock.
+  required_fix: None.
+working_method:
+- Při tvorbě další kapitoly použít tento souhrn a relevantní pravidla masteru. Detail dohledat v TLD, jen když je potřebný.
+- Nová kapitola pracuje s existujícími intenty a výsledky. Nepřidávat automaticky callback pro každou volbu nebo jednotlivou
+  repliku.
+- V novém TLD lze stručně označit, které dřívější stavy scéna používá; není to další vstupní kontrakt.
+- Po dokončení kapitoly doplnit její výsledky a návaznosti do novější verze téhož pracovního souhrnu.
+- Starší navržené možnosti a události v souhrnu nemažeme jen proto, že je následující kapitola nečte.
+- Pokud se změní skutečné pravidlo nebo důsledek v masteru/TLD, upravit souhrn a prověřit scény, které na výsledku závisejí.
+- Texty, dabing a UI zpřesňovat později. Při zachování intentu a mechaniky není nutné měnit přehled návazností.
+revision_note:
+  version: '3.1'
+  changes:
+  - Odstraněny vlastní požadavky na event logy, snapshoty, migrace a podrobné ukládání replik či interakcí.
+  - Odstraněny návrhy nových callbacků a supplemental history fields.
+  - Konzultace shrnutá pomocí existujících intentů, podmínek a důsledků bez finálních replik.
+  - Zachované původní S0/K1 volby, deklarované stavy a mechanické výsledky.
+  - Aktualizovaný zdroj K1 na v1.7 s explicitním authored time contractem a commit body.
+  - Výslovně oddělený K1 dobrovolný journal access a automatický K1 research od S1 Stevensonovy části.
+  - Odstraněn vyřešený stale edge case o povinném Day-2 zápisu.
+  source_files_modified: false

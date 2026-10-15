@@ -1,0 +1,956 @@
+schema:
+  id: JH_AMDD_NARRATIVE_FLOW
+  version: "1.0"
+  status: CANONICAL_DERIVATIVE
+  source_master: "JH_AMDD_master_v6_7_LOCKED"
+  source_master_version: "6.7-resources-storage-pursuit-canonical"
+  purpose: >
+    Narrative flow layer between the master blueprint and technical level design.
+    It defines mandatory story beats, authored player-facing options, allowed outcomes,
+    fail-forward states, hard fails, and chapter-to-chapter continuity without defining
+    exact geometry, encounter construction, clue placement, dialogue lines, or NPC staging.
+
+design_contract:
+  chronology_is_fixed: true
+  chronology:
+    - S0
+    - K1
+    - S1
+    - K2
+    - S2
+    - K3
+    - S3
+    - K4
+    - S4
+    - K5
+    - S5
+    - K6
+    - S6
+    - K7
+    - S7
+    - K8
+    - S8
+
+  interpretation:
+    forced_beat: "Must occur in every non-failed playthrough of the chapter."
+    player_option: "Authored option already allowed by the master. Exact implementation is level design."
+    fail_forward: "Bad or costly result that continues into later chronology."
+    hard_fail: "Terminal run failure requiring reload/restart."
+    optional_content: "May exist when its authored slot/conditions are active; never required for main progression."
+    level_design_open: "Not canonical at this layer; authored later per level."
+
+  global_rules:
+    - "Master rules and persistent state remain authoritative."
+    - "A real story branch still requires an explicit stable Variant ID in the master."
+    - "Mandatory story content survives low ManuscriptFidelity."
+    - "Distortion and Overdrive may alter expression or optional content, but do not invent new main-story topology."
+    - "World memory survives reversion; consequences remain true after Jekyll/Hyde form changes."
+    - "Voluntary serum use begins under player control."
+    - "Voluntary Hyde loses control only at authored compulsion gates."
+    - "Full spontaneous transformations and blackouts occur only at authored gates."
+    - "K5 first spontaneous transformation cannot become a full blackout."
+    - "K7 Carew crisis cannot become a full blackout."
+    - "K6 and K8 may contain full blackouts."
+    - "Suppressor is never mandatory for completing the main story."
+    - "If an NPC death is an authored outcome here, later content must respect it."
+    - "Additional killability of non-listed NPCs is decided in technical level design and must not contradict later forced beats."
+
+  out_of_scope:
+    - exact level geometry
+    - exact NPC placement
+    - patrol routes
+    - exact clue locations
+    - combat choreography
+    - chase route geometry
+    - exact dialogue lines
+    - cinematic shot design
+    - exact number of attackers or civilians
+    - incidental NPC killability unless explicitly authored as a narrative outcome
+    - exact shop layouts
+    - exact stealth route construction
+
+story:
+  S0:
+    title: STEVENSON_OPENING
+    world: STEVENSON
+    narrative_intent: >
+      Establish Stevenson, Fanny, his illness, and the act of writing.
+      The scene must end with Stevenson committing the first Jekyll chapter to the manuscript.
+    forced_beats:
+      - id: S0_ESTABLISH_STEVENSON
+        event: "Stevenson is physically unwell but intends to work."
+      - id: S0_FANNY_CONTACT
+        event: "Fanny is present as the closest domestic counterweight to Stevenson's condition."
+      - id: S0_BEGIN_MANUSCRIPT
+        event: "Stevenson begins shaping the Jekyll story."
+      - id: S0_WRITE_LOCK
+        event: "The first manuscript chapter is written."
+        motifs: [LÁTKA, PROMĚNA, BOLEST, ÚLEVA]
+    player_options:
+      medication_or_wait:
+        - id: S0_WAIT_FANNY
+          intent: "Wait for Fanny instead of self-medicating immediately."
+        - id: S0_ANALGESIC
+          intent: "Take fictional analgesic medication."
+        - id: S0_STIMULANT
+          intent: "Take fictional stimulant medication."
+      Fanny_response:
+        - id: S0_TRUTH
+          intent: "Tell Fanny the truth about Stevenson's state."
+        - id: S0_MINIMIZE
+          intent: "Minimize how bad Stevenson's state is."
+        - id: S0_HELP
+          intent: "Ask Fanny for help."
+    hard_fails: [STEVENSON_FATAL]
+    exit_contract:
+      next: K1
+      required:
+        - "Stevenson has committed to the first manuscript chapter."
+        - "The first write lock has resolved."
+    level_design_open:
+      - "Exact domestic staging."
+      - "Exact form and duration of the Fanny interaction."
+      - "Exact medication presentation and physical interaction."
+      - "Exact transition into manuscript space."
+
+  K1:
+    title: EXPERIMENT_AND_ROOK
+    world: MANUSCRIPT
+    narrative_intent: >
+      Create Hyde, make the first transformation irreversible as a fact of Jekyll's life,
+      kill Rook as a fixed story truth, lose the ledger, and start the police/underworld problem.
+    forced_beats:
+      - id: K1_JEKYLL_EXPERIMENT
+        event: "Jekyll conducts the experiment as Jekyll."
+      - id: K1_FIRST_TRANSFORMATION
+        event: "The experiment causes the first transformation into Hyde."
+      - id: K1_ROOK_CONFLICT
+        event: "Hyde enters an immediate conflict involving Rook."
+      - id: K1_ROOK_DIES
+        event: "Rook dies after the immediate threat has ended."
+        fixed_truth: true
+      - id: K1_LEDGER_MISSING
+        event: "Rook's ledger is missing after the incident."
+        fixed_truth: true
+      - id: K1_WORLD_REACTS
+        event: "The death creates both police and underworld pressure."
+      - id: K1_POLICE_SUMMONS
+        event: "Newcomen summons Jekyll to the crime scene."
+      - id: K1_ROOK_REPUTATION_REVEAL_AND_RELIEF
+        event: "The story establishes Rook's reputation and the relief of his death."
+      - id: K1_JEKYLL_INTERPRETS
+        event: event:"After feeling relief, Jekyll must form an interpretation of what Hyde did and of his own reaction."
+      - id: K1_TRANSFORMATION_KNOWLEDGE
+        event: "Jekyll gains first-hand knowledge of transformation and post-transform physiology."
+    player_options:
+      brew_approach:
+        - id: K1_PRECISE
+          intent: "Prepare the first experiment precisely."
+        - id: K1_FAST
+          intent: "Use a faster fallback preparation."
+        - id: K1_RISKY
+          intent: "Use a deliberately risky preparation."
+      Rook_resolution:
+        - id: K1_CONTROLLED
+          intent: "Resolve the Rook incident with the greatest available restraint."
+        - id: K1_CHAOTIC
+          intent: "Resolve the incident chaotically and leave a messier aftermath."
+        - id: K1_BRUTAL
+          intent: "Resolve the incident through overt brutality."
+      Jekyll_interpretation:
+        - id: K1_RESPONSIBILITY
+          intent: "Accept responsibility for what happened."
+        - id: K1_RATIONALIZE
+          intent: "Rationalize the death on the basis that Rook was evil."
+        - id: K1_SUPPRESS
+          intent: "Refuse to think about the event."
+    persistent_story_facts_on_successful_exit:
+      - RookDead
+      - LedgerMissing
+      - "Police interest exists."
+      - "Underworld interest exists."
+      - "Crowther pressure has begun."
+      - "Incident INC_K1_ROOK exists."
+    hard_fails: [PLAYER_DEATH, DEFINITIVE_CAPTURE, SERUM_OVERDOSE]
+    exit_contract:
+      next: S1
+      required:
+        - "Rook is dead."
+        - "The ledger is missing."
+        - "Jekyll has survived and reverted from the first transformation."
+        - "Jekyll has formed an authored interpretation of the event."
+    level_design_open:
+      - "Exact laboratory layout."
+      - "Exact cause and choreography of the Rook confrontation."
+      - "Exact physical manner of Rook's death."
+      - "Exact mechanism by which the ledger goes missing."
+      - "Exact combat, chase, or escape construction."
+
+  S1:
+    title: MOTIF_TUTORIAL_AND_HOUSE
+    world: STEVENSON
+    narrative_intent: >
+      Return to Stevenson after the first Hyde chapter and establish that the manuscript
+      feeds back into his physical and emotional life before he writes the police chapter.
+    forced_beats:
+      - id: S1_RETURN_TO_STEVENSON
+        event: "The narrative returns from the manuscript to Stevenson."
+      - id: S1_MANUSCRIPT_FEEDBACK
+        event: "Themes from the first Jekyll chapter are available as material for Stevenson's next writing."
+      - id: S1_FANNY_DOMESTIC_ANCHOR
+        event: "Fanny and the domestic world remain available as Stevenson's real-world anchor."
+      - id: S1_WRITE_NEXT
+        event: "Stevenson continues the manuscript into K2."
+    player_options:
+      actions:
+        - id: S1_BODY
+          focus: [KREV, BOLEST, TĚLO]
+        - id: S1_MEDICAL
+          focus: [VĚDA, LÁTKA, ÚLEVA, ZÁVISLOST]
+        - id: S1_FANNY
+          focus: [PÉČE, DŮVĚRA, PODEZŘENÍ, VINA]
+        - id: S1_FIRE
+          focus: [KOUŘ, KLID, VZPOMÍNKA]
+        - id: S1_WINDOW
+          focus: [MLHA, SVĚTLO, SLEDOVÁNÍ]
+        - id: S1_REST
+          focus: [PÉČE, TĚLO, HLAD, ÚLEVA]
+    hard_fails:
+      - id: STEVENSON_FATAL
+        possible_if: "Medication is used."
+    exit_contract:
+      next: K2
+      required: ["Stevenson writes the next manuscript chapter."]
+    level_design_open:
+      - "Exact domestic activity order."
+      - "Exact dialogue with Fanny."
+      - "Exact manifestation of manuscript feedback."
+
+  K2:
+    title: ROOK_DEATH_INVESTIGATION
+    world: MANUSCRIPT
+    narrative_intent: >
+      Force Jekyll to investigate Hyde's crime in public while protecting his own identity,
+      establish Newcomen as the police pressure point, and turn the missing ledger into a lead
+      toward Crowther's network.
+    forced_beats:
+      - id: K2_POLICE_CASE_ACTIVE
+        event: "Rook's death is an active police investigation."
+      - id: K2_JEKYLL_ENTERS_CASE
+        event: "Jekyll participates in the first police investigation section as Jekyll."
+      - id: K2_NO_TRANSFORMATION_DURING_FIRST_POLICE_SECTION
+        event: "The first police section cannot be solved by transforming into Hyde."
+        fixed_truth: true
+      - id: K2_INVESTIGATE_OWN_CRIME
+        event: "Jekyll investigates a crime actually committed by Hyde."
+      - id: K2_MEET_NEWCOMEN
+        event: "Jekyll meets and speaks with Newcomen."
+      - id: K2_POLICE_KNOWLEDGE_REVEALED
+        event: "The Newcomen interaction establishes what the police currently know and suspect."
+      - id: K2_CROWTHER_DIRECTION_EMERGES
+        event: "The investigation produces a direction toward the missing ledger and Crowther-linked people."
+      - id: K2_AFTER_RELEASE_DECISION
+        event: "After the official police section, Jekyll may prepare for further action or stop."
+      - id: K2_AFTER_HOURS_RULE
+        event: "If the player actively returns after hours, the playable return route is Hyde only."
+        fixed_truth: true
+      - id: K2_K3_POSITION_RESOLVES
+        event: "The chapter resolves who has the initiative going into the intermediary hunt."
+    player_options:
+      day_investigation:
+        - {id: K2_REASON, intent: "Reconstruct the crime through reasoning."}
+        - {id: K2_CHEMISTRY, intent: "Examine the body or material evidence through Jekyll's expertise."}
+        - {id: K2_SOCIETY, intent: "Use Jekyll's social access and status."}
+        - {id: K2_LIE, intent: "Misdirect through a lie."}
+        - {id: K2_TAMPER, intent: "Tamper with the investigation."}
+      Newcomen_conversation:
+        - {id: K2_GENERAL, intent: "Offer a general medical inference."}
+        - {id: K2_SOCIAL, intent: "Control the conversation socially."}
+        - {id: K2_LIE_DIALOGUE, intent: "Lie to Newcomen."}
+        - {id: K2_EXACT, intent: "Offer an exact reconstruction that risks revealing too much knowledge."}
+      after_release:
+        - {id: K2_BREW, intent: "Brew serum after release."}
+        - {id: K2_SKIP_BREW, intent: "Do not brew serum."}
+      after_hours:
+        - {id: K2_SKIP_AFTER_HOURS, intent: "Do not return after hours."}
+        - {id: K2_HYDE_AFTER_HOURS, intent: "Return after hours as Hyde if serum is available."}
+    possible_outcomes:
+      initiative_state: [PLAYER_FIRST, CONTESTED, OTHERS_FIRST]
+    optional_content:
+      - {id: K2_COVER_SHOP, type: OPTIONAL_SLOT}
+      - {id: K2_OVERDRIVE_WITNESS, type: AUTHORED_NOISE}
+    preparation_options:
+      after_release_only:
+        - "Withdraw stored serum."
+        - "Brew serum if current resources and lab access permit."
+        - "Store excess legal doses."
+        - "Requisition common reagents if still employed."
+    hard_fails:
+      - id: PLAYER_DEATH
+        possible_during: HYDE_AFTER_HOURS_ONLY
+      - DEFINITIVE_CAPTURE
+      - id: SERUM_OVERDOSE
+        possible_if: "Serum is used."
+    exit_contract:
+      next: S2
+      required:
+        - "The police investigation has happened."
+        - "Jekyll has spoken with Newcomen."
+        - "A Crowther-network direction exists."
+        - "K3 initiative state is resolved."
+    level_design_open:
+      - "Exact crime-scene layout."
+      - "Exact clues."
+      - "Exact order in which investigation actions are discovered."
+      - "Exact Newcomen dialogue."
+      - "Exact after-hours route."
+      - "Exact identity and placement of witnesses."
+      - "Exact cover-shop implementation."
+
+  S2:
+    title: PREP_FOR_LEDGER
+    world: STEVENSON
+    narrative_intent: >
+      Give Stevenson a preparation chapter before the intermediary hunt and establish
+      secrecy, debt, doors, smoke, and fear as available dramatic material.
+    forced_beats:
+      - {id: S2_RETURN_TO_STEVENSON, event: "The story returns to Stevenson."}
+      - {id: S2_PREPARE_NEXT_CHAPTER, event: "Stevenson prepares the manuscript chapter leading to Crowther's intermediary."}
+      - {id: S2_WRITE_NEXT, event: "Stevenson writes K3."}
+    player_options:
+      actions:
+        - {id: S2_REST, intent: "Rest."}
+        - {id: S2_FOOD_FANNY, intent: "Eat / spend restorative time with Fanny."}
+        - {id: S2_MEDICATE, intent: "Use medication."}
+        - id: S2_INSPIRATION
+          focus: [TAJEMSTVÍ, DLUH, DVEŘE, KOUŘ, STRACH]
+        - {id: S2_PUSH, intent: "Push through fatigue to strengthen the writing."}
+    hard_fails: [STEVENSON_FATAL]
+    exit_contract:
+      next: K3
+      required: ["Stevenson writes the intermediary chapter."]
+    level_design_open:
+      - "Exact domestic staging."
+      - "Exact Fanny interaction."
+      - "Exact representation of inspiration."
+
+  K3:
+    title: LOST_LEDGER_AND_INTERMEDIARY
+    world: MANUSCRIPT
+    narrative_intent: >
+      Move Jekyll into Crowther-linked criminal territory, force contact with the intermediary,
+      allow the first major voluntary use of Hyde as a tool, and produce the next concrete
+      lead toward Crowther and the witness.
+    forced_beats:
+      - {id: K3_FOLLOW_LEDGER_TRAIL, event: "Jekyll follows the missing-ledger trail into Crowther-linked territory."}
+      - {id: K3_REACH_INTERMEDIARY, event: "The player reaches Crowther's intermediary."}
+      - {id: K3_INTERMEDIARY_EXCHANGE, event: "The intermediary becomes the central source or obstacle for the next Crowther lead."}
+      - {id: K3_PRIORITY_CONFLICT, event: "The chapter presents competing priorities around ledger, intermediary, and Hyde's escape."}
+      - {id: K3_CROWTHER_LEAD_RESOLVES, event: "The chapter ends with usable direction deeper into Crowther's network."}
+      - {id: K3_WITNESS_DIRECTION_EXISTS, event: "The story can progress toward Crowther's witness in K4."}
+    player_options:
+      form:
+        - {id: K3_STAY_JEKYLL, intent: "Remain Jekyll."}
+        - {id: K3_USE_SERUM, intent: "Voluntarily use Hyde."}
+      Jekyll:
+        - {id: K3_NEGOTIATE, intent: "Negotiate."}
+        - {id: K3_KNOWLEDGE, intent: "Use existing knowledge."}
+        - {id: K3_CHEMISTRY, intent: "Use scientific/chemical expertise."}
+        - {id: K3_DEBT_TRAP, intent: "Create or exploit a debt/trap."}
+      Hyde:
+        - {id: K3_READ_FEAR, intent: "Read the intermediary's fear."}
+        - {id: K3_PREDATORY_BARGAIN, intent: "Offer a predatory bargain."}
+        - {id: K3_THREATEN, intent: "Threaten."}
+      priority:
+        - {id: K3_LEDGER, intent: "Prioritize the ledger."}
+        - {id: K3_INTERMEDIARY, intent: "Prioritize the intermediary."}
+        - {id: K3_HYDE_ESCAPE, intent: "Prioritize Hyde's escape."}
+    possible_outcomes:
+      - {id: LEAD, type: CONTINUE_WITH_ADVANTAGE}
+      - {id: SHARED, type: CONTINUE_CONTESTED}
+      - id: OTHERS
+        type: FAIL_FORWARD
+        meaning: "Opposition holds the initiative, but chronology continues."
+    preparation_options:
+      before_departure:
+        - "Withdraw serum reserve."
+        - "Brew serum."
+        - "Collect carried reagents."
+        - "Change outfit if the authored cover route is available."
+    optional_content:
+      - {id: K3_COVER_SHOP, type: OPTIONAL_SLOT}
+      - {id: K3_OVERDRIVE_RUMOR, type: AUTHORED_NOISE}
+      - id: K3_PICKPOCKET_BASE
+        type: OPTIONAL_ROUTE
+        possible_targets:
+          ordinary_thief: [WALLET]
+          informed_underworld_thief: [SERUM_DOSE, WALLET]
+        resolution: [PICKPOCKET_SYSTEM, PURSUIT_SYSTEM]
+    hard_fails: [PLAYER_DEATH, DEFINITIVE_CAPTURE, SERUM_OVERDOSE]
+    exit_contract:
+      next: S3
+      required:
+        - "The intermediary stage is resolved."
+        - "A Crowther lead exists."
+        - "The story can advance to the witness."
+    level_design_open:
+      - "Exact criminal district."
+      - "Exact intermediary identity/presentation beyond canon already established elsewhere."
+      - "Exact transaction or confrontation staging."
+      - "Exact ledger location."
+      - "Exact chase or escape route."
+      - "Exact pickpocket staging."
+
+  S3:
+    title: FIRST_STRONG_BLEED
+    world: STEVENSON
+    narrative_intent: "Make the Stevenson/manuscript boundary visibly less stable before the witness chapter."
+    forced_beats:
+      - {id: S3_RETURN_TO_STEVENSON, event: "The narrative returns to Stevenson."}
+      - {id: S3_BLEED_PRESENT, event: "The manuscript may now intrude more strongly into Stevenson's perception."}
+      - {id: S3_WRITE_NEXT, event: "Stevenson continues into K4."}
+    player_options:
+      actions:
+        - {id: S3_GROUND, intent: "Ground Stevenson and reconnect him to immediate reality."}
+        - {id: S3_REST, intent: "Rest."}
+        - {id: S3_MEDICATE, intent: "Use medication."}
+        - {id: S3_PUSH, intent: "Push onward despite deterioration."}
+    optional_content:
+      - {id: S3_HALLUCINATION_MOTIFS, type: AUTHORED_PRESENTATION, enabled: true}
+    hard_fails: [STEVENSON_FATAL]
+    exit_contract:
+      next: K4
+      required: ["Stevenson writes the witness chapter."]
+    level_design_open:
+      - "Exact hallucination content."
+      - "Exact domestic movement and staging."
+      - "Exact Fanny participation."
+
+  K4:
+    title: CROWTHER_WITNESS
+    world: MANUSCRIPT
+    narrative_intent: >
+      Put a living source of information about Crowther at risk, force a direct attack,
+      and establish that a failed protection attempt can permanently change later content
+      without stopping the main chronology.
+    forced_beats:
+      - {id: K4_FIND_WITNESS, event: "Jekyll reaches Crowther's witness."}
+      - {id: K4_ACCESS_WITNESS_INFORMATION, event: "Jekyll gets an opportunity to establish what the witness knows."}
+      - {id: K4_SECURE_WITNESS_ATTEMPT, event: "Jekyll attempts to secure, protect, or relocate the witness."}
+      - id: K4_FORCED_ATTACK
+        event: "An authored attack occurs."
+        fixed_truth: true
+      - {id: K4_PRIORITY_CRISIS, event: "During the attack, the player must navigate competing priorities."}
+      - {id: K4_WITNESS_OUTCOME, event: "The witness state resolves before chapter exit."}
+    player_options:
+      form:
+        - {id: K4_STAY_JEKYLL, intent: "Remain Jekyll."}
+        - {id: K4_USE_SERUM, intent: "Use Hyde."}
+        - note: "Jekyll is preferred, but Hyde is authored as a valid route."
+      Jekyll:
+        - {id: K4_TREAT, intent: "Treat the witness."}
+        - {id: K4_REASSURE, intent: "Reassure the witness."}
+        - {id: K4_VERIFY, intent: "Verify the witness's information."}
+        - {id: K4_RELOCATE, intent: "Relocate the witness."}
+      Hyde:
+        - {id: K4_PROTECTIVE_MENACE, intent: "Protect through menace."}
+        - {id: K4_READ_FEAR, intent: "Read fear."}
+        - {id: K4_INTIMIDATE, intent: "Intimidate."}
+      forced_attack_priority:
+        - {id: K4_PROTECT, intent: "Prioritize protecting the witness."}
+        - {id: K4_INFORMATION, intent: "Prioritize securing information."}
+        - {id: K4_HYDE_CHASE, intent: "Prioritize chasing the opposition."}
+    possible_outcomes:
+      - {id: WITNESS_SAFE, type: CONTINUE, persistent: true}
+      - {id: WITNESS_COMPROMISED, type: FAIL_FORWARD, persistent: true}
+      - {id: WITNESS_DEAD, type: FAIL_FORWARD, persistent: true}
+    optional_content:
+      - {id: K4_COVER_SHOP, type: OPTIONAL_SLOT}
+      - {id: K4_OVERDRIVE_PASSERBY, type: AUTHORED_NOISE}
+      - id: K4_PICKPOCKET_OVERDRIVE
+        type: AUTHORED_NOISE
+        possible_target: [WALLET]
+    hard_fails: [PLAYER_DEATH, DEFINITIVE_CAPTURE, SERUM_OVERDOSE]
+    exit_contract:
+      next: S4
+      required:
+        - "The forced attack has occurred."
+        - "Witness state is SAFE, COMPROMISED, or DEAD."
+        - "The story still has a path toward Crowther's wider network."
+    level_design_open:
+      - "Exact witness location."
+      - "Exact attacker identity and number."
+      - "Exact attack trigger."
+      - "Exact combat/chase geometry."
+      - "Exact information object or testimony delivery."
+      - "Exact reason the witness becomes compromised."
+
+  S4:
+    title: SOCIAL_INSPIRATION
+    world: STEVENSON
+    narrative_intent: >
+      Give Stevenson a non-medication domestic chapter before K5 and frame the next
+      manuscript movement around care, memory, home, secrecy, fear, and freedom.
+    forced_beats:
+      - {id: S4_RETURN_TO_STEVENSON, event: "The narrative returns to Stevenson."}
+      - {id: S4_NO_MEDICATION, event: "Medication is unavailable in this chapter.", fixed_truth: true}
+      - {id: S4_WRITE_NEXT, event: "Stevenson continues into the Crowther social-network chapter."}
+    player_options:
+      actions:
+        - {id: S4_FANNY, focus: [PÉČE, DŮVĚRA, PODEZŘENÍ]}
+        - {id: S4_FLOWERS, focus: [KVĚTINY, VZPOMÍNKA]}
+        - {id: S4_MUSIC, focus: [HUDBA, KLID]}
+        - {id: S4_FIRE, focus: [SVĚTLO, DOMOV]}
+        - {id: S4_FICTION, focus: [TAJEMSTVÍ, STRACH, SVOBODA]}
+    hard_fails: []
+    exit_contract:
+      next: K5
+      required: ["Stevenson writes K5."]
+    level_design_open:
+      - "Exact domestic activity."
+      - "Exact Fanny dialogue."
+      - "Exact representation of memory and inspiration."
+
+  K5:
+    title: CROWTHER_SOCIAL_NETWORK
+    world: MANUSCRIPT
+    narrative_intent: >
+      Let Jekyll investigate the respectable/social side of Crowther's network,
+      permit an optional private Hyde detour, and then force the first unavoidable
+      spontaneous transformation without allowing a full blackout.
+    forced_beats:
+      - {id: K5_ENTER_SOCIAL_NETWORK, event: "Jekyll investigates people connected to Crowther's social network."}
+      - {id: K5_PUBLIC_JEKYLL, event: "Public progression occurs as Jekyll.", fixed_truth: true}
+      - {id: K5_PRIVATE_WINDOW_MAY_EXIST, event: "A private authored space may permit optional Hyde use."}
+      - {id: K5_REVERT_BEFORE_PUBLIC_RETURN, event: "If Hyde is used privately, Jekyll must revert before returning to public progression.", fixed_truth: true}
+      - {id: K5_FIRST_SPONTANEOUS, event: "The first mandatory spontaneous transformation occurs.", fixed_truth: true}
+      - {id: K5_NO_FULL_BLACKOUT, event: "This first spontaneous transformation cannot become a full blackout.", fixed_truth: true}
+      - {id: K5_RESPONSE_TO_SPONTANEOUS, event: "The player consciously responds to the loss of control."}
+      - {id: K5_NEW_TRUTH, event: "By chapter end, it is established that Jekyll no longer fully controls when Hyde appears."}
+    player_options:
+      public_Jekyll:
+        - {id: K5_SOCIETY, intent: "Use social skill and status."}
+        - {id: K5_REASON, intent: "Use reasoning."}
+        - {id: K5_CHEMISTRY, intent: "Use scientific/chemical expertise."}
+      private_transform:
+        - {id: K5_STAY_JEKYLL, intent: "Remain Jekyll and return to public progression."}
+        - {id: K5_USE_SERUM, intent: "Take an optional private Hyde detour."}
+      private_Hyde:
+        - {id: K5_INSTINCT, intent: "Use Hyde's instinct."}
+        - {id: K5_MOBILITY, intent: "Use Hyde's mobility."}
+        - {id: K5_BRUTALITY, intent: "Use Hyde's brutality."}
+      spontaneous_response:
+        - {id: K5_HIDE_CONTROL, intent: "Hide the transformation and attempt to retain control."}
+        - {id: K5_SEEK_HELP, intent: "Seek help."}
+        - {id: K5_EMBRACE_HYDE, intent: "Embrace Hyde rather than treating him only as an intrusion."}
+    optional_content:
+      - {id: K5_CLOAKROOM, type: OPTIONAL_ROUTE}
+      - {id: K5_OVERDRIVE_GOSSIP, type: AUTHORED_NOISE}
+    preparation_options:
+      before_benefit:
+        - "Withdraw serum reserve."
+        - "Prepare a clean outfit."
+        - "Carry one suppressor if already unlocked and brewed."
+    persistent_story_facts_on_successful_exit:
+      - "Spontaneous onset has now happened at least once."
+      - "Jekyll knows Hyde can appear without voluntary serum use."
+    hard_fails: [PLAYER_DEATH, DEFINITIVE_CAPTURE, SERUM_OVERDOSE]
+    exit_contract:
+      next: S5
+      required:
+        - "The first mandatory spontaneous transformation has happened."
+        - "No full blackout has replaced player awareness."
+        - "The player's authored response to the spontaneous transformation has resolved."
+    level_design_open:
+      - "Exact benefit/social event."
+      - "Exact members of Crowther's social network."
+      - "Exact private transformation opportunity."
+      - "Exact place and trigger of spontaneous onset."
+      - "Exact public cover-up or escape."
+
+  S5:
+    title: CHEMISTRY_AND_RESOURCE_SPIRAL
+    world: STEVENSON
+    narrative_intent: >
+      Escalate Stevenson's physical cost before the archive chapter and allow the player
+      to trade rest, medication, and writing pressure against one another.
+    forced_beats:
+      - {id: S5_RETURN_TO_STEVENSON, event: "The narrative returns to Stevenson."}
+      - {id: S5_DETERIORATION_PRESENT, event: "Stevenson's worsening condition remains materially relevant to his writing."}
+      - {id: S5_WRITE_NEXT, event: "Stevenson prepares and writes the Crowther archive chapter."}
+    player_options:
+      actions:
+        - {id: S5_REST, intent: "Rest."}
+        - {id: S5_FOOD, intent: "Eat / recover."}
+        - {id: S5_MEDICATE, intent: "Use medication."}
+        - {id: S5_RISKY_SEQUENCE, intent: "Use two fictional medication actions with a safety check after each."}
+        - {id: S5_WRITE_EARLY, intent: "Write before Stevenson is fully recovered."}
+    optional_content:
+      - {id: S5_HALLUCINATION_MOTIFS, type: AUTHORED_PRESENTATION, enabled: true}
+    hard_fails: [STEVENSON_FATAL]
+    exit_contract:
+      next: K6
+      required: ["Stevenson writes K6."]
+    level_design_open:
+      - "Exact medication staging."
+      - "Exact hallucination content."
+      - "Exact Fanny involvement."
+      - "Exact transition into the archive chapter."
+
+  K6:
+    title: CROWTHER_ARCHIVE
+    world: MANUSCRIPT
+    narrative_intent: >
+      Force a direct attack on Crowther's leverage, put decisive evidence in the player's hands,
+      allow the first authored full-blackout possibility, and resolve Crowther as the dominant
+      external antagonist so the final act can focus on Jekyll and Hyde.
+    forced_beats:
+      - {id: K6_ATTACK_CROWTHER_LEVERAGE, event: "Jekyll acts directly against Crowther's leverage and protects his own research."}
+      - {id: K6_REACH_ARCHIVE, event: "The player reaches the archive / evidence space."}
+      - {id: K6_EVIDENCE_FOUND, event: "Relevant evidence becomes available."}
+      - {id: K6_EVIDENCE_DECISION, event: "The player must decide what to do with the evidence."}
+      - {id: K6_FORM_ESCALATION, event: "The Jekyll/Hyde form problem escalates during the chapter."}
+      - {id: K6_COMPULSION_GATE, event: "An authored compulsion gate occurs."}
+      - {id: K6_CROWTHER_CONFRONTATION, event: "Jekyll or Hyde confronts Crowther."}
+      - {id: K6_BREAK_CROWTHER_LEVERAGE, event: "Crowther's leverage is substantially broken by chapter end."}
+      - {id: K6_EXTERNAL_TO_INTERNAL_SHIFT, event: "After K6, the dominant conflict shifts from Crowther to Jekyll/Hyde control."}
+    player_options:
+      first_form:
+        - {id: K6_STAY_JEKYLL, intent: "Enter/continue as Jekyll."}
+        - {id: K6_USE_SERUM, intent: "Use Hyde."}
+      Jekyll_entry:
+        - {id: K6_SOCIETY, intent: "Use society/status."}
+        - {id: K6_REASON, intent: "Use reasoning."}
+        - {id: K6_CHEMISTRY, intent: "Use chemistry."}
+      Hyde_entry:
+        - {id: K6_MOBILITY, intent: "Use mobility."}
+        - {id: K6_INSTINCT, intent: "Use instinct."}
+        - {id: K6_BRUTAL, intent: "Use brutality."}
+      evidence:
+        - {id: K6_TAKE_ORIGINAL, intent: "Take the original."}
+        - {id: K6_COPY, intent: "Create/take a copy."}
+        - {id: K6_DESTROY, intent: "Destroy the evidence."}
+      midchapter_form_gate:
+        JEKYLL:
+          - {id: K6_REMAIN_JEKYLL, intent: "Remain Jekyll."}
+          - {id: K6_USE_SECOND_SERUM, intent: "Use another serum dose."}
+        HYDE:
+          - {id: K6_REVERT_IF_ALLOWED, intent: "Revert if reversion is legally available."}
+          - {id: K6_REMAIN_HYDE, intent: "Remain Hyde."}
+          - {id: K6_REDOSE, intent: "Redose to extend Hyde."}
+      Crowther_as_Jekyll:
+        - {id: K6_REASON_CROWTHER, intent: "Reason with or against Crowther."}
+        - {id: K6_INTERROGATE, intent: "Interrogate Crowther."}
+        - {id: K6_BLACKMAIL_BACK, intent: "Turn blackmail back on Crowther."}
+        - {id: K6_FULL_SYNTHESIS, intent: "Use the accumulated case/evidence as a full synthesis."}
+      Crowther_as_Hyde:
+        - {id: K6_READ_CROWTHER_FEAR, intent: "Read Crowther's fear."}
+        - {id: K6_BARGAIN, intent: "Bargain."}
+        - {id: K6_THREATEN, intent: "Threaten."}
+        - {id: K6_ATTACK, intent: "Attack."}
+    blackout:
+      gate: K6_BLACKOUT_GATE
+      full_blackout_allowed: true
+      mandatory: false
+      note: "If a blackout occurs, it is authored at the K6 gate; it is not a free systemic branch."
+    possible_outcomes:
+      - {id: CLEAN_BREAK, type: CONTINUE, meaning: "Crowther's leverage is broken with comparatively controlled fallout."}
+      - {id: EXPOSED_BREAK, type: FAIL_FORWARD, meaning: "Crowther's leverage is broken, but Jekyll/Hyde becomes more exposed."}
+      - {id: DESTRUCTIVE_BREAK, type: FAIL_FORWARD, meaning: "Crowther's leverage is broken through destructive/violent fallout."}
+    preparation_options:
+      before_archive:
+        - "Prepare a professional multi-dose batch if unlocked."
+        - "Withdraw stored doses."
+        - "Brew suppressor if recipe, reagent, and advanced equipment are available."
+        - "Select carried evidence/reagent."
+    optional_content:
+      - {id: K6_SIDE_OFFICE, type: OPTIONAL_ROUTE}
+      - {id: K6_OVERDRIVE_LEDGER, type: AUTHORED_NOISE}
+      - id: K6_INFORMED_PICKPOCKET
+        type: OPTIONAL_ROUTE
+        possible_targets: [SERUM_DOSE, RARE_SUPPRESSOR_REAGENT, WALLET, EVIDENCE]
+        critical_item_rule: "A critical stolen item requires guaranteed authored recovery or fallback."
+    hard_fails: [PLAYER_DEATH, DEFINITIVE_CAPTURE, SERUM_OVERDOSE]
+    exit_contract:
+      next: S6
+      required:
+        - "The evidence decision is resolved."
+        - "The Crowther confrontation has occurred."
+        - "Crowther's leverage is broken in CLEAN, EXPOSED, or DESTRUCTIVE form."
+        - "The story can now focus primarily on Jekyll/Hyde control."
+    level_design_open:
+      - "Exact archive building."
+      - "Exact infiltration route."
+      - "Exact evidence object(s)."
+      - "Exact Crowther staging and dialogue."
+      - "Exact blackout content if triggered."
+      - "Exact pickpocket pursuit/recovery."
+      - "Whether Crowther can physically die is not defined here unless separately authored later."
+
+  S6:
+    title: RESPONSIBILITY_AND_IDENTITY
+    world: STEVENSON
+    narrative_intent: >
+      Let Stevenson confront the manuscript he has created and shift the thematic center
+      from external conspiracy toward responsibility, identity, and the cost of continuing.
+    forced_beats:
+      - {id: S6_RETURN_TO_STEVENSON, event: "The narrative returns to Stevenson."}
+      - {id: S6_MANUSCRIPT_CONFRONTATION, event: "Stevenson has the opportunity to confront the manuscript as an object and as a reflection of himself."}
+      - {id: S6_IDENTITY_THEME, event: "Responsibility and identity become dominant material for the next chapter."}
+      - {id: S6_WRITE_NEXT, event: "Stevenson writes the Carew chapter."}
+    player_options:
+      actions:
+        - {id: S6_CARE, intent: "Accept care."}
+        - {id: S6_READ_MANUSCRIPT, intent: "Read the manuscript."}
+        - {id: S6_ISOLATE, intent: "Isolate from Fanny."}
+        - {id: S6_MEDICATE, intent: "Use medication."}
+    optional_content:
+      - {id: S6_HALLUCINATION_MOTIFS, type: AUTHORED_PRESENTATION, enabled: true}
+    hard_fails: [STEVENSON_FATAL]
+    exit_contract:
+      next: K7
+      required: ["Stevenson writes K7."]
+    level_design_open:
+      - "Exact manuscript-reading presentation."
+      - "Exact Fanny confrontation or support dialogue."
+      - "Exact hallucination content."
+
+  K7:
+    title: CAREW
+    world: MANUSCRIPT
+    narrative_intent: >
+      Put Carew directly in danger at a point where Jekyll already understands Hyde,
+      force player awareness through the crisis, and make the outcome an explicit consequence
+      rather than something hidden by blackout.
+    forced_beats:
+      - {id: K7_PREPARE_FOR_CAREW, event: "Jekyll knows loss of control is a live risk before Carew arrives."}
+      - {id: K7_CAREW_ARRIVES, event: "Carew arrives."}
+      - {id: K7_CAREW_MEETS_JEKYLL, event: "Carew initially encounters Jekyll, not Hyde.", fixed_truth: true}
+      - {id: K7_JEKYLL_RESPONSE, event: "Jekyll gets an authored response opportunity."}
+      - {id: K7_SPONTANEOUS_PRESSURE, event: "An authored spontaneous transformation pressure gate occurs."}
+      - {id: K7_NO_FULL_BLACKOUT, event: "The Carew crisis cannot become a full blackout.", fixed_truth: true}
+      - {id: K7_HYDE_RESPONSE_IF_PRESENT, event: "If Hyde manifests, the player remains aware and receives authored Hyde options."}
+      - {id: K7_CAREW_CRISIS, event: "A direct Carew crisis must resolve."}
+      - {id: K7_CAREW_OUTCOME, event: "Carew ends SAFE, INJURED, or DEAD."}
+    player_options:
+      before_Carew:
+        - {id: K7_SUPPRESSOR, intent: "Use suppressor."}
+        - {id: K7_PLANNED_RELEASE, intent: "Use a planned Hyde release before Carew."}
+        - {id: K7_NOTHING, intent: "Wait for Carew without special preparation."}
+      Jekyll:
+        - {id: K7_CONFESS, intent: "Confess."}
+        - {id: K7_REASON, intent: "Reason with Carew."}
+        - {id: K7_CHEM_SUPPRESS, intent: "Use chemistry to suppress the crisis."}
+        - {id: K7_DISMISS, intent: "Dismiss Carew."}
+        - {id: K7_FLEE, intent: "Flee."}
+      Hyde:
+        - {id: K7_READ_FEAR, intent: "Read Carew's fear."}
+        - {id: K7_WARN, intent: "Warn Carew."}
+        - {id: K7_THREATEN, intent: "Threaten Carew."}
+        - {id: K7_GIVE_HYDE_CONTROL, intent: "Give Hyde greater control."}
+      crisis:
+        - {id: K7_PROTECT, intent: "Protect Carew."}
+        - {id: K7_FLEE_AS_HYDE, intent: "Flee as Hyde."}
+        - {id: K7_YIELD, intent: "Yield during the crisis."}
+    possible_outcomes:
+      - {id: CAREW_SAFE, type: CONTINUE, persistent: true}
+      - {id: CAREW_INJURED, type: FAIL_FORWARD, persistent: true}
+      - {id: CAREW_DEAD, type: FAIL_FORWARD, persistent: true}
+    suppressor_path:
+      suppressor_can_be_prepared_only_if_master_requirements_are_met: true
+      valid_advanced_locations: [PROFESSIONAL_LAB, LANYON_LAB]
+      home_lab_can_brew_suppressor: false
+      if_suppressor_unavailable:
+        authored_alternatives: [PLANNED_HYDE_RELEASE, WAIT_OR_RESTRAINT, FLEE_STRATEGY, INTEGRATION_OPTIONS]
+    hard_fails:
+      - PLAYER_DEATH
+      - id: DEFINITIVE_CAPTURE
+        possible: false
+      - id: SERUM_OVERDOSE
+        possible_during: PLANNED_RELEASE_ONLY
+    exit_contract:
+      next: S7
+      required:
+        - "Carew has arrived and met Jekyll."
+        - "The spontaneous pressure gate has resolved without full blackout."
+        - "Carew state is SAFE, INJURED, or DEAD."
+    level_design_open:
+      - "Exact reason and manner of Carew's arrival."
+      - "Exact Carew dialogue."
+      - "Exact physical crisis."
+      - "Exact mechanism by which Carew is injured or killed."
+      - "Exact escape/protection route."
+
+  S7:
+    title: FINAL_STEVENSON_PREP
+    world: STEVENSON
+    narrative_intent: >
+      Prepare and write the manuscript finale around identity, transformation, control,
+      fire, guilt, and relief.
+    forced_beats:
+      - {id: S7_RETURN_TO_STEVENSON, event: "The narrative returns to Stevenson."}
+      - {id: S7_FINAL_THEMES, event: "The final chapter is framed around identity, transformation, control, fire, guilt, and relief."}
+      - {id: S7_WRITE_FINALE, event: "Stevenson writes K8."}
+    player_options:
+      actions:
+        - {id: S7_REST, intent: "Rest."}
+        - {id: S7_MEDICATE, intent: "Use medication."}
+        - {id: S7_FINAL_MOTIF, focus: [IDENTITA, PROMĚNA, KONTROLA, OHEŇ, VINA, ÚLEVA]}
+        - {id: S7_WRITE_THROUGH, intent: "Write through exhaustion."}
+    optional_content:
+      - {id: S7_HALLUCINATION_MOTIFS, type: AUTHORED_PRESENTATION, enabled: true}
+    hard_fails: [STEVENSON_FATAL]
+    exit_contract:
+      next: K8
+      required: ["Stevenson writes the final manuscript chapter."]
+    level_design_open:
+      - "Exact domestic staging."
+      - "Exact hallucination content."
+      - "Exact Fanny role before the finale."
+
+  K8:
+    title: JEKYLL_HOUSE_FINALE
+    world: MANUSCRIPT
+    narrative_intent: >
+      Bring outside pressure to Jekyll's final position, resolve the Jekyll/Hyde conflict,
+      permit one last authored blackout without allowing it to choose the ending,
+      and require a final conscious identity decision.
+    forced_beats:
+      - {id: K8_OUTSIDE_PRESSURE_CLOSES_IN, event: "Outside pressure reaches Jekyll's final position."}
+      - {id: K8_CAST_CONFIGURATION, event: "The finale is authored as ASSISTANCE, INVESTIGATION, or SIEGE according to persistent world state."}
+      - {id: K8_FINAL_PREPARATION, event: "Jekyll receives a final authored preparation opportunity."}
+      - {id: K8_FINAL_FORM_DECISION, event: "The player chooses how to enter/handle the final confrontation."}
+      - {id: K8_FINAL_CONFRONTATION, event: "Jekyll or Hyde confronts the people and pressure closing in."}
+      - {id: K8_COMPULSION_GATE, event: "A final authored compulsion gate occurs."}
+      - {id: K8_BLACKOUT_CANNOT_CHOOSE_ENDING, event: "Any full blackout cannot replace the final identity choice.", fixed_truth: true}
+      - {id: K8_FINAL_IDENTITY_GATE, event: "The player consciously chooses the final identity direction."}
+      - {id: K8_MANUSCRIPT_END_RESOLVES, event: "The manuscript resolves as HYDE or INTEGRATION."}
+    cast_variants:
+      - {id: ASSISTANCE, intent: "Jekyll still has meaningful help available."}
+      - {id: INVESTIGATION, intent: "The outside world reaches him primarily as an investigation."}
+      - {id: SIEGE, intent: "The outside world reaches him as open high-pressure pursuit/siege."}
+    player_options:
+      preparation:
+        - {id: K8_BREW_SERUM, intent: "Brew serum."}
+        - {id: K8_BREW_SUPPRESSOR, intent: "Brew suppressor if the master permits access."}
+        - {id: K8_SKIP, intent: "Skip preparation."}
+      form:
+        - {id: K8_STAY_JEKYLL, intent: "Remain Jekyll."}
+        - {id: K8_USE_SERUM, intent: "Use serum."}
+        - {id: K8_USE_SUPPRESSOR, intent: "Use suppressor."}
+      Jekyll:
+        - {id: K8_CONFESS, intent: "Confess."}
+        - {id: K8_REASON, intent: "Reason with those present."}
+        - {id: K8_CHEMISTRY, intent: "Use chemistry as part of the resolution."}
+        - {id: K8_COMPLETE_TRUTH, intent: "Tell the complete truth."}
+        - {id: K8_INTEGRATION_HYBRID, intent: "Attempt a consciously integrated resolution."}
+      Hyde:
+        - {id: K8_READ_ROOM, intent: "Read the room."}
+        - {id: K8_TURN_NEWCOMEN, intent: "Turn Newcomen."}
+        - {id: K8_INTIMIDATE_UTTERSON, intent: "Intimidate Utterson."}
+        - {id: K8_ESCAPE, intent: "Escape."}
+        - {id: K8_FIGHT, intent: "Fight."}
+    blackout:
+      gate: K8_BLACKOUT_GATE
+      full_blackout_allowed: true
+      mandatory: false
+      cannot_replace_final_identity_gate: true
+    final_identity:
+      - {id: K8_CHOOSE_HYDE, outcome: HYDE, availability: ALWAYS}
+      - {id: K8_CHOOSE_INTEGRATION, outcome: INTEGRATION, availability: "Only if the master Integration ending gate is satisfied."}
+    optional_content:
+      - {id: K8_SERVICE_EXIT, type: OPTIONAL_ROUTE}
+      - {id: K8_OVERDRIVE_CORRIDOR, type: AUTHORED_NOISE}
+    hard_fails: [PLAYER_DEATH, DEFINITIVE_CAPTURE, SERUM_OVERDOSE]
+    exit_contract:
+      next: S8
+      required:
+        - "The outside-pressure finale has occurred."
+        - "Any authored blackout has resolved."
+        - "The player has consciously chosen HYDE or eligible INTEGRATION."
+        - "The manuscript reaches its ending."
+    level_design_open:
+      - "Exact Jekyll-house geometry."
+      - "Exact entry points for assistance, investigators, or siege pressure."
+      - "Exact final combat/escape layout."
+      - "Exact blackout content."
+      - "Exact Newcomen/Utterson/Carew/Lanyon dialogue and staging."
+      - "Exact route to any service exit."
+
+  S8:
+    title: FINISHED_DRAFT_AND_BURN
+    world: STEVENSON
+    narrative_intent: >
+      Return permanently to Stevenson, burn the first draft in every ending,
+      and close on the clean sheet.
+    forced_beats:
+      - {id: S8_RETURN_TO_STEVENSON, event: "The narrative returns from the completed manuscript to Stevenson."}
+      - {id: S8_DRAFT_COMPLETE, event: "The first draft is complete."}
+      - {id: S8_NO_MEDICATION, event: "Medication is unavailable.", fixed_truth: true}
+      - {id: S8_FIRST_DRAFT_BURNS, event: "The first draft always burns.", fixed_truth: true}
+      - {id: S8_CLEAN_SHEET, event: "A clean sheet remains after the burn.", fixed_truth: true}
+    ending_variants:
+      - {id: HYDE_QUALITY, manuscript_identity: HYDE, manuscript_quality: QUALITY, burn_actor: FANNY}
+      - {id: HYDE_POOR, manuscript_identity: HYDE, manuscript_quality: POOR, burn_actor: STEVENSON}
+      - {id: INTEGRATION_QUALITY, manuscript_identity: INTEGRATION, manuscript_quality: QUALITY, burn_actor: FANNY}
+      - {id: INTEGRATION_POOR, manuscript_identity: INTEGRATION, manuscript_quality: POOR, burn_actor: STEVENSON}
+    hard_fails: []
+    exit_contract:
+      next: END
+      required:
+        - "The first draft has burned."
+        - "The clean sheet remains."
+    level_design_open:
+      - "Exact burn staging."
+      - "Exact final interaction between Stevenson and Fanny."
+      - "Exact final camera/visual treatment."
+      - "Exact meaning of the clean sheet beyond the fixed image/action."
+
+hard_fail_reference:
+  S0: {STEVENSON_FATAL: true}
+  K1: {PLAYER_DEATH: true, DEFINITIVE_CAPTURE: true, SERUM_OVERDOSE: true}
+  S1: {STEVENSON_FATAL: "if medication used"}
+  K2: {PLAYER_DEATH: "Hyde after-hours only", DEFINITIVE_CAPTURE: true, SERUM_OVERDOSE: "if serum used"}
+  S2: {STEVENSON_FATAL: true}
+  K3: {PLAYER_DEATH: true, DEFINITIVE_CAPTURE: true, SERUM_OVERDOSE: true}
+  S3: {STEVENSON_FATAL: true}
+  K4: {PLAYER_DEATH: true, DEFINITIVE_CAPTURE: true, SERUM_OVERDOSE: true}
+  S4: {NONE: true}
+  K5: {PLAYER_DEATH: true, DEFINITIVE_CAPTURE: true, SERUM_OVERDOSE: true}
+  S5: {STEVENSON_FATAL: true}
+  K6: {PLAYER_DEATH: true, DEFINITIVE_CAPTURE: true, SERUM_OVERDOSE: true}
+  S6: {STEVENSON_FATAL: true}
+  K7: {PLAYER_DEATH: true, DEFINITIVE_CAPTURE: false, SERUM_OVERDOSE: "planned release only"}
+  S7: {STEVENSON_FATAL: true}
+  K8: {PLAYER_DEATH: true, DEFINITIVE_CAPTURE: true, SERUM_OVERDOSE: true}
+  S8: {NONE: true}
+
+technical_level_design_handoff:
+  rule: >
+    Technical level design may invent routes, spaces, sub-objectives, local obstacles,
+    incidental NPCs, combat setups, stealth setups, clue placement, chase geometry,
+    and exact dialogue staging only if every forced beat, authored option, persistent
+    outcome, hard-fail rule, and chapter exit contract above remains satisfiable.
+  must_not_change:
+    - fixed chronology
+    - forced deaths or forced survivals explicitly authored above
+    - K2 first police section as Jekyll
+    - no Jekyll after-hours route in K2
+    - K4 forced attack
+    - K5 first mandatory spontaneous transformation
+    - K5 no full blackout
+    - K6/K8 blackout eligibility
+    - K7 Carew initially meeting Jekyll
+    - K7 no full blackout
+    - K8 final identity gate
+    - S8 first draft always burns
+    - S8 clean sheet remains
+  may_define_later:
+    - exact path between forced beats
+    - exact dialogue
+    - exact NPC positions
+    - exact combat/chase/stealth construction
+    - exact incidental NPC survival rules
+    - exact clue locations
+    - exact environmental storytelling
+    - exact local fail-forward implementation

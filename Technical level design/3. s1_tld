@@ -1,0 +1,919 @@
+# Jekyll & Hyde — S1 Technical Level Design
+# v0.4: Stevenson acquires new motifs; K2 realizes them.
+schema:
+  id: JH_AMDD_S1_TECHNICAL_LEVEL_DESIGN
+  version: '0.4'
+  status: UPDATED_S1_ACQUISITION_K2_REALIZATION
+  chapter: S1
+  world: STEVENSON
+  level_id: L_S1_MOTIF_TUTORIAL_AND_HOUSE
+  purpose: Return to Stevenson, sleep once, acquire new motifs through three domestic actions, and write the
+    next chapter. New motifs are realized in K2, not in S1.
+authority:
+  priority:
+  - MASTER
+  - NARRATIVE_FLOW
+  - TECHNICAL_LEVEL_DESIGN
+  master_source: JH_MASTER(3).yaml
+  narrative_flow_source: JH_Narrative Flow(1).yaml
+  previous_contract: 1+2. s0+k1_kontrakt
+  conflict_rule: 'Master and Narrative Flow remain authoritative. This draft fills in sequence, action-point,
+    motif-resolution and presentation behavior where those documents are level_design_open. A later approved
+    decision replaces a draft rule explicitly; it does not silently coexist with it.
+
+    '
+  design_principles:
+  - S1 is a compact authored interlude, not a second large investigation level.
+  - The player selects three domestic actions from six available actions.
+  - S1 begins at night; one mandatory sleep transition happens before those actions.
+  - After waking, no new laudanum/cocaine use is available in S1.
+  - Each action creates exactly one motif candidate; actions do not create six separate story trees.
+  - Action combinations never create separate K2 topologies or separate full story versions.
+  - Motifs are optional dramatic opportunities, not mandatory quest checkboxes.
+  - Each action supports exactly one motif.
+  - Exact dialogue, UI copy, VO and cinematic shots are downstream layers.
+  - Low Fidelity may simplify presentation but may not remove the three-action structure, the Fanny anchor
+    or the writing transition.
+  - K1 motif outcomes never select or generate new Stevenson motifs.
+  - One morning scene per action; persistent state modulates experience without adding unsupported state branches.
+  source_note: Kumulativní kontrakt v3.1 je souhrn možností, nikoli konkrétní průchod. Narrative Flow nebyl
+    mezi přílohami této revize; jeho obsah nebyl nově ověřen.
+  local_revision_v0_4:
+  - Zachováno šest motivů a jedna akce / jeden motiv z S1 v0.3. Master obsahuje širší seznamy motivů na akci;
+    zúžení je lokální pravidlo S1 vyžadující synchronizaci masteru.
+  - Získání a výběr probíhá v S1; FULFILLED/TWISTED/MISSED až při realizaci v K2. Tato revize výslovně nahrazuje
+    předčasné uzavírání motivů z v0.3.
+  - Ranní přítomnost Fanny je ustanovení této revize S1, nikoli odvození z jejího odchodu v S0.
+  - Pro splnění již deklarované nezávislosti na pořadí se číselné delty akcí sčítají a aplikují jednou při
+    konvergenci; prožitek a síla používají společný stav po spánku. Jde o upřesnění S1, nikoli pravidlo převzaté
+    z K1 kontraktu.
+canonical_contract:
+  entry:
+    source: K1_TO_S1_TRANSITION
+    required:
+    - K1 completed successfully
+    - Form == JEKYLL
+    - ManuscriptDay == 2
+    - AuthorPacket and MotifPacket from the prior write lock exist
+    - Stevenson state from S0 remains available
+  fixed_beats:
+  - S1_RETURN_TO_STEVENSON
+  - S1_MANUSCRIPT_FEEDBACK
+  - S1_SLEEP_TRANSITION
+  - S1_WAKE_FOR_MOTIF_ACTIONS
+  - S1_FANNY_DOMESTIC_ANCHOR
+  - S1_WRITE_NEXT
+  action_points: 3
+  action_order: no_mechanical_effect
+  available_actions:
+  - S1_BODY
+  - S1_MEDICAL
+  - S1_FANNY
+  - S1_FIRE
+  - S1_WINDOW
+  - S1_REST
+  exit:
+    next: K2
+    required:
+    - Stevenson writes the next manuscript chapter
+    - S1 action-point resolution is committed
+    - S1 MotifPacket is generated
+  hard_fail:
+  - STEVENSON_FATAL if the player commits an actual medication use in S1
+  fail_forward:
+  - None in the current master; non-fatal action outcomes continue to S1 write.
+scope:
+  included:
+  - Stevenson return and domestic handoff
+  - six action choices and three action points
+  - motif acquisition, domestic meaning, strength and selection for K2
+  - state-dependent manifestation of the same actions
+  - Fanny domestic anchor
+  - next-chapter write lock and K2 handoff
+  excluded:
+  - exact house geometry and prop art
+  - exact Fanny dialogue and final VO performance
+  - final UI design, typography and notification copy
+  - new medication system rules
+  - new global motif vocabulary outside the actions declared by Master
+  - K2 investigation content
+entry_state:
+  checkpoint: CP_S1_START
+  initialize_from:
+    Stevenson_state: S0 persistent state after S0_WRITE_LOCK and subsequent canonical transition handling
+    K1_world_memory: Rook incident, missing ledger, police/underworld pressure, Crowther pressure and current
+      research/motif results
+    AuthorPacket: generated at the preceding write lock
+    MotifPacket: Historical S0-to-K1 selection and K1 realization results; preserve separately from new S1-to-K2
+      candidates.
+  fixed_runtime:
+    world: STEVENSON
+    Form: STEVENSON
+    ManuscriptDay: 2
+    s1_phase: NIGHT_BEFORE_SLEEP
+    action_points_remaining: 0
+    S1SleepCommitted: false
+    S1AwakeForActions: false
+    S1WriteCommitted: false
+    S1FatalTriggered: false
+  carried_states:
+  - Pain
+  - Fever
+  - Fatigue
+  - Agitation
+  - SleepDebt
+  - Bleed
+  - Rebound
+  - MedicationDependence
+  - AnalgesicTolerance
+  - StimulantTolerance
+  - FannyBond
+  - AuthorPacket
+  - MotifPacket
+  - ManuscriptFidelity
+  - ManuscriptDistortion
+  - ManuscriptOverdrive
+  - AuthorWeather
+  - K1 research tags and current research progress
+  - K1 world-memory facts and current pressure values
+  - K1 interpretation of the Rook incident
+  - current checkpoint and authored time
+  lifecycle:
+    rule: 'Apply the canonical Stevenson S-entry acute reset exactly once on entry, as defined by stevenson.state_lifecycle.
+      Do not reconstruct S0 medication or Fanny writes from their labels.
+
+      '
+    acute_reset_source: stevenson.state_lifecycle.acute_effects.reset_at_S_entry
+    expected_reset:
+      Sedation: 0
+      HallucinationSuppression: 0
+      StimulantActivation: 0
+      ActivationFocusMod: 0
+location:
+  shell: S1_STEVENSON_HOUSE
+  readable_route:
+  - STUDY_WRITING_DESK
+  - SALON
+  - BEDROOM
+  - FIREPLACE
+  - WINDOW
+  - FANNY_ANCHOR
+  - MEDICAL_TABLE
+  - HOUSE_EXIT
+  - SOLDIER_SHELF
+  design_rule: 'The player should understand the six available action anchors in one readable domestic space.
+    Walking between anchors does not consume action points; selecting an action does.
+
+    '
+sleep_and_time:
+  entry: 'K1 returns control to Stevenson at night after the K1 manuscript chapter has been completed. S1 does
+    not begin with a new medication decision.
+
+    '
+  mandatory_transition: S1_SLEEP_TRANSITION
+  purpose:
+  - close the K1 aftermath night
+  - apply the existing SLEEP recovery action
+  - move authored time into the morning motif-action window
+  - provide a single authored opportunity for dream/manuscript feedback
+  recovery_resolver: stevenson.state_lifecycle.recovery_actions.SLEEP
+  effects: 'Use the existing resolver''s allowed reductions to Fatigue, SleepDebt, Rebound and Agitation. Exact
+    numeric recovery is not invented in this TLD.
+
+    '
+  player_behavior:
+    before_sleep: 'The player may look and move within the night shell, but cannot spend S1 action points,
+      farm rest or take another medication.
+
+      '
+    refusal: 'Refusing the bed interaction does not kill Stevenson and does not create a new branch; the morning
+      action phase remains locked until sleep is committed.
+
+      '
+  after_sleep:
+    set:
+      s1_phase: MORNING_MOTIF_ACTIONS
+      S1SleepCommitted: true
+      S1AwakeForActions: true
+      action_points_remaining: 3
+      FannyPresent: true
+    no_second_sleep: true
+    presence_rule: S1 establishes Fanny at home in the morning. Do not replay S0 relationship writes or infer
+      absence from FannyPostDialogueMode.
+  medication_rule: 'S1_MEDICAL is inspection/reflection only. A confirmed actual use of ANALGESIC_A or STIMULANT_S
+    routes to the existing S1 STEVENSON_FATAL rule; there is no S1 medication/sleep loop.
+
+    '
+morning_possibility_contract:
+  basis: S0_to_S1_continuity, S0_summary and K1_success_exit in cumulative contract v3.1; Master state_lifecycle.
+  guaranteed:
+  - Úspěšný návrat; Stevenson skutečně užil lék v S0.
+  - Před akcemi proběhl právě jeden spánek. Žádná varianta sběru motivů bez spánku.
+  - Sedation, HallucinationSuppression, StimulantActivation a ActivationFocusMod jsou 0; další dávka není platná
+    akce.
+  - Šest akcí je ráno dostupných; hráč provede tři různé.
+  - K1ResearchGranted je true, ale Jekyllův research journal ani jeho znalosti se nepřevádějí na Stevensonovu
+    domácí akci.
+  remaining_differences:
+    body: Převzít skutečné Pain, Fever, Bleed a další persistentní hodnoty. Spánek není vyléčení nemoci ani
+      automatické vynulování únavy.
+    recovery: SLEEP smí snížit Fatigue, SleepDebt, Rebound a Agitation. Master neurčuje množství, proto nelze
+      tvrdit konkrétní ranní rozsahy či zaručené CLEAR/STABLE.
+    medicine: Skutečně podané ANALGESIC_A nebo STIMULANT_S, výsledek dávky a případná Fanny pomoc zůstávají
+      kontextem. Akutní účinek se nevrací.
+    relationship: Použít skutečný FannyBond a vybranou S0_TRUTH / S0_MINIMIZE / S0_HELP. Všechny tři volby
+      byly vztahově pozitivní; MINIMIZE není důkaz nedůvěry. Bez prahů nevytvářet STRAINED/WITHDRAWN větve.
+  not_new_motif_inputs:
+  - K1RookResolutionStyle
+  - K1SelectedInterpretation
+  - K1NewspaperRead
+  - K1ReliefResolved
+  - K1_BrewObservation
+  - PoliceHeat
+  - UnderworldHeat
+  - CrowtherPressure
+  - NewcomenSuspicion
+  K1_preservation: Tyto výsledky zachovat pro návaznost rukopisu, případný úvodní feedback a K2. Nemění dostupnost,
+    identitu ani sílu nového motivu. K1 ÚLEVA=MISSED nezakazuje ÚLEVU v S1 a nová ÚLEVA starý výsledek nepřepisuje.
+  packet_timing: Starý AuthorPacket je historický otisk pro K1. Ranní domácí prožitek vychází ze současného
+    stavu po resetu a spánku. Nový AuthorPacket se vytvoří z aktuálního stavu při S1_WRITE_NEXT a ovlivní K2.
+  variation_budget: Jedno základní provedení na akci. Níže uvedené kontexty mění akcent či gesto, nejsou další
+    volby, motivy nebo povinné kombinatorické scény.
+state_model:
+  action_points:
+    initial: 3
+    spend: 1 per completed S1 action
+    rule: Choose three distinct actions; repeating an action is disabled.
+    order_matters: false
+    order_effect: Use the same post-sleep state as the baseline for all candidate presentation/strength evaluation.
+      Accumulate declared action deltas and apply their sum once, with canonical bounds, at convergence. This
+      avoids order-dependent clamping. Current final state generates the new AuthorPacket.
+  action_history:
+    required_fields:
+    - action_id
+    - selection_order
+    - state_snapshot_at_selection
+    - applied_state_writes
+    - generated_motif_evidence
+    rule: Design description only; reuse checkpoint state and selected action set. No new per-line logs or
+      save serialization requirement.
+  chapter_flags:
+  - S1ActionCount
+  - S1ActionPointsRemaining
+  - S1WriteCommitted
+  - S1NextChapterReady
+  - S1FatalTriggered
+  - S1FannyAnchorVisited
+  - S1MotifConvergenceResolved
+  - S1ManuscriptFeedbackPresented
+  - S1SelectedAction_1
+  - S1SelectedAction_2
+  - S1SelectedAction_3
+  - S1ActionOrder
+  - S1MotifEvidenceSet
+  - S1SelectedMotifSet
+  - LeadSoldierShelfSeen
+  - LeadSoldierQuestAccepted
+motif_model:
+  purpose: 'Convert the three chosen domestic actions into exactly three authored motif candidates for the
+    next manuscript chapter. One completed action creates one motif candidate; S1 does not ask the player to
+    complete every possible motif.
+
+    '
+  states:
+  - UNSEEN
+  - CANDIDATE
+  - ACTIVE
+  - DISCARDED
+  strength_range: 0..100
+  candidate_creation: 'Each completed action creates exactly one candidate for its declared motif. No action
+    emits a list of motifs and no later action duplicates or strengthens an already-created motif.
+
+    '
+  state_gating: All six actions are available in the morning; phase, unused action and remaining AP are the
+    only selection gates.
+  fading: No passive decay in S1. Unselected candidates become DISCARDED, not MISSED.
+  convergence: After three actions, rank their candidates, select the strongest two and a third if third.Strength
+    >= second.Strength - 10. Mark selected candidates ACTIVE for K2 and others DISCARDED. S1 never assigns
+    FULFILLED, TWISTED or MISSED to these new motifs.
+  topology_compression:
+    K2_topologies_from_S1: 1
+    K2_branching_rule: 'S1 motif identity may affect writing tone, optional authored expression or quality
+      inputs only. It does not create a separate K2 mission, location graph or investigation branch.
+
+      '
+  player_visibility: Show the domestic experience and acquired theme. Final writing presents selected themes,
+    not their K2 realization or hidden numeric strength.
+  candidate_catalog:
+    TELO:
+      source_action: S1_BODY
+      display_name: TĚLO
+      meaning: Tělo jako nositel schopností, omezení a poznatelných stop.
+      availability: ALWAYS_IN_S1_ACTION_WINDOW
+      experience_inputs: &id001
+      - Pain
+      - Fever
+      - Bleed
+      - Fatigue
+      created_state: CANDIDATE
+      selected_state: ACTIVE
+      realization_chapter: K2
+    VĚDA:
+      source_action: S1_MEDICAL
+      display_name: VĚDA
+      meaning: Pozorování, metoda a ověřování předpokladu.
+      availability: ALWAYS_IN_S1_ACTION_WINDOW
+      experience_inputs: &id002
+      - Pain
+      - MedicationDependence
+      - AnalgesicTolerance
+      - StimulantTolerance
+      created_state: CANDIDATE
+      selected_state: ACTIVE
+      realization_chapter: K2
+    DŮVĚRA:
+      source_action: S1_FANNY
+      display_name: DŮVĚRA
+      meaning: Dovolit druhému člověku přístup k části pravdy a spolehnout se na něj.
+      availability: ALWAYS_IN_S1_ACTION_WINDOW
+      experience_inputs: &id003
+      - FannyBond
+      - Agitation
+      created_state: CANDIDATE
+      selected_state: ACTIVE
+      realization_chapter: K2
+    VZPOMÍNKA:
+      source_action: S1_FIRE
+      display_name: VZPOMÍNKA
+      meaning: Minulá zkušenost se vrací jako uchovaný detail a dostává význam v přítomnosti.
+      availability: ALWAYS_IN_S1_ACTION_WINDOW
+      experience_inputs: &id004
+      - Agitation
+      - Fatigue
+      created_state: CANDIDATE
+      selected_state: ACTIVE
+      realization_chapter: K2
+    SLEDOVÁNÍ:
+      source_action: S1_WINDOW
+      display_name: SLEDOVÁNÍ
+      meaning: Pozorovatel, pozorovaný a hranice toho, co lze z pohledu poznat.
+      availability: ALWAYS_IN_S1_ACTION_WINDOW
+      experience_inputs: &id005
+      - Agitation
+      - Pain
+      - Fatigue
+      created_state: CANDIDATE
+      selected_state: ACTIVE
+      realization_chapter: K2
+    ÚLEVA:
+      source_action: S1_REST
+      display_name: ÚLEVA
+      meaning: Dočasné polevení zátěže bez odstranění její příčiny.
+      availability: ALWAYS_IN_S1_ACTION_WINDOW
+      experience_inputs: &id006
+      - Pain
+      - Fatigue
+      - Agitation
+      - SleepDebt
+      - Rebound
+      created_state: CANDIDATE
+      selected_state: ACTIVE
+      realization_chapter: K2
+  naming_rule: 'Motif IDs use the existing master vocabulary where it exists. Diacritics in content text are
+    presentation; implementation IDs should use stable ASCII IDs if the project coding standard requires it
+    (e.g. Telo, Veda, Pece).
+
+    '
+  realization_in_K2:
+    outcomes:
+    - FULFILLED
+    - TWISTED
+    - MISSED
+    rule: Selected motifs enter K2 ACTIVE and unresolved. K2 authored opportunities determine fulfillment or
+      twisting; selected unresolved motifs become MISSED at K2 closure. Acquisition, domestic presentation
+      and selection in S1 award no realization score.
+  strength_policy:
+    inputs: Selected action and shared post-sleep Stevenson baseline only; no K1 outcomes or historical packet.
+    numeric_status: 'TUNING: weights and deterministic tie-break are not supplied by the contract; do not invent
+      their values or treat this draft as a completed numeric resolver.'
+    order: Action order cannot break ties or modify strength.
+    state_role: Persistent body/relationship state can affect experienced emphasis and eventual tuned strength.
+      Motif identity remains fixed; no extra motif is emitted.
+action_catalog:
+  S1_BODY:
+    intent: Prohlédnout vlastní tělo a všimnout si jeho současných mezí.
+    anchor: BEDROOM
+    motif: TELO
+    availability: ALWAYS_IN_S1_ACTION_WINDOW
+    cost: 1 action point
+    writes:
+      Fatigue: 3
+    creates_evidence: TELO
+    expression:
+      morning_beat: Po probuzení se Stevenson posadí, protáhne ruku a sleduje námahu při obyčejném pohybu.
+        Tělo je něco, co může pozorovat, ale ne libovolně ovládat.
+      allowed_context: Bolest či horečka mění provedení pohybu podle skutečného stavu. Krvácení nezobrazovat,
+        pokud Bleed není přítomné. Nezískává Hydeovu ránu ani jeho odolnost.
+      motif_acquired: Tělo jako nositel schopností, omezení a poznatelných stop.
+      state_inputs: *id001
+      state_baseline: post-sleep Stevenson state; not the historical K1 AuthorPacket
+    no_new_branch: true
+    writes_timing: Queue once on completion; aggregate selected action deltas at convergence.
+  S1_MEDICAL:
+    intent: Prohlédnout vlastní léky a poznámky bez užití dávky.
+    anchor: MEDICAL_TABLE
+    motif: VĚDA
+    availability: ALWAYS_IN_S1_ACTION_WINDOW
+    cost: 1 action point
+    writes: {}
+    creates_evidence: VĚDA
+    guard: 'The player may inspect, compare notes and prepare writing material. No actual medication-use interaction
+      is offered after waking. If an implementation exposes a debug/legacy use path, it routes to STEVENSON_FATAL
+      through the master S1 hard-fail rule.
+
+      '
+    expression:
+      morning_beat: Stevenson vezme do ruky lahvičku nebo vlastní záznam a porovná očekávaný účinek s tím,
+        co sám zažil. Oddělí pozorování od domněnky.
+      allowed_context: Podle skutečného léku v S0 připomene tlumení bolesti nebo snahu získat sílu k práci.
+        Při podání Fanny může uznat její pomoc. Výsledek dávky je kontext, nikoli znovu aktivovaný účinek;
+        žádný K1 recept ani výzkumný bonus.
+      motif_acquired: Pozorování, metoda a ověřování předpokladu.
+      state_inputs: *id002
+      state_baseline: post-sleep Stevenson state; not the historical K1 AuthorPacket
+    no_new_branch: true
+    writes_timing: Queue once on completion; aggregate selected action deltas at convergence.
+  S1_FANNY:
+    intent: Přijmout ranní přítomnost Fanny a krátce s ní sdílet vlastní stav.
+    anchor: FANNY_ANCHOR
+    motif: DŮVĚRA
+    cost: 1 action point
+    writes: {}
+    creates_evidence: DŮVĚRA
+    availability: ALWAYS_IN_S1_ACTION_WINDOW
+    expression:
+      morning_beat: Fanny se zajímá o jeho ráno. Stevenson jí věnuje pozornost a připustí ji k vlastní zkušenosti,
+        aniž musí předat celý rukopis.
+      allowed_context: 'S0_TRUTH: naváže na otevřenost. S0_MINIMIZE: naváže na dřívější uklidnění bez automatického
+        obvinění ze lži. S0_HELP: naváže na přijatou pomoc. Jde o zabarvení jedné interakce, ne tři nové vztahové
+        volby.'
+      motif_acquired: Dovolit druhému člověku přístup k části pravdy a spolehnout se na něj.
+      state_inputs: *id003
+      state_baseline: post-sleep Stevenson state; not the historical K1 AuthorPacket
+    no_new_branch: true
+    writes_timing: Queue once on completion; aggregate selected action deltas at convergence.
+  S1_FIRE:
+    intent: Zastavit se u krbu a vybavit si vlastní předchozí večer.
+    anchor: FIREPLACE
+    motif: VZPOMÍNKA
+    availability: ALWAYS_IN_S1_ACTION_WINDOW
+    cost: 1 action point
+    writes:
+      Agitation: -5
+    creates_evidence: VZPOMÍNKA
+    expression:
+      morning_beat: 'Teplo a praskání ohně připomenou Stevensonovi chvíli předchozího večera v domě: tělesný
+        pocit, podaný lék či Fannyinu přítomnost. Všimne si, co ze zážitku v paměti zůstalo.'
+      allowed_context: Použít jen skutečně prožitou domácí událost ze S0. Nevymýšlet novou biografickou scénu.
+        Motiv není odměna za K1 styl boje ani reprodukce Rookovy smrti.
+      motif_acquired: Minulá zkušenost se vrací jako uchovaný detail a dostává význam v přítomnosti.
+      state_inputs: *id004
+      state_baseline: post-sleep Stevenson state; not the historical K1 AuthorPacket
+    no_new_branch: true
+    writes_timing: Queue once on completion; aggregate selected action deltas at convergence.
+  S1_WINDOW:
+    intent: Chvíli pozorovat prostor před domem.
+    anchor: WINDOW
+    motif: SLEDOVÁNÍ
+    availability: ALWAYS_IN_S1_ACTION_WINDOW
+    cost: 1 action point
+    writes: {}
+    creates_evidence: SLEDOVÁNÍ
+    expression:
+      morning_beat: Stevenson zůstane u okna a sleduje obyčejný pohyb venku. Uvědomí si rozdíl mezi tím, co
+        vidí, a tím, co o pozorovaném člověku skutečně ví.
+      allowed_context: Výchozí motiv je pozorování. Přetrvávající neklid může změnit soustředění či gesto,
+        ale nezakládá druhou paranoidní větev ani skutečného pronásledovatele. K1 PoliceHeat není tlak policie
+        na Stevensonův dům.
+      motif_acquired: Pozorovatel, pozorovaný a hranice toho, co lze z pohledu poznat.
+      state_inputs: *id005
+      state_baseline: post-sleep Stevenson state; not the historical K1 AuthorPacket
+    no_new_branch: true
+    writes_timing: Queue once on completion; aggregate selected action deltas at convergence.
+  S1_REST:
+    intent: Krátce odpočívat před prací, nikoli znovu usnout.
+    anchor: BEDROOM
+    motif: ÚLEVA
+    availability: ALWAYS_IN_S1_ACTION_WINDOW
+    cost: 1 action point
+    writes:
+      Fatigue: -12
+      Agitation: -5
+    creates_evidence: ÚLEVA
+    expression:
+      morning_beat: Stevenson se pohodlně usadí, přestane se namáhat a na chvíli odloží požadavek pokračovat
+        v práci. Prožije odlehčení nebo zachování klidu, i když nemoc trvá.
+      allowed_context: Při zbývající únavě či neklidu je patrná změna; při nízkých hodnotách jde o uchování
+        klidu. Nevynucovat předchozí vyčerpání, nový lék ani snížení Pain. K1 noviny či morální interpretace
+        tuto akci nepodmiňují.
+      motif_acquired: Dočasné polevení zátěže bez odstranění její příčiny.
+      state_inputs: *id006
+      state_baseline: post-sleep Stevenson state; not the historical K1 AuthorPacket
+    no_new_branch: true
+    writes_timing: Queue once on completion; aggregate selected action deltas at convergence.
+availability_and_state_expression:
+  all_actions_available: true
+  rule: After waking, all six anchors are selectable once, while AP remain. Each creates one fixed motif candidate.
+    No K1 result gates a domestic action.
+  current_state: Use morning_possibility_contract and per-action expression. Avoid unsupported high/low branch
+    thresholds.
+  historical_AuthorPacket: Only historical K1 presentation/feedback context; never substitute it for current
+    Stevenson state or new motif strength.
+  new_AuthorPacket: Generate at S1 write lock using canonical derived values from final Stevenson state. Fidelity,
+    Distortion, Overdrive, CognitionBand and AuthorWeather affect K2 through canonical rules.
+  feedback_limit: Optional K1 return feedback does not generate motifs, transfer police pressure into domestic
+    state or add undeclared state writes.
+sequence:
+- id: S1_BOOT
+  type: SYSTEM
+  player_control: false
+  actions:
+  - validate K1 transition and inherited packet
+  - apply Stevenson S-entry acute reset once
+  - initialize S1 action points to 0; morning actions locked
+  - create CP_S1_START
+  exit: S1_RETURN_TO_STEVENSON
+- id: S1_RETURN_TO_STEVENSON
+  type: CHAPTER_RETURN
+  player_control: locked_then_handoff
+  purpose:
+  - return from manuscript space to Stevenson
+  - show that K1 material remains available as memory and pressure
+  - establish the domestic house shell
+  actions:
+  - allow night-shell movement; keep motif interactions locked
+  exit: S1_MANUSCRIPT_FEEDBACK
+- id: S1_MANUSCRIPT_FEEDBACK
+  type: PRESENTATION_GAMEPLAY_BEAT
+  player_control: limited_then_free
+  purpose: 'Give the player a readable expression of manuscript feedback without declaring a single correct
+    interpretation of K1.
+
+    '
+  actions:
+  - present one state-appropriate authored feedback cue
+  - do not resolve a new motif solely from the cue
+  - do not create a new objective from optional atmosphere
+  - set S1ManuscriptFeedbackPresented = true after feedback
+  exit: S1_SLEEP_TRANSITION
+- id: S1_SLEEP_TRANSITION
+  type: MANDATORY_RECOVERY_TRANSITION
+  player_control: true
+  preconditions:
+  - S1ManuscriptFeedbackPresented == true
+  - S1SleepCommitted == false
+  - s1_phase == NIGHT_BEFORE_SLEEP
+  actions:
+  - require the player to choose the bed/sleep interaction
+  - call stevenson.state_lifecycle.recovery_actions.SLEEP
+  - advance authored time through one authored night-to-morning transition
+  - set S1SleepCommitted = true
+  - set S1AwakeForActions = true
+  - set s1_phase = MORNING_MOTIF_ACTIONS
+  - set S1ActionPointsRemaining = 3
+  - optionally fire one authored dream/manuscript feedback presentation
+  - establish FannyPresent = true for this morning without relationship writes
+  - retain post-sleep baseline through existing checkpoint state
+  - create CP_S1_AWAKE
+  exit: S1_WAKE_FOR_MOTIF_ACTIONS
+- id: S1_WAKE_FOR_MOTIF_ACTIONS
+  type: MORNING_HANDOFF
+  player_control: locked_then_handoff
+  actions:
+  - present Stevenson awake after the mandatory sleep transition
+  - show current body-state feedback without exposing hidden motif weights
+  - enable the six domestic action anchors
+  exit: S1_ACTION_SELECTION
+- id: S1_ACTION_SELECTION
+  type: ACTION_POINT_FREE_EXPLORATION
+  player_control: true
+  preconditions:
+  - S1AwakeForActions == true
+  - S1ActionPointsRemaining > 0
+  actions:
+  - allow movement among six anchors
+  - on each distinct completed action spend one point and record its selection
+  - queue declared state deltas once; use common post-sleep baseline for motif experience
+  - create the action's one CANDIDATE
+  - return while points remain; at zero go to S1_MOTIF_CONVERGENCE
+  exit_when: S1ActionPointsRemaining == 0
+- id: S1_MOTIF_CONVERGENCE
+  type: SYSTEM_RESOLUTION
+  player_control: false
+  actions:
+  - apply sum of selected action state deltas once to post-sleep baseline using canonical bounds
+  - rank three candidates without action order; numeric strength and tie-break remain tuning
+  - select strongest two and third only if third.Strength >= second.Strength - 10
+  - mark selected candidates ACTIVE, unselected DISCARDED; no K2 realization outcome yet
+  - set S1MotifConvergenceResolved = true
+  - create CP_S1_PRE_WRITE
+  exit: S1_FANNY_DOMESTIC_ANCHOR
+- id: S1_FANNY_DOMESTIC_ANCHOR
+  type: NARRATIVE_ANCHOR
+  player_control: limited_then_free
+  purpose: 'Confirm Fanny and the household remain emotionally present after the selected actions. This is
+    not a second action point and does not add a hidden relationship choice.
+
+    '
+  actions:
+  - allow one short contextual exchange or reaction
+  - acknowledge selected themes without realizing them
+  - no additional candidate or FannyBond write
+  exit: S1_WRITE_NEXT_PROMPT
+- id: S1_WRITE_NEXT_PROMPT
+  type: GATE
+  player_control: true
+  preconditions:
+  - S1ActionPointsRemaining == 0
+  - S1MotifConvergenceResolved == true
+  actions:
+  - enable writing desk
+  - show the next-chapter writing objective
+  exit_on_write: S1_WRITE_NEXT
+- id: S1_WRITE_NEXT
+  type: SYSTEM_LOCK
+  player_control: false
+  actions:
+  - set S1WriteCommitted = true
+  - generate new AuthorPacket from final current Stevenson state via canonical derived values
+  - commit S1 MotifPacket with selected ACTIVE motifs for K2
+  - do not assign K2 MotifClosure before realization in K2
+  - persist selected actions, candidate selection and current state
+  - create CP_S1_COMPLETE
+  - clear acute effects after write lock under canonical lifecycle
+  exit: S1_TO_K2_TRANSITION
+- id: S1_TO_K2_TRANSITION
+  type: CHAPTER_TRANSITION
+  player_control: false
+  actions:
+  - pass current Stevenson state and new AuthorPacket/MotifPacket to K2
+  - preserve K1 world memory and pressure
+  - load K2 with Form == JEKYLL, SerumStock == 0 and TransformWindow == CLOSED
+  next: K2
+objectives:
+  OBJ_LEAD_SOLDIERS:
+    active_after: LeadSoldierQuestAccepted == true
+    complete_when: StevensonSoldiersFoundCount == 16
+    display_intent: FIND_STEVENSON_LEAD_SOLDIERS
+    optional: true
+    rule: Count shown in the quest log only. No HUD element, no waypoint, no location text.
+interaction_catalog:
+  INT_S1_WRITING_DESK:
+    zone: STUDY_WRITING_DESK
+    enabled_when: S1ActionPointsRemaining == 0 AND S1MotifConvergenceResolved == true
+    action: COMMIT_NEXT_MANUSCRIPT_CHAPTER
+    time_cost: authored downstream; no number set in v0.4
+  INT_S1_MEDICATION_INSPECT:
+    zone: MEDICAL_TABLE
+    enabled_when: S1 action selection is active AND S1AwakeForActions == true
+    action: INSPECT_MEDICINE_AND_NOTES
+    result: S1_MEDICAL evidence only
+    rule: 'This interaction is not medication use. A confirmed actual dose routes to STEVENSON_FATAL according
+      to the master S1 hard-fail rule.
+
+      '
+  INT_S1_FANNY_ANCHOR:
+    zone: FANNY_ANCHOR
+    action: SELECT_S1_FANNY
+    result: S1_FANNY action and its declared motif evidence
+  INT_S1_BODY_ANCHOR:
+    zone: BEDROOM
+    action: SELECT_S1_BODY
+    result: S1_BODY action and its declared motif evidence
+  INT_S1_REST_ANCHOR:
+    zone: BEDROOM
+    action: SELECT_S1_REST
+    result: S1_REST action and its declared motif evidence
+  INT_S1_FIREPLACE:
+    zone: FIREPLACE
+    action: SELECT_S1_FIRE
+    result: S1_FIRE action and its declared motif evidence
+  INT_S1_WINDOW:
+    zone: WINDOW
+    action: SELECT_S1_WINDOW
+    result: S1_WINDOW action and its declared motif evidence
+  INT_S1_SOLDIER_SHELF:
+    zone: SOLDIER_SHELF
+    optional: true
+    enabled_when: S1ManuscriptFeedbackPresented == true AND S1WriteCommitted == false
+    action: INSPECT_SOLDIER_SHELF
+    result: >
+      Show sixteen figures. Figures already in FoundStevensonSoldiers show a subtly
+      changed state; the inspect text shows the count (for example 1/16). Set
+      LeadSoldierShelfSeen=true. Offer ACCEPT_COLLECTING or NOT_NOW.
+    choices:
+      ACCEPT_COLLECTING: set LeadSoldierQuestAccepted=true; activate OBJ_LEAD_SOLDIERS
+      NOT_NOW: no writes; the shelf stays interactable and the offer returns on re-inspection
+    rule: >
+      Spends no action point and no activity, grants no motif, and never blocks S1.
+      The quest is never granted automatically. The shelf remains available in later
+      Stevenson chapters (MASTER_CHANGE_PROPOSED).
+hard_fail_handling:
+  STEVENSON_FATAL:
+    trigger: confirmed actual medication use during S1
+    result: terminal failure; reload last valid S1 checkpoint
+    checkpoint: Latest valid S1 checkpoint, including CP_S1_AWAKE; never commit a successful packet from a
+      fatal attempt.
+    no_partial_success: true
+  rule: 'Inspecting medicine, remembering medicine or discussing medicine is not medication use and must not
+    trigger the hard fail.
+
+    '
+checkpoints:
+  CP_S1_START:
+    created_at: S1_BOOT
+    purpose: retry the night return and mandatory sleep from a clean inherited state
+    restores:
+    - inherited Stevenson state
+    - K1 AuthorPacket/MotifPacket
+    - s1_phase: NIGHT_BEFORE_SLEEP
+    - S1SleepCommitted: false
+    - S1AwakeForActions: false
+    - action_points_remaining: 0
+    - no S1 action history
+    - no S1 motif convergence
+  CP_S1_AWAKE:
+    created_at: S1_SLEEP_TRANSITION
+    purpose: retry the three-action motif window without replaying sleep
+    restores:
+    - current Stevenson state after SLEEP recovery
+    - S1SleepCommitted: true
+    - S1AwakeForActions: true
+    - s1_phase: MORNING_MOTIF_ACTIONS
+    - action_points_remaining: 3
+    - no S1 action history
+    - no S1 motif convergence
+  CP_S1_PRE_WRITE:
+    created_at: S1_MOTIF_CONVERGENCE
+    purpose: retry the final domestic anchor or writing transition without replaying the three actions
+    restores:
+    - all three selected actions, candidate evidence and ACTIVE/DISCARDED selection
+    - current Stevenson state after action writes
+    - S1MotifConvergenceResolved: true
+  CP_S1_COMPLETE:
+    created_at: S1_WRITE_NEXT
+    purpose: enter K2 without replaying S1
+    restores:
+    - current Stevenson state
+    - S1 MotifPacket and AuthorPacket
+    - S1 action summary
+    - S1 selected ACTIVE motifs; K2 realization unresolved
+    - K1 world memory and pressure
+save_and_idempotency:
+  source: S1 checkpoints and existing save contract pattern
+  rules:
+  - Loading a checkpoint reconstructs the selected action set; it does not spend points or replay sleep recovery
+    again.
+  - Candidate selection and aggregate action state writes run once per S1 attempt; loading does not repeat
+    them.
+  - S1 write lock runs once; K2 receives one S1 packet.
+  - A failed attempt does not create a successful S1 output.
+  implementation_status: DESIGN_CONTRACT_ONLY_CPP_SAVE_IMPLEMENTATION_DEFERRED
+dialogue_and_presentation_contract:
+  dialogue_intents:
+  - S1_RETURN_TO_STEVENSON: Stevenson recognizes that the manuscript has changed how he sees his body and house.
+  - S1_MANUSCRIPT_FEEDBACK: The written world is available as pressure/material, not as a literal speaking
+      voice by default.
+  - S1_FANNY_DOMESTIC_ANCHOR: Fanny remains present as a real relationship, not merely a motif selector.
+  - S1_WRITE_NEXT: Stevenson commits to continuing the manuscript.
+  exact_lines: TBD_IN_DIALOGUE_LAYER
+  voiced: Decide with final dialogue/VO pass; absence of VO does not alter mechanics.
+  notifications: 'Optional action-complete feedback may say that a new thought or motif has entered the manuscript.
+    Exact copy, sound, icon and duration are downstream.
+
+    '
+  UI_rules:
+  - Never display hidden motif strength or the strongest-two formula.
+  - Show three remaining action points after waking in a readable but non-intrusive way.
+  - Do not present the six actions as mandatory objectives.
+  - Actual medication use must have a clear interaction distinction from inspection.
+  - Do not show a usable post-wake dose prompt in S1.
+K2_handoff:
+  fixed:
+    world: MANUSCRIPT
+    Form: JEKYLL
+    SerumStock: 0
+    TransformWindow: CLOSED
+  inherited_from_S1:
+  - current Stevenson persistent state
+  - S1 selected ACTIVE motifs, domestic meaning and strength; realization unresolved
+  - S1 AuthorPacket and MotifPacket
+  - S0 and K1 world memory
+  - PoliceHeat
+  - UnderworldHeat
+  - CrowtherPressure
+  - NewcomenSuspicion
+  - FannyBond
+  - research tags and current ResearchProgress
+  - K1 selected interpretation
+  - S1 authoring inputs; K2 MotifClosure deferred until K2 realization
+  K2_does_not_receive_as_new_topology:
+  - a separate branch for each exact S1 dialogue line
+  - a branch for each order-specific presentation variation unless a future TLD explicitly promotes it
+  - a new serum dose from S1
+  rule: K2 continues after the completed first Newcomen consultation. Preserve RookDead, LedgerMissing, green-blood
+    evidence, actual pressures and K1 interpretation including NONE. New S1 motifs offer realization opportunities
+    within the shared investigation topology; do not replay first discoveries or repair old MISSED outcomes.
+acceptance_tests:
+- S1 always returns to Stevenson after a successful K1.
+- S1 begins in the night-before-sleep phase with zero available motif action points.
+- The player must commit one sleep transition before the morning motif-action phase unlocks.
+- Sleep uses the existing SLEEP recovery resolver and is applied exactly once.
+- Refusing to sleep does not kill Stevenson and does not unlock motif actions.
+- S1 exposes exactly six declared actions and gives exactly three action points.
+- No action can be selected twice in v0.4.
+- Selection order does not change state writes, motif selection or K2 topology.
+- S1_BODY applies Fatigue +3 exactly once at convergence if selected.
+- S1_FIRE applies Agitation -5 exactly once at convergence if selected.
+- S1_REST applies Fatigue -12 and Agitation -5 exactly once at convergence if selected.
+- S1_MEDICAL inspection never counts as actual medication use.
+- No post-wake laudanum/cocaine dose is offered as a valid S1 action.
+- Actual S1 medication use routes to STEVENSON_FATAL.
+- Every selected action creates only its one declared motif evidence.
+- No passive motif decay occurs while the player walks or waits in S1.
+- Convergence selects the strongest two candidates and an optional third under the master threshold.
+- Low Fidelity does not remove the three-action structure or writing transition.
+- S1 write lock generates one packet and transitions to K2.
+- K2 starts Jekyll, with SerumStock 0 and TransformWindow CLOSED.
+- Every valid S1 action combination reaches the same K2 main topology.
+- Reloading CP_S1_PRE_WRITE does not replay action writes or repeat candidate selection.
+- Every valid successful K1 entry exposes all six morning actions; actual medication remains forbidden.
+- Different K1 combat, brew, newspaper or suspicion results do not select or gate new S1 motifs.
+- No-sleep, renewed acute medication effects, invented Fanny estrangement and a guaranteed healthy morning
+  are not S1 branches.
+- Old AuthorPacket remains historical; current post-sleep state informs experience and new final state generates
+  the K2 packet.
+- New motifs leave S1 ACTIVE or DISCARDED; no new FULFILLED/TWISTED/MISSED is assigned in S1.
+- S1 REST can acquire new ULEVA even when K1 ULEVA is MISSED, without changing the old outcome.
+- All permutations of the same selected actions use one post-sleep baseline and the same summed deltas with
+  one clamp.
+- Fanny is present by S1 morning staging, independent of S0 historical post-dialogue position.
+- S1 can be completed without ever inspecting the soldier shelf.
+- Inspecting the shelf or accepting the quest spends no action point or activity and creates no motif.
+- With RLS_SOLDIER_01_ROOK already held the first inspect shows 1/16; otherwise 0/16.
+- Declining leaves LeadSoldierQuestAccepted == false and the offer returns on re-inspection.
+- The shelf is still interactable in S2 if skipped in S1.
+open_design_decisions:
+- id: S1_SLEEP_PRESENTATION
+  question: Exact sleep animation, dream cue and morning transition.
+  current_proposal: One authored transition; no additional gameplay branch.
+- id: S1_MOTIF_STRENGTH
+  question: Numeric acquisition strength weights and order-independent tie-break.
+  current_proposal: TUNING; source defines two strongest and optional third within 10 only. Do not invent a
+    completed resolver.
+- id: S1_FANNY_DIALOGUE
+  question: Exact relationship exchange and whether it has any numeric FannyBond effect.
+  current_proposal: No new FannyBond write; contextualize the single interaction using actual S0 choice and
+    current bond.
+- id: S1_MEDICATION_PRESENTATION
+  question: Whether the medical table shows bottles, notes or an empty/locked presentation.
+  current_proposal: Inspection/reflection is available; no post-wake dose prompt is a valid S1 action.
+- id: S1_MANUSCRIPT_FEEDBACK
+  question: Exact visual/audio manifestation of K1 feedback.
+  current_proposal: One authored cue reacts to inherited AuthorPacket and K1 outcomes without creating a new
+    branch.
+- id: S1_WRITE_QUALITY
+  question: Numeric authoring-quality inputs at S1 write lock.
+  current_proposal: Use canonical authoring rules; K2 MotifClosure is evaluated only after K2 realization,
+    not in S1.
+- id: S1_TIME
+  question: Exact authored minutes for sleep and the three morning actions.
+  current_proposal: Use one mandatory sleep transition plus three one-point actions; exact minute values remain
+    tuning.
+- id: S1_SLEEP_NUMERICS
+  question: Canonical numeric SLEEP recovery is not supplied by Master or K1 contract.
+  current_proposal: Keep one rested-morning presentation; preserve resolver output without claiming all persistent
+    values become zero.
+production_handoff:
+  ready_for:
+  - greybox house shell with seven anchors
+  - action-point selection prototype
+  - temporary motif feedback and convergence debug panel
+  - placeholder Fanny exchange
+  - writing transition to K2
+  not_ready_for:
+  - final dialogue prose
+  - final VO recording
+  - final UI art
+  - final motif weights and quality formula
+  - final cinematic shots and house art
+revision_note:
+  version: '0.4'
+  changes:
+  - Konkrétní domácí vznik šesti motivů a omezené kontexty ze skutečného Stevensonova stavu.
+  - Oddělen historický packet, aktuální stav po spánku a nový packet pro K2.
+  - Odstraněno generování a uzavírání nových motivů podle výsledků K1.
+  - Sjednocena dostupnost akcí, ranní Fanny, 0 AP před spánkem a checkpoint po probuzení.
+  - Zachována pravidla tří akcí, jejich číselné zápisy a výběr 2 + volitelný třetí.
+  - Číselné zotavení, síly a tie-break zůstávají výslovně otevřené; kontrakt je neurčuje.
+  other_source_files_modified: false

@@ -1,0 +1,199 @@
+schema:
+  id: JH_AMDD_S0_DIALOGUE
+  version: "1.0"
+  chapter: S0
+  purpose: "Dialogue and performance text only. Gameplay/state effects are defined outside this file."
+
+characters:
+  STEVENSON:
+    display_name: "Robert Louis Stevenson"
+  FANNY:
+    display_name: "Fanny Stevenson"
+
+conversations:
+
+  S0_FANNY_WAIT_ENTRY:
+    context: "Stevenson chose to wait for Fanny before taking medication."
+    lines:
+      - id: S0_FAN_WAIT_001
+        speaker: FANNY
+        text: "Louis?"
+        direction: "She has seen him ill many times; tonight she immediately notices he is worse."
+
+      - id: S0_STE_WAIT_001
+        speaker: STEVENSON
+        text: "I'm awake."
+
+      - id: S0_FAN_WAIT_002
+        speaker: FANNY
+        text: "I can see that."
+
+      - id: S0_FAN_WAIT_003
+        speaker: FANNY
+        text: "Which is it tonight?"
+
+    choices:
+
+      S0_FANNY_MED_LAUDANUM:
+        player_text: "Laudanum."
+        lines:
+          - id: S0_STE_MED_LAU_001
+            speaker: STEVENSON
+            text: "Laudanum."
+
+          - id: S0_FAN_MED_LAU_001
+            speaker: FANNY
+            text: "The pain is worse tonight?"
+
+          - id: S0_STE_MED_LAU_002
+            speaker: STEVENSON
+            text: "Yes."
+
+          - id: S0_FAN_MED_LAU_002
+            speaker: FANNY
+            text: "All right."
+            direction: "No judgment. She begins preparing it as part of an established routine."
+
+      S0_FANNY_MED_COCAINE:
+        player_text: "Cocaine."
+        lines:
+          - id: S0_STE_MED_COC_001
+            speaker: STEVENSON
+            text: "Cocaine."
+
+          - id: S0_FAN_MED_COC_001
+            speaker: FANNY
+            text: "Still determined to write?"
+
+          - id: S0_STE_MED_COC_002
+            speaker: STEVENSON
+            text: "I am."
+
+          - id: S0_FAN_MED_COC_002
+            speaker: FANNY
+            text: "All right."
+            direction: "A trace of concern, but no argument. She understands why he wants it."
+
+      S0_FANNY_MED_FANNY_CHOOSE:
+        player_text: "Fanny, choose."
+        lines:
+          - id: S0_STE_MED_FCH_001
+            speaker: STEVENSON
+            text: "Fanny, choose."
+
+          - id: S0_FAN_MED_FCH_001
+            speaker: FANNY
+            text: "Laudanum."
+
+          - id: S0_STE_MED_FCH_002
+            speaker: STEVENSON
+            text: "That quickly?"
+
+          - id: S0_FAN_MED_FCH_002
+            speaker: FANNY
+            text: "You are in pain, Louis. And I love you more than your writing."
+            direction: "Warm, matter-of-fact; not an accusation and not an attempt to stop him from writing."
+
+  S0_FANNY_SELF_MED_ENTRY:
+    context: "Stevenson medicated himself before Fanny arrived."
+    lines:
+      - id: S0_FAN_SELF_001
+        speaker: FANNY
+        text: "Louis?"
+
+      - id: S0_STE_SELF_001
+        speaker: STEVENSON
+        text: "I'm awake."
+
+      - id: S0_FAN_SELF_002
+        speaker: FANNY
+        text: "You've already taken something."
+        direction: "Observation, not interrogation."
+
+      - id: S0_STE_SELF_002
+        speaker: STEVENSON
+        text: "Yes."
+
+  S0_FANNY_COMMON:
+    context: "Common conversation after the medication beat, regardless of whether Fanny administered it or Stevenson self-medicated."
+    lines:
+      - id: S0_FAN_COMMON_001
+        speaker: FANNY
+        text: "How are you, really?"
+
+    choices:
+
+      S0_TRUTH:
+        player_text: "I have had a most dreadful nightmare, Fanny."
+        lines:
+          - id: S0_STE_TRUTH_001
+            speaker: STEVENSON
+            text: "I have had a most dreadful nightmare, Fanny."
+
+          - id: S0_FAN_TRUTH_001
+            speaker: FANNY
+            text: "Tell me."
+
+          - id: S0_STE_TRUTH_002
+            speaker: STEVENSON
+            text: "Not yet. I need to put something down before it leaves me."
+            direction: "He is being honest with her, but the urge to write is already taking hold."
+
+          - id: S0_FAN_TRUTH_002
+            speaker: FANNY
+            text: "Then write."
+            direction: "Supportive, quiet. She does not try to stop him."
+
+      S0_MINIMIZE:
+        player_text: "It is nothing, dear. You don't have to worry. Go back to sleep."
+        lines:
+          - id: S0_STE_MIN_001
+            speaker: STEVENSON
+            text: "It is nothing, dear. You don't have to worry. Go back to sleep."
+
+          - id: S0_FAN_MIN_001
+            speaker: FANNY
+            text: "If you're certain."
+
+          - id: S0_STE_MIN_002
+            speaker: STEVENSON
+            text: "I am."
+
+          - id: S0_FAN_MIN_002
+            speaker: FANNY
+            text: "All right."
+            direction: "She accepts his answer without fully believing it, then leaves him to work."
+
+      S0_HELP:
+        player_text: "Stay with me a moment."
+        lines:
+          - id: S0_STE_HELP_001
+            speaker: STEVENSON
+            text: "Stay with me a moment."
+
+          - id: S0_FAN_HELP_001
+            speaker: FANNY
+            text: "Of course."
+
+          - id: S0_STE_HELP_002
+            speaker: STEVENSON
+            text: "Just until I begin."
+
+          - id: S0_FAN_HELP_002
+            speaker: FANNY
+            text: "I'm here."
+            direction: "She remains with him quietly while he settles at the desk."
+
+  S0_TO_WRITING:
+    context: "Shared ending after TRUTH, MINIMIZE, or ASK_HELP."
+    lines:
+      - id: S0_STE_WRITE_001
+        speaker: STEVENSON
+        text: "I should write."
+        direction: "Low, almost to himself. This leads directly into the writing beat."
+
+notes:
+  - "This file intentionally contains no FannyBond writes, medication outcomes, state changes, or gameplay logic."
+  - "TRUTH, MINIMIZE, and ASK_HELP are internal choice IDs; the player sees the spoken player_text."
+  - "The exact staging of Fanny leaving or remaining is handled outside this dialogue file."
+  - "All successful S0 paths converge on Stevenson beginning to write."

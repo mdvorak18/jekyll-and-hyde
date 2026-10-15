@@ -1,0 +1,32 @@
+# Unreal Engine – generované složky
+Binaries/
+Intermediate/
+Saved/
+DerivedDataCache/
+Build/
+*.xcworkspace/
+.vs/
+.idea/
+
+# Unreal Content (binární .uasset/.umap) – kryje Time Machine
+Jekyll and Hyde_A Most Dreadful Dream/JekyllAndHyde/Content/
+
+# Média a grafika (ne kód/YAML/TLD/kontrakty/dokumenty)
+AI artwork/
+Grafy/
+Stevenson_quotes/
+*.png
+*.jpg
+*.jpeg
+*.mp4
+*.mov
+*.wav
+*.mp3
+
+# Zálohy a systémové soubory
+*.bak
+*.bak2
+.DS_Store
+
+# Uživatelská nastavení editoru
+DefaultEditorPerProjectUserSettings.ini

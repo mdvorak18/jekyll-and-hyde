@@ -1,0 +1,4196 @@
+project:
+  id: jekyll_hyde_a_most_dreadful_dream
+  title: 'Jekyll & Hyde: A Most Dreadful Dream'
+  master_version: 6.8-s1-time-inspiration
+  replaces: 6.7-resources-storage-pursuit-canonical
+  expected_length_hours:
+  - 6
+  - 8
+  core_rule: 'Stevenson creates conditions, themes and problems. The player decides how Jekyll or Hyde solves them.
+
+    Results become manuscript state; manuscript state affects Stevenson; Stevenson state configures the next manuscript
+
+    chapter.
+
+    '
+  branch_rule: A real story branch requires an explicit stable Variant ID.
+  node_rule: 'YAML nodes are decision/consequence points, not complete scenes. Dialogue IDs are intents, not final
+
+    line-by-line scripts. Free-roam, traversal, stealth, combat, exploration and long conversations can exist between
+
+    nodes.
+
+    '
+  scope_note: 'Complete master systems/topology replacement. Level-specific geometry, exact NPC placement, individual
+
+    shop layouts, chase routes, clue placement and combat encounter construction are authored later per level while
+
+    obeying this master.'
+
+tuning:
+
+  rule: 'Numbers marked TUNING are balancing defaults, not immutable narrative canon.
+
+    '
+
+  Integration_initial:
+
+    value: 20
+
+    status: TUNING
+
+  ProfessionalStanding_initial:
+
+    value: 85
+
+    status: TUNING
+
+chronology:
+
+- S0
+
+- K1
+
+- S1
+
+- K2
+
+- S2
+
+- K3
+
+- S3
+
+- K4
+
+- S4
+
+- K5
+
+- S5
+
+- K6
+
+- S6
+
+- K7
+
+- S7
+
+- K8
+
+- S8
+
+manuscript_time:
+
+  ManuscriptDay:
+
+    initial: 1
+
+    type: INTEGER
+
+  TimeOfDay:
+
+    type: AUTHORED_STATE
+
+    values:
+
+    - MORNING
+
+    - DAY
+
+    - EVENING
+
+    - NIGHT
+
+  advancement:
+
+    rule: >
+      Manuscript time advances only at explicit authored story transitions.
+      Free roam, reloads and waiting do not advance the day automatically.
+
+    day_advance_event: ADVANCE_MANUSCRIPT_DAY
+
+  invariants:
+
+  - There is no real-time manuscript clock simulation.
+
+  - The player cannot advance ManuscriptDay by waiting.
+
+  - Reloading never advances manuscript time.
+
+  - Leaving and re-entering a location never advances manuscript time by itself.
+
+  - TimeOfDay is authored by the current chapter or sequence unless an explicit story event changes it.
+
+
+skills:
+
+  range:
+
+  - 0
+
+  - 5
+
+  initial:
+
+    JEKYLL:
+
+      Reason: 2
+
+      Society: 2
+
+      Chemistry: 2
+
+    HYDE:
+
+      Brutality: 1
+
+      Instinct: 1
+
+      Mobility: 1
+
+  progression:
+
+    chapters:
+
+    - K1
+
+    - K2
+
+    - K3
+
+    - K4
+
+    - K5
+
+    - K6
+
+    - K7
+
+    point_each: 1
+
+    max_rank: 5
+
+route_check:
+
+  scope:
+  - authored dialogue skill routes
+  - authored investigation skill routes
+  - authored interaction skill routes
+
+  rule: >
+    Unless a subsystem declares its own explicit Master-level resolver,
+    every authored skill-gated route uses this resolver.
+    Ordinary non-skill dialogue and interactions do not require a route check.
+
+  formula: 40 + 12*Primary + 6*Secondary + ContextMod
+
+  STRONG: Score >= 75
+
+  COSTLY: 55 <= Score <= 74
+
+  UNAVAILABLE: Score < 55
+
+  ContextMod:
+    rule: >
+      ContextMod is situational and applies only when the authored context
+      is relevant to the current route. It never permanently changes
+      the character's skill rank.
+
+    examples:
+    - professional standing affecting a Society route
+    - grooming/presentation affecting a Society route
+    - laboratory quality affecting a Chemistry route
+    - visibility or environmental conditions affecting an observation route
+
+  reads_firewall: true
+
+persistent_state:
+
+  Exposure:
+
+    initial: 0
+
+    range:
+
+    - 0
+
+    - 100
+
+    buckets:
+
+      LOW:
+
+      - 0
+
+      - 34
+
+      WATCHED:
+
+      - 35
+
+      - 69
+
+      HUNTED:
+
+      - 70
+
+      - 100
+
+  Integration:
+
+    initial: 20
+
+    status: TUNING
+
+    range:
+
+    - 0
+
+    - 100
+
+    buckets:
+
+      LOW:
+
+      - 0
+
+      - 34
+
+      MID:
+
+      - 35
+
+      - 59
+
+      HIGH:
+
+      - 60
+
+      - 100
+
+    ending_threshold: 60
+
+  HydeDependence:
+
+    initial: 0
+
+    range:
+
+    - 0
+
+    - 100
+
+  SerumTolerance:
+
+    initial: 0
+
+    range:
+
+    - 0
+
+    - 100
+
+  Craving:
+
+    initial: 0
+
+    range:
+
+    - 0
+
+    - 100
+
+    status: TUNING
+
+  CalmBeats:
+
+    initial: 0
+
+    range:
+
+    - 0
+
+    - 3
+
+    status: TUNING
+
+  RecentViolence:
+
+    initial: 0
+
+    range:
+
+    - 0
+
+    - 100
+
+    chapter_exit_decay: -35
+
+  RecentTransformLoad:
+
+    initial: 0
+
+    range:
+
+    - 0
+
+    - 100
+
+    voluntary_gain: 20
+
+    spontaneous_gain: 30
+
+    chapter_exit_decay: -15
+
+  SerumInstabilityScar:
+
+    initial: 0
+
+    range:
+
+    - 0
+
+    - 100
+
+    chapter_exit_decay: -10
+
+  SuppressionStrain:
+
+    initial: 0
+
+    range:
+
+    - 0
+
+    - 100
+
+    status: TUNING
+
+  PoliceHeat:
+
+    initial: 0
+
+    range:
+
+    - 0
+
+    - 100
+
+    status: TUNING
+  NewcomenSuspicion:
+    initial: 0
+    range:
+    - 0
+    - 100
+    buckets:
+      LOW:
+      - 0
+      - 34
+      WATCHED:
+      - 35
+      - 69
+      HUNTED:
+      - 70
+      - 100
+    status: TUNING
+  UnderworldHeat:
+
+    initial: 0
+
+    range:
+
+    - 0
+
+    - 100
+
+    status: TUNING
+
+  CrowtherPressure:
+
+    initial: 0
+
+    range:
+
+    - 0
+
+    - 100
+
+    status: TUNING
+
+  ProfessionalStanding:
+
+    initial: 85
+
+    range:
+
+    - 0
+
+    - 100
+
+    status: TUNING
+
+  ResearchProgress:
+
+    initial: 0
+
+    range:
+
+    - 0
+
+    - 100
+
+    status: TUNING
+
+hyde_dependence:
+
+  ownership_rule: 'HydeDependence changes only through this resolver. An authored option may supply a dependence_delta
+
+    or named event, but must not also direct-write the same delta.
+
+    '
+
+  events:
+
+    VOLUNTARY_TRANSFORM:
+
+      delta: 5
+
+      status: TUNING
+
+    REDOSE:
+
+      delta: 8
+
+      status: TUNING
+
+    MAJOR_HYDE_OBJECTIVE:
+
+      delta: 8
+
+      status: TUNING
+
+    REMAIN_HYDE:
+
+      delta: 4
+
+      status: TUNING
+
+    BRUTALITY_SOLUTION:
+
+      delta: 8
+
+      status: TUNING
+
+    KILL:
+
+      delta: 10
+
+      status: TUNING
+
+    FULL_BLACKOUT:
+
+      delta: 10
+
+      status: TUNING
+
+    SPONTANEOUS_TRANSFORM:
+
+      delta: 4
+
+      status: TUNING
+
+    PREDATORY_RELEASE:
+
+      delta: 8
+
+      status: TUNING
+
+    ACCEPT_RESPONSIBILITY:
+
+      delta: -6
+
+      status: TUNING
+
+    RESIST_AS_JEKYLL:
+
+      delta: -5
+
+      status: TUNING
+
+    SOLVE_BLACKOUT:
+
+      delta: -10
+
+      status: TUNING
+
+    INTEGRATION_CONTROL:
+
+      delta: -8
+
+      status: TUNING
+
+  passive_decay: false
+
+hyde_dominance:
+
+  type: DERIVED
+
+  status: TUNING
+
+  formula: 'clamp(.45*HydeDependence + .20*RecentTransformLoad + .15*RecentViolence + .10*SerumTolerance + .10*SerumInstabilityScar)
+
+    '
+
+  buckets:
+
+    LOW:
+
+    - 0
+
+    - 34
+
+    MID:
+
+    - 35
+
+    - 69
+
+    HIGH:
+
+    - 70
+
+    - 100
+
+  direct_writes_allowed: false
+
+stevenson:
+  raw_initial:
+    Pain: 80
+    Fever: 65
+    Fatigue: 40
+    Agitation: 25
+    Sedation: 0
+    SleepDebt: 20
+    Bleed: 0
+    Rebound: 0
+    MedicationDependence: 0
+    FannyBond: 85
+    AnalgesicTolerance: 0
+    StimulantTolerance: 0
+  ChemicalInstability:
+    formula: 'clamp(.35*Sedation + .25*Agitation + .20*Rebound + .10*AnalgesicTolerance + .10*StimulantTolerance)
+
+      '
+  AuthorCondition:
+    formula: 'clamp(100 - .30*Pain - .20*Fever - .25*Fatigue - .15*SleepDebt - .10*ChemicalInstability)
+
+      '
+    buckets:
+      CRITICAL:
+      - 0
+      - 33
+      STRAINED:
+      - 34
+      - 66
+      STABLE:
+      - 67
+      - 100
+  AuthoringClarity:
+    formula: 'clamp(100 - .25*Pain - .20*Fatigue - .25*Agitation - .20*Sedation - .20*Bleed + .10*FannyBond)
+
+      '
+    buckets:
+      DISTORTED:
+      - 0
+      - 33
+      FRAYED:
+      - 34
+      - 66
+      CLEAR:
+      - 67
+      - 100
+  Bleed_buckets:
+    LOW:
+    - 0
+    - 33
+    MID:
+    - 34
+    - 66
+    HIGH:
+    - 67
+    - 100
+  state_lifecycle:
+    acute_effects:
+      reset_at_S_entry:
+        Sedation: 0
+        HallucinationSuppression: 0
+        StimulantActivation: 0
+        ActivationFocusMod: 0
+      clear_after_write_lock: true
+    persistent:
+    - Pain
+    - Fever
+    - Fatigue
+    - Agitation
+    - SleepDebt
+    - Bleed
+    - Rebound
+    - MedicationDependence
+    - AnalgesicTolerance
+    - StimulantTolerance
+    - FannyBond
+    recovery_actions:
+      SLEEP:
+        clears_acute_effects:
+        - Sedation
+        - HallucinationSuppression
+        - StimulantActivation
+        - ActivationFocusMod
+        may_reduce:
+        - Fatigue
+        - SleepDebt
+        - Rebound
+        - Agitation
+        profiles:
+          FULL_NIGHT_480:
+            status: PLAYTEST_BASELINE
+            duration_minutes: 480
+            writes:
+              Fatigue: -30
+              SleepDebt: -20
+              Rebound: -15
+              Agitation: -20
+            clamp: 0..100
+            clears_acute_effects:
+            - Sedation
+            - HallucinationSuppression
+            - StimulantActivation
+            - ActivationFocusMod
+            unchanged:
+            - Pain
+            - Fever
+            - Bleed
+            - MedicationDependence
+            - AnalgesicTolerance
+            - StimulantTolerance
+            - FannyBond
+            rule: Only the FULL_NIGHT_480 profile uses these exact values. Other authored sleep durations require
+              their own profile; do not scale or retrofit silently.
+      REST:
+        may_reduce:
+        - Fatigue
+        - Agitation
+        - Rebound
+      CARE:
+        may_reduce:
+        - Fatigue
+        - Agitation
+        may_affect:
+        - condition_context
+  authored_time:
+    status: PLAYTEST_BASELINE
+    scope: Stevenson chapters explicitly opting into AUTHORED_CLOCK; S1 first. Does not change manuscript clocks
+      or silently retrofit S0/S2+.
+    mode: AUTHORED_CLOCK
+    fatigue_per_awake_minute: 0.2
+    rule: 'For each committed awake activity: advance authored minutes; Fatigue = clamp(Fatigue + 0.2 * minutes);
+      then apply explicit activity effects and clamp. Keep fractions. No real-time timer.'
+    zero_time:
+    - menus
+    - reading dialogue at player speed
+    - motif confirmation
+    - walking within house
+    - pause
+    - reload
+    sleep_exception: Full sleep advances clock without awake fatigue; apply its recovery profile once.
+    pain_rule: No passive Pain increase or automatic medicine wearing-off curve in this revision. Pain changes only
+      through declared exertion, medicine and existing canonical effects.
+    order_matters: true
+    atomicity: Charge time and effects once on activity commit. Reload restores both clock and state; never recharge
+      a completed activity.
+
+medication:
+  fictional_only: true
+  game_drop_range:
+  - 0
+  - 20
+  tolerance_decay: false
+  symptomatic:
+    status: TUNING
+    any:
+    - Pain >= 50
+    - Fatigue >= 60
+    - Rebound >= 20
+  ANALGESIC_A:
+    target: 6 + round(AnalgesicTolerance/20)
+    precision: max(1, 3-floor(AnalgesicTolerance/35))
+    classification:
+      UNDER: error < -precision
+      CORRECT: abs(error) <= precision
+      OVER: error > precision AND error < precision+5
+      CRITICAL_HIGH: error >= precision+5
+    effects:
+      UNDER:
+        Pain: -10
+        Sedation: 4
+        AnalgesicTolerance: 2
+        MedicationDependence: 1
+        HallucinationSuppression: 5
+      CORRECT:
+        Pain: -25
+        Sedation: 10
+        AnalgesicTolerance: 5
+        MedicationDependence: 2
+        HallucinationSuppression: 20
+      OVER:
+        Pain: -30
+        Sedation: 30
+        Rebound: 5
+        AnalgesicTolerance: 8
+        MedicationDependence: 4
+        HallucinationSuppression: 35
+      CRITICAL_HIGH:
+        Pain: -30
+        Sedation: 45
+        Rebound: 10
+        AnalgesicTolerance: 12
+        MedicationDependence: 6
+        HallucinationSuppression: 45
+  STIMULANT_S:
+    target: 5 + round(StimulantTolerance/20)
+    precision: max(1, 3-floor(StimulantTolerance/35))
+    classification:
+      UNDER: error < -precision
+      CORRECT: abs(error) <= precision
+      OVER: error > precision AND error < precision+5
+      CRITICAL_HIGH: error >= precision+5
+    effects:
+      UNDER:
+        Fatigue: -8
+        Agitation: 4
+        SleepDebt: 2
+        StimulantTolerance: 2
+        MedicationDependence: 1
+        StimulantActivation: 20
+        ActivationFocusMod: 2
+      CORRECT:
+        Fatigue: -20
+        Agitation: 10
+        SleepDebt: 5
+        StimulantTolerance: 5
+        MedicationDependence: 2
+        StimulantActivation: 50
+        ActivationFocusMod: 8
+      OVER:
+        Fatigue: -25
+        Agitation: 25
+        SleepDebt: 15
+        Rebound: 5
+        StimulantTolerance: 8
+        MedicationDependence: 4
+        StimulantActivation: 80
+        ActivationFocusMod: 4
+      CRITICAL_HIGH:
+        Fatigue: -25
+        Agitation: 40
+        SleepDebt: 20
+        Rebound: 10
+        StimulantTolerance: 12
+        MedicationDependence: 6
+        StimulantActivation: 100
+        ActivationFocusMod: -5
+  skip_dependence:
+    if_40_plus_and_symptomatic:
+      Rebound: 5
+      Agitation: 5
+    if_70_plus_and_symptomatic:
+      Rebound: 8
+      AuthorConditionModifier: -5
+  Fanny_assistance:
+    SUPPORTIVE: exact target ±1
+    STRAINED: approximate
+    WITHDRAWN: none
+  emergency_if:
+    any:
+    - Sedation >= 90
+    - Agitation >= 95
+    - last_classification == CRITICAL_HIGH AND AuthorCondition < 25
+  rescue_if: FannyPresent AND FannyBond >= 40
+  rescue_writes:
+    Fatigue: 15
+    Bleed: 10
+    FannyBond: -8
+    NextWriteQualityModifier: -10
+  fatal_handler: FAIL_STEVENSON_FATAL
+  chapter_rules:
+    S1:
+      status: PLAYTEST_BASELINE
+      availability: MORNING_FREE_ACTIONS only
+      duration_minutes: 10
+      allowed:
+      - ANALGESIC_A
+      - STIMULANT_S
+      limit: One actual administration of each medication in S1 (maximum two); at least 60 authored minutes between
+        any two S1 administrations. Inspecting bottles remains unlimited.
+      dose: Use existing medication target, precision, classification, effect tables and emergency/rescue rules
+        unchanged. Dose 0 cancels without time, effects or motif.
+      cooldown: Measured between completed administrations; cannot pre-start a dose to bypass lock. No real-time
+        waiting.
+      automatic_motif: On actual positive-dose administration, acquire LATKA once per S1, Strength 50. A second
+        type does not duplicate or strengthen it. No automatic PROMENA/ULEVA/ZAVISLOST.
+      acute_lifecycle: New effects remain under existing lifecycle until writing; snapshot before clearing. No invented
+        time-decay curve.
+      fatal: Emergency -> rescue_if/rescue_writes if valid; otherwise FAIL_STEVENSON_FATAL. Surviving rescue keeps
+        actual dose and LATKA; fatal attempt exports nothing.
+      forced_dependence: No new dependency-forced motif rule in S1. LATKA is an explicit consequence of voluntary
+        dosing, not an addiction-threshold intrusion.
+
+author_packet:
+
+  generated_at_each_write_lock: true
+
+  fields:
+
+    CognitiveImprint: AuthoringClarity
+
+    ConditionImprint: AuthorCondition
+
+    BleedImprint: Bleed
+
+    ChemicalImprint: ChemicalInstability
+
+    MotifPacket: selected_motifs
+
+  CognitionBand:
+
+    IMPAIRED:
+
+      condition: CognitiveImprint <= 33
+
+      JekyllCognitionMod: -10
+
+      JekyllClueMod: -10
+
+    STRAINED:
+
+      condition: 34 <= CognitiveImprint <= 66
+
+      JekyllCognitionMod: 0
+
+      JekyllClueMod: 0
+
+    LUCID:
+
+      condition: CognitiveImprint >= 67
+
+      JekyllCognitionMod: 10
+
+      JekyllClueMod: 10
+
+  ManuscriptFidelity:
+
+    status: TUNING
+
+    meaning: how complete, usable and detailed the written world is
+
+    formula: clamp(.60*AuthoringClarity + .30*AuthorCondition + ActivationFocusMod)
+
+    buckets:
+
+      FRAGMENTARY:
+
+      - 0
+
+      - 39
+
+      THIN:
+
+      - 40
+
+      - 69
+
+      RICH:
+
+      - 70
+
+      - 100
+
+  ManuscriptDistortion:
+
+    status: TUNING
+
+    meaning: how warped, uncanny and dreamlike the authored material is
+
+    formula: clamp(.45*Bleed + .25*Fever + .20*Agitation + .10*ChemicalInstability)
+
+    buckets:
+
+      GROUNDED:
+
+      - 0
+
+      - 34
+
+      UNEASY:
+
+      - 35
+
+      - 69
+
+      NIGHTMARE:
+
+      - 70
+
+      - 100
+
+  ManuscriptOverdrive:
+
+    status: TUNING
+
+    meaning: how excessive, hyperactive and overwritten the authored material is
+
+    formula: clamp(.55*StimulantActivation + .35*Agitation - .30*Sedation)
+
+    buckets:
+
+      CALM:
+
+      - 0
+
+      - 34
+
+      BUSY:
+
+      - 35
+
+      - 69
+
+      OVERWRITTEN:
+
+      - 70
+
+      - 100
+
+authorial_content:
+
+  criticality:
+
+    MANDATORY:
+
+      affected_by_fidelity: false
+
+    OPTIONAL_ROUTE:
+
+      affected_by_fidelity: true
+
+    FLAVOR:
+
+      affected_by_fidelity: true
+
+    NOISE:
+
+      activated_by_overdrive: true
+
+  fidelity:
+
+    RICH:
+
+      OPTIONAL_ROUTE: FULL
+
+      FLAVOR: FULL
+
+    THIN:
+
+      OPTIONAL_ROUTE: LIMITED
+
+      FLAVOR: REDUCED
+
+    FRAGMENTARY:
+
+      OPTIONAL_ROUTE: ABSENT_UNLESS_MINIMUM_VARIANT
+
+      FLAVOR: MINIMAL
+
+  overdrive:
+
+    CALM:
+
+      noise_slots: 0
+
+    BUSY:
+
+      noise_slots: 1
+
+    OVERWRITTEN:
+
+      noise_slots: 2
+
+  distortion:
+
+    GROUNDED: ordinary authored variant
+
+    UNEASY: uncanny authored variant
+
+    NIGHTMARE: strong warped authored variant
+
+  clue_types:
+
+    "TRUE": relevant factual clue
+    AMBIGUOUS: real but open to interpretation
+
+    AUTHORIAL_NOISE: plausible but nonessential authored clutter
+
+  invariants:
+
+  - mandatory content is never removed
+
+  - noise comes only from declared NOISE slots
+
+  - noise never hides mandatory truth behind RNG
+
+  - no render stat creates a new quest by itself
+
+  cover_shop_template:
+
+    SlotID: SLOT_COVER_SHOP
+
+    criticality: OPTIONAL_ROUTE
+
+    RICH:
+
+      VariantID: COVER_SHOP_FULL
+
+      options:
+
+      - BUY_NEW_COAT
+
+      - ASK_FOR_REPAIR
+
+      - REMOVE_MONOGRAM
+
+      - HYDE_STEAL_COAT
+
+      - HYDE_INTIMIDATE_SHOPKEEPER
+
+    THIN:
+
+      VariantID: COVER_SHOP_LIMITED
+
+      options:
+
+      - BUY_SIMPLE_COAT
+
+      - HYDE_STEAL_COAT
+
+    FRAGMENTARY:
+
+      VariantID: COVER_SHOP_ABSENT
+
+      description: shop is only a facade / closed / swallowed by fog
+
+author_weather:
+
+  status: TUNING
+
+  generated_at_write_lock: true
+
+  stored_in_AuthorPacket: true
+
+  channels:
+
+    Fog: clamp(.55*Sedation + .20*Fatigue + .15*Bleed + .10*SleepDebt)
+
+    Storm: clamp(.45*Fever + .30*Agitation + .15*Bleed + .10*ChemicalInstability)
+
+    Brightness: clamp(35 + .55*StimulantActivation + .15*AuthoringClarity - .35*Sedation - .15*Bleed)
+
+    Wind: clamp(.45*Agitation + .30*StimulantActivation + .15*Fever + .10*Bleed)
+
+    Rain: clamp(.35*Fever + .25*Pain + .25*Agitation + .15*Bleed)
+
+    Gloom: clamp(.45*Fatigue + .30*Sedation + .25*Bleed)
+
+    Unnaturalness: clamp(.55*Bleed + .25*ManuscriptDistortion + .20*ChemicalInstability)
+
+  baseline_blend: FinalChannel = .50*ChapterBaselineChannel + .50*AuthorWeatherChannel
+
+  visual_language:
+
+    high_Sedation:
+
+    - heavy fog
+
+    - muffled sound
+
+    - soft lamps
+
+    - emptier streets
+
+    high_Fever:
+
+    - storm
+
+    - rain
+
+    - oppressive wet air
+
+    high_Fatigue:
+
+    - long dusk
+
+    - weak lamps
+
+    - muted skyline
+
+    high_Agitation:
+
+    - hard wind
+
+    - fast clouds
+
+    - flickering light
+
+    productive_StimulantActivation:
+
+    - clearer sky
+
+    - sharp daylight
+
+    - high definition
+
+    - busier street life
+
+    excessive_StimulantActivation:
+
+    - overbright sky
+
+    - hard shadows
+
+    - nervous crowds
+
+    - rapid weather movement
+
+    high_Bleed:
+
+    - fog indoors
+
+    - rain under clear sky
+
+    - impossible shadows
+
+    - weather behaving wrongly
+
+  context_mods:
+
+    HEAVY_FOG:
+
+      condition: FinalFog >= 70
+
+      JekyllLongDistanceObservation: -5
+
+      HydeDetectionByNPC: -5
+
+    HEAVY_RAIN:
+
+      condition: FinalRain >= 70
+
+      BloodEvidencePersistence: -10
+
+      FootprintVisibility: 10
+
+    BRIGHT:
+
+      condition: FinalBrightness >= 70
+
+      WitnessDescriptionQuality: 10
+
+      HydeStealth: -5
+
+    STRONG_WIND:
+
+      condition: FinalWind >= 70
+
+      RooftopMobility: -5
+
+      AmbientNoiseCover: 5
+
+  branch_creation: false
+form_visual_language:
+
+  HYDE:
+
+    mode: CONSTRAINED_PREDATORY_PERCEPTION
+
+    base_world:
+
+      intent: near-monochrome or duotone perception with strongly reduced ordinary color
+
+      exact_palette: TBD_VISUAL_DIRECTION
+
+      readability_rule: >
+        Environment silhouettes, navigation, combat readability and mandatory information
+        must remain clear.
+
+    semantic_accents:
+
+      RED:
+
+        intent: violence / blood / immediate physical threat
+
+        eligibility: AUTHORED_TAG_ONLY
+
+        tag: HYDE_ACCENT_RED
+
+      GOLD:
+
+        intent: authored instinct-relevant object, target or cue
+
+        eligibility: AUTHORED_TAG_ONLY
+
+        tag: HYDE_ACCENT_GOLD
+
+    tagging_rule: >
+      Accent color is never inferred from generic interactability.
+      Only explicitly authored/tagged objects or states may receive a semantic accent.
+      A colored accent does not by itself create an interaction, clue, objective or branch.
+
+    render_order:
+
+    - resolve AuthorWeather / ManuscriptFidelity / ManuscriptDistortion / ManuscriptOverdrive
+
+    - render underlying manuscript scene
+
+    - if Form == HYDE, apply Hyde base perception treatment
+
+    - apply eligible semantic accent tags without changing their meaning
+
+    Stevenson_interaction:
+
+      AuthorWeather: >
+        Continues to affect the underlying scene and atmosphere.
+
+      ManuscriptFidelity: >
+        May change authored optional detail density.
+        It does not remove the Hyde perception layer while Form == HYDE.
+
+      ManuscriptDistortion: >
+        May warp authored expression beneath or within the Hyde layer,
+        but must not redefine semantic accent meaning.
+
+      ManuscriptOverdrive: >
+        May activate only declared authored visual/noise content.
+        It must not automatically color ordinary objects or create false gameplay affordances.
+
+    accessibility:
+
+      color_alone_is_never_required: true
+
+      secondary_cue_required: true
+
+      secondary_cues:
+
+      - luminance
+
+      - shape
+
+      - outline
+
+      - animation
+
+      - audio
+
+    invariants:
+
+    - Hyde perception changes presentation, not story topology.
+
+    - Accent semantics remain stable unless explicitly changed by the master.
+
+    - Mandatory information never relies on hue alone.
+
+    - Generic interactability never grants a Hyde accent.
+
+    - Exact LUT, post-process, emissive, material and VFX values belong downstream.  
+motifs:
+  outcomes:
+    FULFILLED: 100
+    TWISTED: 80
+    MISSED: 0
+  anchor_weight: 1.5
+  selection:
+    base_count: 2
+    optional_third_if: third.Strength >= second.Strength-10
+    chapter_overrides:
+      S1:
+        mode: EXPLICIT_ACCEPT_ALL
+        maximum_voluntary: 6
+        maximum_total: 7
+        automatic_motif: LATKA on actual S1 medication administration
+        strength_ranking_selects: false
+        tie_break: NONE; stable display order only
+        scope: Other chapter selection rules unchanged.
+  unselected_candidate: DISCARDED
+  selected_unresolved_at_convergence: MISSED
+  main_story_required: false
+  multi_motif_action_allowed: true
+  strength_usage_S1:
+    range: 0..100
+    default: 50
+    science_magazine: 75
+    automatic_LATKA: 50
+    state_bonus: 0
+    decay: 0
+    purpose: Closure weight and authored emphasis, never acceptance gating or top-N selection. Outcome score is
+      separate from strength.
+    weight: Strength / 50; anchor_weight 1.5 only for an explicitly designated anchor. S1 designates no weighted
+      anchor.
+collectibles:
+  lead_soldiers:
+    total: 16
+    state:
+      FoundStevensonSoldiers: {type: SET, initial: []}
+      StevensonSoldiersFoundCount: {derived_from: FoundStevensonSoldiers, range: 0_TO_16}
+      LeadSoldierShelfSeen: {type: BOOLEAN, initial: false}
+      LeadSoldierQuestAccepted: {type: BOOLEAN, initial: false}
+      LeadSoldierCollectionComplete: {derived_from: StevensonSoldiersFoundCount == 16}
+    rules:
+    - Collecting a soldier adds no HydeDependence; the kills and actions that create soldiers apply their normal consequences.
+    - No soldier may be permanently lost; every slot declares a recovery route.
+    - Completion gives no stat, skill or money reward; it unlocks the late authored confrontation.
+    slots:
+      RLS_SOLDIER_01_ROOK: {source_type: SIGNIFICANT_VICTIM, chapter: K1, mandatory: true, chess_role: ROOK_A}
+      # RLS_SOLDIER_02 .. 16: TBD (source_type: SIGNIFICANT_VICTIM | HIDDEN | MINOR_DROP)
+
+research:
+
+  status: TUNING
+
+  repeated_identical_test_farming: false
+
+  tags:
+
+    RD_BASE_TRANSFORMATION: 10
+
+    RD_POST_TRANSFORM_PHYSIOLOGY: 8
+
+    RD_POTENCY_RESPONSE: 8
+
+    RD_PURITY_RESPONSE: 8
+
+    RD_DURATION_RESPONSE: 8
+
+    RD_STRESS_RESPONSE: 10
+
+    RD_REDOSE_RESPONSE: 12
+
+    RD_SPONTANEOUS_ONSET: 12
+
+    RD_SUPPRESSION_RESPONSE: 12
+
+    RD_INTEGRATION_RESPONSE: 12
+
+  unlocks:
+
+    20: better Potency/Purity estimate
+
+    30: Suppressor recipe insight; actual brewing still requires Chemistry >=3, STABILIZER and advanced equipment
+
+    45: better duration/redose forecast
+
+    60: improved serum purification and REFINED_TRIPLE path when recipe mastery also qualifies
+
+    75: refined suppressor
+
+    90: advanced control / Integration hooks
+
+  fallback_rule: required mechanics always have a non-research story unlock
+research_journal:
+
+  purpose: >
+    Persistent diegetic record of Jekyll's scientific knowledge, hypotheses,
+    procedures and empirical observations.
+
+  exact_prose: DOWNSTREAM_CONTENT
+
+  rules:
+
+  - The journal may explain known gameplay effects without exposing hidden formulas or exact numeric state unless explicitly unlocked.
+
+  - Basic known medical information may be available from the start and does not require the player to have heard the same information in dialogue.
+
+  - New authored discoveries update existing entries rather than creating a separate progression tree.
+
+  - Authored discoveries, observations and hypotheses are recorded automatically when their source event resolves; opening or reading the journal is never required to commit that knowledge.
+
+  - Reading an entry does not grant ResearchProgress. ResearchProgress and research tags are awarded only by their authored source events/resolvers.
+
+  - The journal records knowledge; it does not create arbitrary crafting combinations.
+  
+  sections:
+
+    SUBSTANCES:
+
+      LAUDANUM:
+
+        system_binding: ANALGESIC_A
+
+        initial_state: BASIC_KNOWN
+
+        known_from_start: true
+
+        basic_gameplay_summary:
+
+        - reduces Pain
+
+        - increases Sedation
+
+        - suppresses hallucination pressure
+
+        - repeated use builds tolerance and dependence
+
+        - excessive dosing increases adverse effects and rebound
+
+        future_updates: AUTHORED
+
+      COCAINE:
+
+        system_binding: STIMULANT_S
+
+        initial_state: BASIC_KNOWN
+
+        known_from_start: true
+
+        basic_gameplay_summary:
+
+        - reduces Fatigue temporarily
+
+        - increases Agitation
+
+        - increases SleepDebt
+
+        - can improve activation and focus
+
+        - repeated use builds tolerance and dependence
+
+        - excessive dosing increases instability and rebound
+
+        future_updates: AUTHORED
+
+      SERUM:
+
+        initial_state: ACTIVE_RESEARCH
+
+        known_from_start: true
+
+        contents:
+
+        - current preparation notes
+
+        - experimental hypotheses
+
+        - observed Potency / Purity behavior when learned
+
+        - transformation observations
+
+        - post-transform physiology
+
+        - reversion observations
+
+        updates_from: AUTHORED_SERUM_RESEARCH_EVENTS
+
+      SUPPRESSOR:
+
+        initial_state: UNKNOWN
+
+        reveal_if: SuppressorRecipeKnown == true
+
+        contents:
+
+        - suppression theory
+
+        - preparation notes once discovered
+
+        - observed suppression response
+
+        updates_from: AUTHORED_SUPPRESSOR_RESEARCH_EVENTS
+professional_system:
+
+  standing_buckets:
+
+    RESPECTED:
+
+      range:
+
+      - 70
+
+      - 100
+
+      SocietyContextMod: 10
+
+    QUESTIONED:
+
+      range:
+
+      - 40
+
+      - 69
+
+      SocietyContextMod: 0
+
+    DISCREDITED:
+
+      range:
+
+      - 20
+
+      - 39
+
+      SocietyContextMod: -10
+
+    DISGRACED:
+
+      range:
+
+      - 0
+
+      - 19
+
+      SocietyContextMod: -20
+
+  labs:
+
+    PROFESSIONAL:
+
+      requires: ProfessionalStanding >= 40 AND CrowtherPressure < 80
+
+      LabQuality: 80
+
+      BrewContextMod: 10
+
+      PurityModifier: 10
+
+      ResearchMultiplier: 1.0
+
+      BatchCap: 2
+
+      AdvancedEquipment: true
+
+      SuppressorBrewing: true
+
+      MaximumBatchScale: recipe-derived up to REFINED_TRIPLE
+
+      SerumReserveCap: recipe-derived up to 4
+
+    HOME:
+
+      always_available: true
+
+      LabQuality: 50
+
+      BrewContextMod: 0
+
+      PurityModifier: 0
+
+      ResearchMultiplier: 0.75
+
+      BatchCap: 1
+
+      AdvancedEquipment: false
+
+      SuppressorBrewing: false
+
+      MaximumBatchScale: SINGLE
+
+      SerumReserveCap: 1
+
+  loss_of_job_is_hard_fail: false
+
+  loss_of_job_effects:
+
+  - ProfessionalLabAccess false
+
+  - routine purchasing power becomes unavailable
+
+  - no home suppressor brewing
+
+  - home serum batch capped at SINGLE
+
+  - home serum reserve capped at 1
+
+  - research multiplier reduced
+
+underworld:
+
+  after_K1_UnderworldHeat_floor: 25
+
+  purpose: 'Police want to identify Hyde. Crowther''s network wants to find and punish the man who killed Rook.
+
+    Hyde therefore gains both danger and unique access to criminal routes, informants and confrontations.
+
+    '
+
+  random_main_plot_generation: false
+
+serum:
+
+  SerumStock:
+
+    initial: 0
+
+    min: 0
+
+    max: 2
+
+  dose_sizes:
+
+    SMALL: 0.75
+
+    STANDARD: 1.0
+
+    LARGE: 1.25
+
+  brew:
+
+    score: 40 + 12*Chemistry + 6*Reason + Lab.BrewContextMod + BrewContextMod
+
+    STRONG:
+
+      condition: score >= 75
+
+      ProcessQuality: 10
+
+      preferred_doses: 2
+
+    COSTLY:
+
+      condition: 55 <= score <= 74
+
+      ProcessQuality: -5
+
+      preferred_doses: 1
+
+    FAILED:
+
+      condition: score < 55
+
+      preferred_doses: 0
+
+    approaches:
+
+      BALANCED:
+
+        PotencyMod: 0
+
+        PurityMod: 0
+
+      PUSH_POTENCY:
+
+        PotencyMod: 15
+
+        PurityMod: -15
+
+      PURIFY:
+
+        PotencyMod: -10
+
+        PurityMod: 15
+
+      DESPERATE:
+
+        PotencyMod: 20
+
+        PurityMod: -35
+
+        status: TUNING
+
+    Potency: clamp(30 + 8*Chemistry + .25*IngredientPotency + .10*LabQuality + ApproachPotencyMod + BatchScalePotencyMod
+
+      + ProcessQuality)
+
+    Purity: clamp(25 + 8*Chemistry + .25*IngredientPurity + .15*LabQuality + Lab.PurityModifier + ApproachPurityMod
+
+      + BatchScalePurityMod + ProcessQuality)
+
+    batch_scale:
+
+      SINGLE:
+
+        requires: SERUM_RECIPE_L1
+
+        valid_labs:
+
+        - PROFESSIONAL
+
+        - HOME
+
+        doses_created: 1
+
+        PotencyMod: 0
+
+        PurityMod: 0
+
+      DOUBLE:
+
+        requires: SERUM_RECIPE_L2
+
+        valid_labs:
+
+        - PROFESSIONAL
+
+        doses_created: 2
+
+        PotencyMod: 6
+
+        PurityMod: -4
+
+        status: TUNING
+
+      TRIPLE:
+
+        requires: SERUM_RECIPE_L3
+
+        valid_labs:
+
+        - PROFESSIONAL
+
+        doses_created: 3
+
+        PotencyMod: 12
+
+        PurityMod: -8
+
+        status: TUNING
+
+      REFINED_TRIPLE:
+
+        requires: SERUM_RECIPE_L4
+
+        valid_labs:
+
+        - PROFESSIONAL
+
+        doses_created: 3
+
+        PotencyMod: 12
+
+        PurityMod: -2
+
+        status: TUNING
+
+    batch_scale_rule: >
+      Larger simultaneous professional batches become more potent as Jekyll masters the recipe,
+      but early large batches are harder to purify. Home brewing never exceeds SINGLE.
+
+    preparation_base:
+
+      id: SERUM_BASE
+
+      rule: >
+        Every serum preparation begins with BASE_REAGENT + CATALYST.
+        Batch scale determines the required quantity.
+
+      player_facing_recipe: research_journal.sections.SUBSTANCES.SERUM
+
+    resource_requirements:
+      SINGLE:
+
+      - BASE_REAGENT x1
+
+      - CATALYST x1
+
+      DOUBLE:
+
+      - BASE_REAGENT x2
+
+      - CATALYST x2
+
+      TRIPLE:
+
+      - BASE_REAGENT x3
+
+      - CATALYST x3
+
+      REFINED_TRIPLE:
+
+      - BASE_REAGENT x3
+
+      - CATALYST x3
+
+  use:
+
+    EffectiveDrive: Potency*DoseMultiplier*(1-.35*(SerumTolerance/100))
+
+    TransformFuelGain: clamp(ceil(EffectiveDrive/35),1,4)
+
+    ToxicityGain: DoseMultiplier*(.55*Potency + .80*(100-Purity))
+
+    SerumToleranceGain: round(2 + Potency/25 + DoseSizeBonus + RedoseBonus)
+
+    toxicity:
+
+      STABLE: ActiveToxicLoad < 70
+
+      UNSTABLE: 70 <= ActiveToxicLoad < 95
+
+      CRITICAL: 95 <= ActiveToxicLoad < 115
+
+      FATAL: ActiveToxicLoad >= 115
+
+    fatal_handler: FAIL_SERUM_OVERDOSE
+
+form_system:
+
+  policies:
+
+  - JEKYLL_REQUIRED
+
+  - JEKYLL_PREFERRED
+
+  - FORM_FLEXIBLE
+
+  - HYDE_LOCKED
+
+  - SPONTANEOUS_GATE
+
+  - FINAL_IDENTITY
+
+  voluntary_transform_requires:
+
+  - Form == JEKYLL
+
+  - TransformWindow == OPEN
+
+  - SerumStock >= 1
+
+  voluntary_transform_blackout: false
+
+  TransformFuel_real_time_timer: false
+
+  ReversionControl:
+
+    status: TUNING
+
+    formula: 'clamp(45 + .35*ActiveSerumPurity + .35*Integration - .40*HydeDependence - .15*SerumTolerance - .15*ActiveToxicLoad
+
+      + IntegrationReversionMod + ToxicityBucketMod)
+
+      '
+
+    CONTROLLED:
+
+      condition: '>=70'
+
+      behavior: choose REVERT at FIRST_GATE or REMAIN to DEFAULT if authored
+
+    COMMITTED:
+
+      condition: 45-69
+
+      behavior: forced remain until DEFAULT_GATE, then authored revert
+
+    OVERRUN:
+
+      condition: <45
+
+      behavior: cannot revert at DEFAULT; persists to LATEST_SAFE_GATE
+
+  redose:
+
+    allowed: true
+
+    requires:
+
+    - Form == HYDE
+
+    - RedoseWindow == OPEN
+
+    - SerumStock >= 1
+
+    effect:
+
+    - add TransformFuel
+
+    - add Toxicity
+
+    - increase SerumTolerance
+
+    - call HydeDependence.REDOSE
+
+    fatal_if: ActiveToxicLoad >= 115
+
+required_reversion:
+
+  trigger: next beat is JEKYLL_REQUIRED AND Form == HYDE
+
+  magic_reversion: false
+
+  options:
+
+    RR_HIDE_WAIT:
+
+      effect: TransformFuel -1; TimePressure +1
+
+    RR_EXERTION:
+
+      effect: TransformFuel -1; HydeSatiation +5
+
+    RR_DESTROY_PROPERTY:
+
+      effect: TransformFuel -1; HydeSatiation +7; may create incident
+
+    RR_TERRORIZE:
+
+      effect: TransformFuel -1; HydeSatiation +10; witness consequence
+
+    RR_ASSAULT:
+
+      effect: TransformFuel -2; HydeSatiation +25; violence +30; incident
+
+    RR_KILL:
+
+      effect: TransformFuel -2; HydeSatiation +35; violence +80; incident
+
+    RR_SUPPRESSOR:
+
+      requires: SuppressorStock >= 1
+
+  violence_never_mandatory: true
+
+craving_and_compulsion:
+
+  craving_gain_after_major_Jekyll_beat: 4 + round(HydeDependence/20), unless CalmBeats > 0
+
+  buckets:
+
+    CONTROLLED:
+
+    - 0
+
+    - 29
+
+    RESTLESS:
+
+    - 30
+
+    - 59
+
+    INTRUSIVE:
+
+    - 60
+
+    - 79
+
+    BREAKING:
+
+    - 80
+
+    - 100
+
+  voluntary_Hyde_starts_player_controlled: true
+
+  HydeSatiation_gain:
+
+    movement: 5
+
+    environment_destruction: 7
+
+    intimidation: 10
+
+    hostile_victory: 15
+
+    major_Hyde_objective: 20
+
+    assault_uninvolved: 25
+
+    kill: 35
+
+  on_reversion:
+
+    CravingReduction: round(.60*HydeSatiation)
+
+    CalmBeatsGain: clamp(floor(HydeSatiation/25),0,3)
+
+  compulsion_gate:
+
+    only_authored: true
+
+    pressure: clamp(.40*Craving + .35*HydeDependence + .20*RecentViolence - .25*Integration)
+
+    if_player_resists:
+
+      restraint: clamp(50 + .50*Integration + .20*HydeSatiation - .35*HydeDependence - .25*Craving)
+
+      success: restraint >= 55 -> keep control, Integration +4
+
+      failure: restraint < 55 -> authored BLACKOUT_BREACH
+
+spontaneous_transform:
+
+  random_full_transform: false
+
+  only_at_authored_gates: true
+
+  BreakthroughPressure: clamp(.35*Craving + .30*HydeDependence + .20*TransformPressure + .15*SuppressionStrain -
+
+    .25*Integration - CalmWindowModifier - ActiveSuppressorModifier)
+
+  outcomes:
+
+    SYMPTOMS_ONLY: <55
+
+    CONTROLLED_BREAKTHROUGH: 55-69
+
+    FRAGMENTED_BREAKTHROUGH: 70-84
+
+    FULL_BLACKOUT: '>=85'
+
+  full_blackout_gates:
+
+  - K6_BLACKOUT_GATE
+
+  - K8_BLACKOUT_GATE
+
+  max_full_blackouts_campaign: 2
+
+suppressor:
+
+  unlock_if:
+
+  - ResearchProgress >= 30
+
+  - LanyonKnowledge == SEEDED
+
+  - LanyonKnowledge == TRUE
+
+  effect: reduces breakthrough pressure, does not reduce Craving
+
+  repeated_use_cost: SuppressionStrain rises
+
+  basic_side_effect:
+
+    Fatigue: 5
+
+    JekyllCognitionContextMod: -5
+
+    SuppressionStrain: 10
+
+  SuppressorRecipeKnown:
+
+    unlock_any:
+
+    - ResearchProgress >= 30
+
+    - LanyonKnowledge == SEEDED
+
+    - LanyonKnowledge == TRUE
+
+  brew_requirements:
+
+    all:
+
+    - SuppressorRecipeKnown
+
+    - Chemistry >= 3
+
+    - STABILIZER >= 1
+
+    - AdvancedEquipment == true
+
+    preparation:
+
+      base: SERUM_BASE
+
+      additive: STABILIZER
+
+      consumes:
+
+      - BASE_REAGENT x1
+
+      - CATALYST x1
+
+      - STABILIZER x1
+
+    valid_labs:
+
+    - PROFESSIONAL
+
+    - LANYON_LAB
+
+    HOME_LAB: INVALID
+
+  LanyonLab:
+
+    AdvancedEquipment: true
+
+    purpose: >
+
+      Fail-forward source of advanced laboratory equipment
+
+      if Jekyll loses access to his professional laboratory.
+
+    access_modes:
+
+      LEGITIMATE:
+
+        rule: >
+
+          Exact social requirements, permission and consequences
+
+          are defined by the specific level.
+
+      ILLEGAL_AUTHORED_ROUTE:
+
+        rule: >
+
+          A specific level may allow Jekyll or Hyde
+
+          to gain unauthorized access to Lanyon's laboratory.
+
+    HydeAccess:
+
+      allowed_if_authored: true
+
+      may_enable:
+
+        - "physical infiltration"
+
+        - "forced entry"
+
+        - "alternative traversal"
+
+        - "reagent theft"
+
+        - "preparing laboratory access for Jekyll"
+
+    PrecisionChemistry:
+
+      default_required_form: "JEKYLL"
+
+      exception:
+
+        condition: "explicit authored Integration ability"
+
+        rule: >
+
+          Exceptional Hyde chemistry use must be specifically authored.
+
+    level_design_rule: >
+
+      Exact entry routes, guards, witnesses, reversion setup,
+
+      stolen materials and evidence consequences belong
+
+      to the specific level design, not the master YAML.
+
+  main_story_required: false
+  home_brewing: false
+identity:
+
+  default_visual_rule: Hyde is not recognized as Jekyll by appearance alone
+
+  states:
+
+  - UNKNOWN
+
+  - ASSOCIATED
+
+  - SUSPICIOUS
+
+  - CONFIRMED
+
+  CONFIRMED_requires:
+
+  - witnessed transformation
+
+  - unambiguous scientific proof
+
+  - confession plus corroboration
+
+  evidence_types:
+
+  - WITNESS_DESCRIPTION
+
+  - BLOOD
+
+  - CLOTHING
+
+  - ACCESS
+
+  - BEHAVIOR
+
+  - FOOTPRINT
+
+  - CHEMICAL_TRACE
+
+  - FINGER_MARK
+
+  finger_mark:
+
+    routine_police_database: false
+
+    use: rare direct-comparison scientific clue
+
+cover:
+
+  actions:
+
+  - BUY_NEW_OUTFIT
+
+  - STEAL_OUTFIT_AS_HYDE
+
+  - INTIMIDATE_SHOPKEEPER
+
+  - ASSAULT_SHOPKEEPER
+
+  - CLEAN_OUTFIT
+
+  - DESTROY_OUTFIT
+
+  - REMOVE_MONOGRAM
+
+  rule: cover changes witness descriptions; it never erases existing memories or reports
+
+  Hyde_theft_rule: Hyde stealing clothing is not the default when Jekyll can simply buy it. It becomes attractive
+
+    when Hyde needs immediate cover, cannot revert, the shop refuses him, the wallet is gone, or Jekyll appearing
+
+    as buyer would create identity evidence.
+
+world_memory:
+
+  IncidentLedger_fields:
+
+  - IncidentID
+
+  - source
+
+  - chapter
+
+  - location
+
+  - severity
+
+  - victim_status
+
+  - publicness
+
+  - witnesses
+
+  - witness_description_quality
+
+  - physical_evidence
+
+  - police_awareness
+
+  - underworld_awareness
+
+  - Jekyll_link
+
+  - newspaper_coverage
+
+  - resolved
+
+  source_values:
+
+  - JEKYLL
+
+  - HYDE
+
+  - BLACKOUT_HYDE
+
+  newspaper_rule: articles contain only PUBLIC facts
+
+  exposure_rule: incidents do not auto-write Exposure unless explicitly authored
+
+  aftermath:
+
+  - CLEAN
+
+  - AFTERMATH
+
+  - POLICE_SCENE
+
+knowledge_legitimacy:
+
+  states:
+
+  - UNKNOWN
+
+  - PLAYER_SECRET
+
+  - POLICE_KNOWN
+
+  - PUBLIC
+
+  - JEKYLL_LEGITIMIZED
+
+  TOO_PRECISE:
+
+    condition: Jekyll uses PLAYER_SECRET without legitimate source
+
+    writes:
+
+      Exposure: 10
+
+      NewcomenSuspicion: 15
+
+      ProfessionalStanding: -5
+
+  newspaper_reading:
+
+    effect: PUBLIC facts become Jekyll-legitimate and may unlock prepared dialogue
+
+integration:
+
+  meaning: 'Not abstinence and not a 50/50 compromise. Jekyll can accept aggressive or instinctive truths without
+
+    surrendering responsibility; Hyde can exercise restraint.
+
+    '
+
+  high_threshold: 60
+
+  high_hooks:
+
+  - JEKYLL_INSTINCT_ECHO
+
+  - HYDE_RESTRAINT
+
+  - REVERSION_BONUS
+
+  universal_skill_merge: false
+
+quality:
+  WriteQuality: .60*AuthoringClarity + .40*AuthorCondition
+  AuthoringQuality: mean(all WriteQuality)
+  MotifClosure: weighted mean active motif outcomes
+  BookQuality: .50*AuthoringQuality + .50*MotifClosure
+  QUALITY: '>=60'
+  POOR: <60
+  empty_motif_policy:
+    chapter_without_active_motifs: MotifClosure = null; omit from motif aggregate, never divide by zero or assign
+      MISSED to absent motifs.
+    book_without_any_active_motifs: BookQuality = AuthoringQuality.
+    aggregate_with_motifs: MotifClosure = sum(outcome_score * weight) / sum(weight) over actually ACTIVE motifs
+      after realization; rejected and unseen motifs excluded.
+
+chapter_weather_baselines:
+
+  K1:
+
+    Fog: 45
+
+    Storm: 35
+
+    Brightness: 25
+
+    Wind: 30
+
+    Rain: 25
+
+    Gloom: 55
+
+    Unnaturalness: 20
+
+  K2:
+
+    Fog: 35
+
+    Storm: 20
+
+    Brightness: 45
+
+    Wind: 20
+
+    Rain: 30
+
+    Gloom: 35
+
+    Unnaturalness: 15
+
+  K3:
+
+    Fog: 40
+
+    Storm: 25
+
+    Brightness: 35
+
+    Wind: 35
+
+    Rain: 25
+
+    Gloom: 45
+
+    Unnaturalness: 20
+
+  K4:
+
+    Fog: 50
+
+    Storm: 35
+
+    Brightness: 25
+
+    Wind: 30
+
+    Rain: 40
+
+    Gloom: 55
+
+    Unnaturalness: 25
+
+  K5:
+
+    Fog: 20
+
+    Storm: 15
+
+    Brightness: 60
+
+    Wind: 15
+
+    Rain: 10
+
+    Gloom: 20
+
+    Unnaturalness: 20
+
+  K6:
+
+    Fog: 45
+
+    Storm: 45
+
+    Brightness: 25
+
+    Wind: 45
+
+    Rain: 45
+
+    Gloom: 55
+
+    Unnaturalness: 35
+
+  K7:
+
+    Fog: 50
+
+    Storm: 55
+
+    Brightness: 20
+
+    Wind: 50
+
+    Rain: 55
+
+    Gloom: 65
+
+    Unnaturalness: 45
+
+  K8:
+
+    Fog: 60
+
+    Storm: 60
+
+    Brightness: 15
+
+    Wind: 55
+
+    Rain: 50
+
+    Gloom: 70
+
+    Unnaturalness: 60
+
+story:
+  S0:
+    world: STEVENSON
+    decisions:
+      S0_MED:
+        options:
+          S0_WAIT_FANNY:
+            action: WAIT_FANNY
+            writes:
+              Pain: 5
+              Fatigue: 5
+              FannyBond: 3
+            medication_followup:
+              required: true
+              administered_by: FANNY
+          S0_ANALGESIC:
+            action: TAKE_ANALGESIC_A
+            parametric_drops:
+            - 0
+            - 20
+          S0_STIMULANT:
+            action: TAKE_STIMULANT_S
+            parametric_drops:
+            - 0
+            - 20
+      S0_FANNY:
+        options:
+          S0_TRUTH:
+            intent: TRUTH
+            writes:
+              FannyBond: 8
+              Agitation: -5
+          S0_MINIMIZE:
+            intent: MINIMIZE
+            writes:
+              FannyBond: -4
+              Agitation: 2
+          S0_HELP:
+            intent: ASK_HELP
+            writes:
+              FannyBond: 5
+    write_lock:
+    - LÁTKA
+    - PROMĚNA
+    - BOLEST
+    - ÚLEVA
+  K1:
+    world: MANUSCRIPT
+    entry:
+      Form: JEKYLL
+      SerumStock: 0
+    main_objective: complete experiment; survive first transformation
+    form_policy:
+      experiment: JEKYLL_REQUIRED
+      Rook: HYDE_LOCKED
+    decisions:
+      K1_BREW:
+        options:
+          K1_PRECISE:
+            action: PRECISE
+            strong:
+              Potency: 70
+              Purity: 80
+            costly:
+              Potency: 65
+              Purity: 65
+          K1_FAST:
+            action: FAST_FALLBACK
+            fixed:
+              Potency: 70
+              Purity: 55
+          K1_RISKY:
+            action: RISKY
+            fixed:
+              Potency: 85
+              Purity: 35
+              SerumInstabilityScar: 15
+      K1_ROOK:
+        fixed_truth: Rook always dies after immediate threat ends
+        options:
+          K1_CONTROLLED:
+            action: CONTROLLED
+            strong:
+              Exposure: 0
+              Integration: 5
+              dependence_delta: 4
+            costly:
+              Exposure: 5
+              Integration: 2
+              dependence_delta: 6
+          K1_CHAOTIC:
+            action: CHAOTIC
+            strong:
+              Exposure: 5
+              dependence_delta: 7
+            costly:
+              Exposure: 10
+              dependence_delta: 9
+          K1_BRUTAL:
+            action: BRUTAL
+            writes:
+              Exposure: 12
+              Integration: -5
+              RecentViolence: 100
+            dependence_delta: 14
+      K1_INTERPRET:
+        options:
+          K1_RESPONSIBILITY:
+            intent: ACCEPT_RESPONSIBILITY
+            Integration: 10
+            dependence_event: ACCEPT_RESPONSIBILITY
+          K1_RATIONALIZE:
+            intent: HE_WAS_EVIL
+            Integration: -6
+            dependence_delta: 6
+          K1_SUPPRESS:
+            intent: REFUSE_TO_THINK
+            Integration: -2
+            dependence_delta: 3
+    fixed_after_Rook:
+      RookDead: true
+      LedgerMissing: true
+      PoliceHeat: 25
+      UnderworldHeat: 25
+      CrowtherPressure: 10
+      IncidentID: INC_K1_ROOK
+    research_tags:
+    - RD_BASE_TRANSFORMATION
+    - RD_POST_TRANSFORM_PHYSIOLOGY
+  S1:
+    world: STEVENSON
+    design_source: S1_tld.yaml v0.5
+    action_points: null
+    time_profile: stevenson.authored_time
+    sleep_profile: FULL_NIGHT_480
+    sleep_required: true
+    actions:
+      S1_BODY:
+        motifs:
+        - TĚLO
+        base_minutes: 10
+        accept_extra_minutes: 5
+        strength: 50
+        base_effects_first_completion: {}
+        accept_effects:
+          Pain: 3
+      S1_MEDICAL:
+        motifs:
+        - VĚDA
+        base_minutes: 60
+        accept_extra_minutes: 60
+        strength: 75
+        base_effects_first_completion: {}
+        accept_effects: {}
+      S1_FANNY:
+        motifs:
+        - DŮVĚRA
+        base_minutes: 20
+        accept_extra_minutes: 5
+        strength: 50
+        base_effects_first_completion:
+          FannyBond: TRUTH +3 / MINIMIZE +2 / HELP +4, once
+        accept_effects: {}
+      S1_FIRE:
+        motifs:
+        - VZPOMÍNKA
+        base_minutes: 10
+        accept_extra_minutes: 5
+        strength: 50
+        base_effects_first_completion:
+          Agitation: -5
+        accept_effects: {}
+      S1_WINDOW:
+        motifs:
+        - SLEDOVÁNÍ
+        base_minutes: 5
+        accept_extra_minutes: 5
+        strength: 50
+        base_effects_first_completion: {}
+        accept_effects: {}
+      S1_REST:
+        motifs:
+        - ÚLEVA
+        base_minutes: 30
+        accept_extra_minutes: 0
+        strength: 50
+        base_effects_first_completion:
+          Fatigue: -18
+          Agitation: -5
+        accept_effects: {}
+    motif_selection: Explicit accept/reject; all six may be accepted. No top-N gate.
+    medication_rule: medication.chapter_rules.S1
+    writing_minutes: 30
+    FannyBond_by_S0_choice:
+      S0_TRUTH: 3
+      S0_MINIMIZE: 2
+      S0_HELP: 4
+    new_motif_realization: K2 only
+    minimum_motifs_for_write: 0
+  K2:
+    world: MANUSCRIPT
+    invariant:
+      Form: JEKYLL
+      SerumStock: 0
+      TransformWindow: CLOSED
+    main_objective: investigate Rook's death without exposing Jekyll
+    content_slots:
+      K2_COVER_SHOP: SLOT_COVER_SHOP
+      K2_OVERDRIVE_WITNESS: NOISE
+    day_options:
+      K2_REASON: REASON_RECONSTRUCT
+      K2_CHEMISTRY: CHEMISTRY_BODY
+      K2_SOCIETY: SOCIETY_ACCESS
+      K2_LIE: LIE_MISDIRECT
+      K2_TAMPER: TAMPER
+    decisions:
+      K2_NEWCOMEN:
+        fixed_truth: Newcomen leaves the first conversation with some baseline suspicion regardless of approach
+        options:
+          K2_GENERAL:
+            intent: GENERAL_MEDICAL_INFERENCE
+            writes:
+              NewcomenSuspicion: 8
+          K2_SOCIAL:
+            intent: CONTROL_CONVERSATION
+            writes:
+              NewcomenSuspicion: 5
+          K2_LIE_DIALOGUE:
+            intent: LIE
+            writes:
+              NewcomenSuspicion: 20
+              Exposure: 5
+          K2_EXACT:
+            intent: EXACT_RECONSTRUCTION
+            writes:
+              NewcomenSuspicion: 3
+    after_release_brew:
+      K2_BREW: BREW_SERUM
+      K2_SKIP_BREW: SKIP_BREW
+    after_hours:
+      K2_SKIP_AFTER_HOURS: SKIP_AFTER_HOURS
+      K2_HYDE_AFTER_HOURS:
+        action: DO_AFTER_HOURS_AS_HYDE
+        requires: SerumStock >= 1
+    Jekyll_after_hours_route_exists: false
+    K3Entry:
+      PLAYER_FIRST: LeadPoints >= 25 AND Exposure < 70
+      CONTESTED: 10 <= LeadPoints <= 24 AND Exposure < 70
+      OTHERS_FIRST: LeadPoints < 10 OR Exposure >= 70
+    lab_prep:
+      after_release_only: true
+      options:
+      - withdraw stored serum
+      - brew if resources/lab permit
+      - store excess legal doses
+    S1_motif_handoff:
+      maximum_active: 7
+      minimum_active: 0
+      realization_source: S1_tld.yaml K2_realization_seeds until K2 TLD is authored
+      LATKA: Actual optional serum use after existing lab gate realizes the medicine motif; no forced use, stock
+        grant or replay of K1. Brewing alone insufficient.
+      topology: All accepted motifs fit shared investigation and optional later serum path.
+  S2:
+    world: STEVENSON
+    action_points: 3
+    actions:
+      S2_REST:
+        Fatigue: -18
+        SleepDebt: -12
+        AP: 2
+      S2_FOOD_FANNY:
+        Fatigue: -8
+        Agitation: -5
+        FannyBond: 3
+      S2_MEDICATE: MEDICATE
+      S2_INSPIRATION:
+        motifs:
+        - TAJEMSTVÍ
+        - DLUH
+        - DVEŘE
+        - KOUŘ
+        - STRACH
+      S2_PUSH:
+        Fatigue: 10
+        Agitation: 8
+        strongest_motif: 15
+  K3:
+    world: MANUSCRIPT
+    main_objective: reach intermediary and recover Crowther lead
+    content_slots:
+      K3_COVER_SHOP: SLOT_COVER_SHOP
+      K3_OVERDRIVE_RUMOR: NOISE
+    transform:
+      K3_STAY_JEKYLL: STAY_JEKYLL
+      K3_USE_SERUM: USE_SERUM
+    Jekyll_options:
+    - K3_NEGOTIATE
+    - K3_KNOWLEDGE
+    - K3_CHEMISTRY
+    - K3_DEBT_TRAP
+    Hyde_options:
+    - K3_READ_FEAR
+    - K3_PREDATORY_BARGAIN
+    - K3_THREATEN
+    priority_options:
+    - K3_LEDGER
+    - K3_INTERMEDIARY
+    - K3_HYDE_ESCAPE
+    outcomes:
+      LEAD: ControlPoints >= 15
+      SHARED: -14 <= ControlPoints <= 14
+      OTHERS: ControlPoints <= -15
+    resource_prep:
+      before_departure: true
+      options:
+      - withdraw serum reserve
+      - brew serum
+      - collect carried reagents
+      - change outfit if cover route is available
+    pickpocket_encounter:
+      SlotID: K3_PICKPOCKET_BASE
+      criticality: OPTIONAL_ROUTE
+      location_tag: CRIMINAL_DISTRICT
+      base_attempts: 1
+      extra_attempts_from_Overdrive: true
+      default_thief: ORDINARY_PICKPOCKET
+      TheftPriority:
+      - WALLET
+      if_informed_variant:
+        thief: INFORMED_UNDERWORLD_THIEF
+        TheftPriority:
+        - SERUM_DOSE
+        - WALLET
+      resolution: pickpocket_system + pursuit_system
+  S3:
+    world: STEVENSON
+    action_points: 3
+    actions:
+      S3_GROUND:
+        Agitation: -12
+        Bleed: -5
+        FannyBond: 6
+      S3_REST:
+        Fatigue: -15
+        SleepDebt: -15
+        Bleed: -3
+      S3_MEDICATE: MEDICATE
+      S3_PUSH:
+        Fatigue: 10
+        Agitation: 8
+        Bleed: 8
+    hallucination_motifs: true
+  K4:
+    world: MANUSCRIPT
+    main_objective: find and secure Crowther's witness
+    content_slots:
+      K4_COVER_SHOP: SLOT_COVER_SHOP
+      K4_OVERDRIVE_PASSERBY: NOISE
+    transform:
+      K4_STAY_JEKYLL: STAY_JEKYLL
+      K4_USE_SERUM: USE_SERUM
+    form_policy: JEKYLL_PREFERRED
+    Jekyll_options:
+    - K4_TREAT
+    - K4_REASSURE
+    - K4_VERIFY
+    - K4_RELOCATE
+    Hyde_options:
+    - K4_PROTECTIVE_MENACE
+    - K4_READ_FEAR
+    - K4_INTIMIDATE
+    forced_attack_priorities:
+    - K4_PROTECT
+    - K4_INFORMATION
+    - K4_HYDE_CHASE
+    outcomes:
+    - WITNESS_SAFE
+    - WITNESS_COMPROMISED
+    - WITNESS_DEAD
+    pickpocket_encounter:
+      SlotID: K4_PICKPOCKET_OVERDRIVE
+      criticality: NOISE
+      base_attempts: 0
+      requires: ManuscriptOverdrive in [BUSY, OVERWRITTEN]
+      default_thief: ORDINARY_PICKPOCKET
+      TheftPriority:
+      - WALLET
+  S4:
+    world: STEVENSON
+    action_points: 3
+    medication_access: false
+    actions:
+      S4_FANNY:
+      - PÉČE
+      - DŮVĚRA
+      - PODEZŘENÍ
+      S4_FLOWERS:
+      - KVĚTINY
+      - VZPOMÍNKA
+      S4_MUSIC:
+      - HUDBA
+      - KLID
+      S4_FIRE:
+      - SVĚTLO
+      - DOMOV
+      S4_FICTION:
+      - TAJEMSTVÍ
+      - STRACH
+      - SVOBODA
+  K5:
+    world: MANUSCRIPT
+    main_objective: investigate Crowther's social network
+    public_policy: JEKYLL_REQUIRED
+    public_options:
+    - K5_SOCIETY
+    - K5_REASON
+    - K5_CHEMISTRY
+    private_transform:
+      K5_STAY_JEKYLL: return to public progression
+      K5_USE_SERUM: optional Hyde detour
+    private_Hyde_options:
+    - K5_INSTINCT
+    - K5_MOBILITY
+    - K5_BRUTALITY
+    content_slots:
+      K5_CLOAKROOM: OPTIONAL_ROUTE
+      K5_OVERDRIVE_GOSSIP: NOISE
+    return_to_public_requires_reversion: true
+    spontaneous_gate:
+      id: K5_SPONTANEOUS
+      mandatory: true
+      full_blackout_allowed: false
+    response_options:
+    - K5_HIDE_CONTROL
+    - K5_SEEK_HELP
+    - K5_EMBRACE_HYDE
+    research_tags:
+    - RD_SPONTANEOUS_ONSET
+    resource_prep:
+      before_benefit: true
+      options:
+      - withdraw serum reserve
+      - prepare clean outfit
+      - carry one suppressor if already unlocked and brewed
+  S5:
+    world: STEVENSON
+    action_points: 3
+    actions:
+      S5_REST:
+        Fatigue: -18
+        SleepDebt: -15
+      S5_FOOD:
+        Fatigue: -8
+        Agitation: -5
+      S5_MEDICATE: MEDICATE
+      S5_RISKY_SEQUENCE: 'two fictional medication actions with safety check after each; then Rebound +15, MedicationDependence
+
+        +4'
+      S5_WRITE_EARLY:
+        Fatigue: 8
+        Agitation: 6
+        strongest_motif: 10
+    hallucination_motifs: true
+  K6:
+    world: MANUSCRIPT
+    main_objective: break Crowther's leverage and protect Jekyll's research
+    blackout_gate: K6_BLACKOUT_GATE
+    content_slots:
+      K6_SIDE_OFFICE: OPTIONAL_ROUTE
+      K6_OVERDRIVE_LEDGER: NOISE
+    first_transform:
+    - K6_STAY_JEKYLL
+    - K6_USE_SERUM
+    Jekyll_entry:
+    - K6_SOCIETY
+    - K6_REASON
+    - K6_CHEMISTRY
+    Hyde_entry:
+    - K6_MOBILITY
+    - K6_INSTINCT
+    - K6_BRUTAL
+    evidence:
+    - K6_TAKE_ORIGINAL
+    - K6_COPY
+    - K6_DESTROY
+    midchapter_form_gate:
+      JEKYLL:
+      - K6_REMAIN_JEKYLL
+      - K6_USE_SECOND_SERUM
+      HYDE:
+      - K6_REVERT_IF_ALLOWED
+      - K6_REMAIN_HYDE
+      - K6_REDOSE
+    compulsion_gate: K6_COMPULSION_01
+    Crowther_Jekyll:
+    - K6_REASON_CROWTHER
+    - K6_INTERROGATE
+    - K6_BLACKMAIL_BACK
+    - K6_FULL_SYNTHESIS
+    Crowther_Hyde:
+    - K6_READ_CROWTHER_FEAR
+    - K6_BARGAIN
+    - K6_THREATEN
+    - K6_ATTACK
+    outcomes:
+    - CLEAN_BREAK
+    - EXPOSED_BREAK
+    - DESTRUCTIVE_BREAK
+    resource_prep:
+      before_archive: true
+      options:
+      - professional multi-dose batch if unlocked
+      - withdraw stored doses
+      - brew suppressor if recipe/reagent/equipment available
+      - select carried evidence / reagent
+    pickpocket_encounter:
+      SlotID: K6_INFORMED_PICKPOCKET
+      criticality: OPTIONAL_ROUTE
+      location_tag: CROWTHER_NETWORK
+      base_attempts: 1
+      extra_attempts_from_Overdrive: true
+      default_thief: INFORMED_UNDERWORLD_THIEF
+      TheftPriority:
+      - SERUM_DOSE
+      - STABILIZER
+      - WALLET
+      - EVIDENCE
+      critical_item_theft_requires_guaranteed_recovery: true
+      resolution: pickpocket_system + pursuit_system
+  S6:
+    world: STEVENSON
+    action_points: 3
+    actions:
+      S6_CARE:
+        Agitation: -10
+        Fatigue: -8
+        FannyBond: 6
+      S6_READ_MANUSCRIPT:
+        Fatigue: 4
+        Bleed: 3
+      S6_ISOLATE:
+        FannyBond: -6
+        Agitation: 5
+        Bleed: 5
+      S6_MEDICATE: MEDICATE
+    hallucination_motifs: true
+  K7:
+    world: MANUSCRIPT
+    main_objective: deal with Carew before Jekyll loses control
+    pre_Carew_options:
+      K7_SUPPRESSOR: USE_SUPPRESSOR
+      K7_PLANNED_RELEASE: PLANNED_HYDE_RELEASE
+      K7_NOTHING: WAIT_FOR_CAREW
+    Carew_present_policy: JEKYLL_REQUIRED
+    Jekyll_options:
+    - K7_CONFESS
+    - K7_REASON
+    - K7_CHEM_SUPPRESS
+    - K7_DISMISS
+    - K7_FLEE
+    spontaneous_gate:
+      id: K7_SPONTANEOUS
+      full_blackout_allowed: false
+    Hyde_options:
+    - K7_READ_FEAR
+    - K7_WARN
+    - K7_THREATEN
+    - K7_GIVE_HYDE_CONTROL
+    crisis_options:
+    - K7_PROTECT
+    - K7_FLEE_AS_HYDE
+    - K7_YIELD
+    outcomes:
+    - CAREW_SAFE
+    - CAREW_INJURED
+    - CAREW_DEAD
+    research_tags:
+    - RD_SUPPRESSION_RESPONSE
+    suppressor_preparation:
+      brew_possible_if:
+      - SuppressorRecipeKnown
+      - Chemistry >= 3
+      - STABILIZER >= 1
+      - AdvancedEquipment == true
+      valid_locations:
+      - PROFESSIONAL_LAB
+      - LANYON_LAB
+      HOME_LAB: cannot brew suppressor
+      if_unavailable:
+      - planned Hyde release
+      - wait / restraint
+      - flee strategy
+      - Integration options
+  S7:
+    world: STEVENSON
+    action_points: 3
+    actions:
+      S7_REST:
+        Fatigue: -15
+        SleepDebt: -10
+        Agitation: -5
+      S7_MEDICATE: MEDICATE
+      S7_FINAL_MOTIF:
+      - IDENTITA
+      - PROMĚNA
+      - KONTROLA
+      - OHEŇ
+      - VINA
+      - ÚLEVA
+      S7_WRITE_THROUGH:
+        Fatigue: 10
+        Agitation: 8
+        strongest_motif: 15
+    hallucination_motifs: true
+  K8:
+    world: MANUSCRIPT
+    main_objective: resolve Jekyll and Hyde before outside pressure closes in
+    blackout_gate:
+      id: K8_BLACKOUT_GATE
+      cannot_replace_final_identity_gate: true
+    content_slots:
+      K8_SERVICE_EXIT: OPTIONAL_ROUTE
+      K8_OVERDRIVE_CORRIDOR: NOISE
+    cast:
+      ASSISTANCE: Exposure < 70 AND CarewAlive AND CarewWillHelp AND LanyonKnowledge == TRUE
+      INVESTIGATION: Exposure < 70 AND not ASSISTANCE
+      SIEGE: Exposure >= 70
+    prep_options:
+    - K8_BREW_SERUM
+    - K8_BREW_SUPPRESSOR
+    - K8_SKIP
+    form_options:
+    - K8_STAY_JEKYLL
+    - K8_USE_SERUM
+    - K8_USE_SUPPRESSOR
+    Jekyll_options:
+    - K8_CONFESS
+    - K8_REASON
+    - K8_CHEMISTRY
+    - K8_COMPLETE_TRUTH
+    - K8_INTEGRATION_HYBRID
+    Hyde_options:
+    - K8_READ_ROOM
+    - K8_TURN_NEWCOMEN
+    - K8_INTIMIDATE_UTTERSON
+    - K8_ESCAPE
+    - K8_FIGHT
+    compulsion_gate: K8_COMPULSION_01
+    final_identity:
+      K8_CHOOSE_HYDE:
+        always_available: true
+        BookEnd: HYDE
+      K8_CHOOSE_INTEGRATION:
+        requires: Integration >= 60
+        BookEnd: INTEGRATION
+    resource_prep:
+      serum: brew according to current lab, recipe mastery, storage and reagents
+      suppressor: only advanced equipment route
+      home_lab_limit: SINGLE serum batch; no suppressor
+  S8:
+    world: STEVENSON
+    medication_access: false
+    outcomes:
+    - HYDE_QUALITY
+    - HYDE_POOR
+    - INTEGRATION_QUALITY
+    - INTEGRATION_POOR
+    first_draft_always_burns: true
+    burn_actor:
+      QUALITY: FANNY
+      POOR: STEVENSON
+    clean_sheet_remains: true
+
+hard_fail_matrix:
+  S0:
+    StevensonFatal: true
+  K1:
+    PlayerDeath: true
+    Capture: true
+    SerumOverdose: true
+  S1:
+    StevensonFatal: Only canonical medication emergency/fatal resolution; actual medication use alone is not fatal.
+  K2:
+    PlayerDeath: Hyde after-hours only
+    Capture: true
+    SerumOverdose: if serum used
+  S2:
+    StevensonFatal: true
+  K3:
+    PlayerDeath: true
+    Capture: true
+    SerumOverdose: true
+  S3:
+    StevensonFatal: true
+  K4:
+    PlayerDeath: true
+    Capture: true
+    SerumOverdose: true
+  S4:
+    none: true
+  K5:
+    PlayerDeath: true
+    Capture: true
+    SerumOverdose: true
+  S5:
+    StevensonFatal: true
+  K6:
+    PlayerDeath: true
+    Capture: true
+    SerumOverdose: true
+  S6:
+    StevensonFatal: true
+  K7:
+    PlayerDeath: true
+    Capture: false
+    SerumOverdose: planned release only
+  S7:
+    StevensonFatal: true
+  K8:
+    PlayerDeath: true
+    Capture: true
+    SerumOverdose: true
+  S8:
+    none: true
+
+invariants:
+
+- K2 first police scene is always Jekyll, SerumStock 0, TransformWindow CLOSED.
+
+- K2 has no Jekyll after-hours route.
+
+- Voluntary serum use starts under player control.
+
+- Voluntary Hyde can lose control only at authored COMPULSION_GATES.
+
+- Full spontaneous transforms and blackouts occur only at authored gates.
+
+- K5 first spontaneous transform cannot become a full blackout.
+
+- K7 Carew crisis cannot become a full blackout.
+
+- K6 and K8 may contain full blackouts.
+
+- Suppressor reduces breakthrough pressure but does not satisfy Craving.
+
+- Planned Hyde release may reduce Craving and buy CalmBeats while increasing Dependence.
+
+- Hyde and Jekyll are visually treated as different men.
+
+- World memory survives reversion.
+
+- Newspapers contain only public facts and may prepare Jekyll for later dialogue.
+
+- Player-secret knowledge is not automatically Jekyll-legitimate knowledge.
+
+- ProfessionalStanding is separate from Society skill.
+
+- Losing the professional lab is fail-forward; home lab remains.
+
+- Motifs are optional dramatic opportunities, not mandatory quest checkboxes.
+
+- One Hyde action may realize several motifs.
+
+- Mandatory story content is never removed by low ManuscriptFidelity.
+
+- Low Fidelity may remove/simplify declared optional shops, routes, clues and interactables.
+
+- High Overdrive may add declared authored noise, false leads and excessive detail.
+
+- Distortion changes authored expression without inventing new main-story topology.
+
+- Correct stimulant use can improve writing quality; excess stimulation can create Overdrive/noise.
+
+- Sedation can suppress hallucination pressure while reducing clarity and optional world detail.
+
+- Fever/Agitation tend toward storms; Sedation toward fog; stimulant activation toward brightness.
+
+- High Bleed may make weather and space behave unnaturally.
+
+- Weather only adds presentation and declared small ContextMods.
+
+- All manuscript effects of Stevenson state pass through AuthorPacket.
+
+- No stat or formula creates an un-authored chapter or ending.
+
+- There is no numeric money stat.
+
+- 'Routine purchasing is access-based: employment + wallet + authored shop.'
+
+- A stolen wallet temporarily blocks purchases; returning home can restore a wallet only while Jekyll remains funded/employed.
+
+- Routine money cannot substitute for STABILIZER or special quest resources.
+
+- Home lab can brew serum but never suppressor.
+
+- Suppressor requires advanced equipment plus recipe knowledge, Chemistry and STABILIZER.
+
+- Lanyon's lab may provide an advanced-equipment fail-forward route.
+
+- Suppressor is never mandatory for completing the main story.
+
+- Professional lab enables larger serum batches and larger reserves.
+
+- Home lab serum batch is capped at SINGLE and reserve at 1.
+
+- Carried serum begins at 1 dose and may rise to 2 through recipe mastery / case improvement.
+
+- Larger simultaneous professional serum batches gain Potency but initially incur a Purity penalty.
+
+- Recipe mastery comes from successful brewing plus Chemistry/Research, not from money or grind.
+
+- At most one recipe mastery credit is awarded per chapter.
+
+- Pickpockets exist only through authored PICKPOCKET_SLOTs.
+
+- Higher Overdrive may activate more declared pickpocket slots in eligible criminal/crowded spaces.
+
+- Low Fidelity may reduce crowd/pickpocket slot count rather than spawning contradictory crowds.
+
+- Ordinary pickpockets normally target the wallet; serum/evidence theft requires an informed authored thief or visible
+
+  item.
+
+- Critical quest items cannot be permanently lost without a guaranteed authored recovery/fallback.
+
+- Jekyll can catch a thief without transforming, but through harder time-sensitive Reason/Society pursuit.
+
+- 'Hyde has genuine physical pursuit advantages: speed, climbing, damage, obstacle breaking and PredatorSense.'
+
+- PredatorSense tracks only authored fresh trails/targets and is not omniscient wall vision.
+
+- Quick-action timers have accessibility settings including NO_TIMER.
+
+- Missing a single quick action degrades chase state rather than automatically hard-failing the mission.
+
+- A shop may be absent at low Fidelity; high Overdrive may instead add merchant friction/noise if the shop exists.
+
+- Hyde stealing a coat is contextual, not irrationally preferable to Jekyll simply buying one.
+
+economy_access:
+
+  design_rule: There is no numeric money economy. Jekyll normally has sufficient ordinary purchasing power while
+
+    professionally employed. Losing employment removes routine discretionary purchase access. Temporary theft of
+
+    his wallet blocks purchases until he recovers it or returns home to obtain another wallet from the household
+
+    safe.
+
+  EmploymentState:
+
+    EMPLOYED:
+
+      condition: ProfessionalStanding >= 40 AND ProfessionalLabAccess == true
+
+      RoutinePurchasingPower: AVAILABLE
+
+    SUSPENDED_OR_DISMISSED:
+
+      condition: ProfessionalStanding < 40 OR ProfessionalLabAccess == false due career loss
+
+      RoutinePurchasingPower: UNAVAILABLE
+
+  WalletStatus:
+
+    PRESENT: ordinary purchases may be made if RoutinePurchasingPower is AVAILABLE
+
+    STOLEN: ordinary purchases temporarily blocked
+
+    AT_HOME: ordinary purchases blocked until wallet collected
+
+  initial:
+
+    WalletStatus: PRESENT
+
+  HomeSafe:
+
+    money_amount: ABSTRACT / NOT NUMERIC
+
+    restore_wallet_if:
+
+    - WalletStatus == STOLEN
+
+    - EmploymentState == EMPLOYED
+
+    - player returns to Jekyll home
+
+    result: WalletStatus = PRESENT
+
+    note: The stolen wallet may still physically exist in world memory, but restoring access does not require tracking
+
+      pennies or bank balances.
+
+  RoutinePurchase:
+
+    requires:
+
+    - EmploymentState == EMPLOYED
+
+    - WalletStatus == PRESENT
+
+    - relevant authored shop/service exists
+
+    examples:
+
+    - ordinary coat
+
+    - basic laboratory consumables
+
+    - food
+
+    - routine medical supplies
+
+  SpecialPurchase:
+
+    rule: Rare or story-significant reagents are never solved by 'having enough money' alone. They require an authored
+
+      supplier, requisition, relationship, theft, discovery or quest source.
+
+  why_Hyde_might_steal_when_Jekyll_is_funded:
+
+  - Hyde needs cover immediately and cannot safely revert first
+
+  - shop refuses service to Hyde
+
+  - shop is closed to normal customers
+
+  - Jekyll purchasing the exact suspicious item would create identity evidence
+
+  - wallet was stolen
+
+  - authorial Overdrive creates an authored merchant-friction variant
+  
+  
+reagent_system:
+
+  fictional_only: true
+
+  rule: >
+    Reagents are abstract fictional resource categories. No real chemical recipe,
+    concentration or medically actionable instructions are represented.
+
+  categories:
+
+    BASE_REAGENT:
+
+      role: ordinary serum substrate
+
+      rarity: COMMON
+
+    CATALYST:
+
+      role: required component of SERUM_BASE
+
+      rarity: UNCOMMON
+
+    STABILIZER:
+
+      role: >
+        Special reagent used to convert SERUM_BASE into SUPPRESSOR
+        once Jekyll has discovered the suppressor principle.
+
+      rarity: RARE
+
+      routine_purchase: false
+
+  ReagentInventory:
+
+    representation: small integer tokens, not a broad crafting inventory
+
+    carried_field_cap: 3
+
+    critical_reagent_auto_storage: lab storage when returned to a valid lab
+
+  professional_lab_stock:
+
+    while_accessible:
+
+      BASE_REAGENT: UNLIMITED
+
+      CATALYST: UNLIMITED
+
+      STABILIZER: AUTHORED_ONLY
+
+  home_lab_stock:
+
+    BASE_REAGENT:
+
+      passive_cap: 2
+
+      restock_source: POOLE
+
+    CATALYST:
+
+      passive_cap: 2
+
+      restock_source: POOLE
+
+    STABILIZER:
+
+      passive_cap: 0
+
+      restock_source: NONE
+
+      acquisition: AUTHORED_ONLY
+
+    Poole_restock:
+
+      request_location: JEKYLL_HOME
+
+      player_requested: true
+
+      delivery: NEXT_MANUSCRIPT_DAY
+
+      behavior: RESTORE_BASE_AND_CATALYST_TO_PASSIVE_CAP
+
+      reload_does_not_advance_delivery: true
+
+      leaving_and_reentering_home_does_not_advance_delivery: true
+
+  softlock_rule: >
+    Suppressor is powerful but never mandatory for main-story completion.
+    If STABILIZER or advanced equipment is unavailable, planned release,
+    restraint, escape or Integration remain authored alternatives.
+
+serum_recipe_mastery:
+
+  status: TUNING
+
+  philosophy: Jekyll begins from a written formula. Repeated successful preparation plus Chemistry skill creates
+
+    insight automatically; the player does not buy recipe perks with money.
+
+  SuccessfulBrewCredits:
+
+    initial: 0
+
+    gain_rule: Gain at most 1 mastery credit per manuscript chapter for the first stable successful serum brew.
+
+      Repeated reload/brew farming in the same chapter gives no extra credit.
+
+    qualifying_brew: BrewScore >= 55 AND resulting batch is not immediately FATAL
+
+  levels:
+
+    SERUM_RECIPE_L1:
+
+      initial: true
+
+      requires: none
+
+      unlocks:
+
+      - SINGLE batch
+
+      - CarriedSerumCap 1
+
+      - ProfessionalSerumReserveCap 1
+
+    SERUM_RECIPE_L2:
+
+      requires:
+
+      - Chemistry >= 2
+
+      - SuccessfulBrewCredits >= 2
+
+      unlocks:
+
+      - DOUBLE batch in PROFESSIONAL lab
+
+      - ProfessionalSerumReserveCap 2
+
+      - better batch consistency
+
+    SERUM_RECIPE_L3:
+
+      requires:
+
+      - Chemistry >= 3
+
+      - SuccessfulBrewCredits >= 3
+
+      - ResearchProgress >= 30
+
+      unlocks:
+
+      - TRIPLE batch in PROFESSIONAL lab
+
+      - CarriedSerumCap 2 via improved serum case
+
+      - ProfessionalSerumReserveCap 3
+
+    SERUM_RECIPE_L4:
+
+      requires:
+
+      - Chemistry >= 4
+
+      - SuccessfulBrewCredits >= 4
+
+      - ResearchProgress >= 60
+
+      unlocks:
+
+      - REFINED_TRIPLE batch
+
+      - ProfessionalSerumReserveCap 4
+
+      - reduced large-batch Purity penalty
+
+  automatic_unlock_rule: When requirements become true at a lab analysis point, Jekyll receives the recipe insight
+
+    automatically.
+
+serum_storage:
+
+  no_grid_inventory: true
+
+  initial:
+
+    CarriedSerumCap: 1
+
+    CarriedSuppressorCap: 1
+
+    ProfessionalSerumReserveCap: 1
+
+    HomeSerumReserveCap: 1
+
+  derived_caps:
+
+    SERUM_RECIPE_L1:
+
+      CarriedSerumCap: 1
+
+      ProfessionalSerumReserveCap: 1
+
+    SERUM_RECIPE_L2:
+
+      CarriedSerumCap: 1
+
+      ProfessionalSerumReserveCap: 2
+
+    SERUM_RECIPE_L3:
+
+      CarriedSerumCap: 2
+
+      ProfessionalSerumReserveCap: 3
+
+    SERUM_RECIPE_L4:
+
+      CarriedSerumCap: 2
+
+      ProfessionalSerumReserveCap: 4
+
+  home_caps:
+
+    CarriedSerumCap: recipe-derived
+
+    HomeSerumReserveCap: 1
+
+    MaximumBatchScale: SINGLE
+
+    SuppressorReserveCap: 0
+
+  professional_caps:
+
+    MaximumBatchScale: recipe-derived
+
+    SuppressorReserveCap: 2
+
+  storage_flow:
+
+  - brew batch
+
+  - fill carried serum slots if player chooses
+
+  - store remaining legal doses in current lab reserve
+
+  - prevent brew if no legal storage exists unless player explicitly discards/replaces a dose
+
+  retrieve_reserve:
+
+    requires: physical return to the lab that stores the dose
+
+    mid_mission_auto_refill: false
+
+  design_effect: Losing the professional lab does not end the game, but it sharply reduces Jekyll's ability to stockpile
+
+    multiple doses, which makes late Hyde control and redose planning more difficult.
+
+inventory_system:
+
+  design_rule: No grid inventory and no encumbrance simulation. Track only items that materially affect serum control,
+
+    cover, investigation or authored objectives.
+
+  categories:
+
+    WALLET:
+
+      slot: false
+
+      stateful: true
+
+    SERUM_DOSE:
+
+      slot: CarriedSerumCap
+
+    SUPPRESSOR:
+
+      slot: CarriedSuppressorCap
+
+    FIELD_REAGENT:
+
+      slot: ReagentInventory.carried_field_cap
+
+    EVIDENCE:
+
+      slot: authored evidence capacity; normally abstract
+
+    OUTFIT:
+
+      slot: current worn outfit + authored spare only
+
+  critical_item_rule: A critical quest item may be stolen only if an immediate or later authored recovery/fallback
+
+    route is guaranteed.
+
+  lab_storage_is_separate_from_carried_inventory: true
+
+pickpocket_system:
+
+  purpose: Criminal districts can threaten Jekyll's temporary access to money, serum, suppressor, reagents or evidence.
+
+    Pickpockets are authored encounter slots, not random global procs.
+
+  eligible_locations:
+
+  - criminal streets
+
+  - markets
+
+  - crowded underworld interiors
+
+  - selected K3/K6 spaces
+
+  activation:
+
+    base_rule: level must declare at least one PICKPOCKET_SLOT
+
+    OverdriveBonus:
+
+      CALM: 0
+
+      BUSY: 1
+
+      OVERWRITTEN: 2
+
+    FidelityCap:
+
+      RICH: all declared base + bonus slots may exist
+
+      THIN: maximum 1 active pickpocket slot
+
+      FRAGMENTARY: bonus slots disabled; only explicit mandatory/base slot may remain
+
+    maximum_active_attempts_per_level: 3
+
+  thief_types:
+
+    ORDINARY_PICKPOCKET:
+
+      default_targets:
+
+      - WALLET
+
+      can_target_serum: false
+
+      can_target_evidence: false
+
+    INFORMED_UNDERWORLD_THIEF:
+
+      default_targets:
+
+      - WALLET
+
+      - SERUM_DOSE
+
+      - SUPPRESSOR
+
+      - FIELD_REAGENT
+
+      - EVIDENCE
+
+      rule: non-wallet targeting requires an authored reason the thief knows the item matters
+
+  NoticePickpocketScore:
+
+    JEKYLL: 40 + 10*Reason + ObservationContextMod + WeatherVisibilityMod
+
+    HYDE: 40 + 12*Instinct + FearSensoryContextMod + WeatherVisibilityMod
+
+    OUTCOMES:
+
+      ANTICIPATE: Score >= 75; prevent theft or grab wrist before loss
+
+      LATE_NOTICE: 55 <= Score <= 74; item taken, immediate pursuit starts
+
+      MISSED: Score < 55; theft discovered after a short authored delay
+
+  theft_priority_rule: Each authored slot declares TheftPriority. Ordinary thieves normally take WALLET. Serum/suppressor/evidence
+
+    theft is reserved for informed thieves or visibly exposed items.
+
+  wallet_theft:
+
+    WRITES:
+
+      WalletStatus: STOLEN
+
+    purchase_access: blocked
+
+    recovery:
+
+    - catch thief
+
+    - later recover from fence/cache if authored
+
+    - return home and restore wallet from safe if still employed
+
+  item_theft:
+
+    WRITES:
+
+    - remove selected carried item
+
+    - create StolenItemCase
+
+    possible_recovery:
+
+    - immediate chase
+
+    - Jekyll clue pursuit
+
+    - Hyde physical pursuit
+
+    - later underworld fence
+
+    - authored informant
+
+  fail_forward: Failure to recover an ordinary wallet or noncritical item does not end the story. Critical items
+
+    require an authored fallback.
+
+quick_action_system:
+
+  status: TUNING
+
+  purpose: Short reaction windows create pressure during thefts, escapes and investigations without turning the
+
+    game into continuous QTEs.
+
+  uses:
+
+  - mark fleeing target
+
+  - choose an intercept direction
+
+  - spot a fresh clue before it is lost in crowd/weather
+
+  - grab or dodge at close range
+
+  - select a route during a chase
+
+  default_window_seconds: 3.0
+
+  accessibility:
+
+    NORMAL: 1.0x timer
+
+    EXTENDED: 2.0x timer
+
+    NO_TIMER: decision remains but motor-time pressure is removed
+
+    rule: Accessibility settings never remove story content or endings.
+
+  failure_rule: Missing one quick action normally degrades the pursuit state; it does not instantly fail the entire
+
+    mission.
+
+pursuit_system:
+
+  shared_states:
+
+  - TARGET_VISIBLE
+
+  - TARGET_LOST_IN_CROWD
+
+  - TRAIL_FOUND
+
+  - INTERCEPT_PREDICTED
+
+  - TARGET_ESCAPED
+
+  - TARGET_CAUGHT
+
+  JEKYLL:
+
+    fantasy: outthink the runner rather than overpower them
+
+    strengths:
+
+    - Reason identifies fresh clues
+
+    - Reason predicts likely exits
+
+    - Society can recruit a constable, shopkeeper or bystander if authored
+
+    - knowledge of district can create intercept routes
+
+    weaknesses:
+
+    - lower sprint speed
+
+    - slower climbing
+
+    - cannot smash through many chase obstacles
+
+    QuickReasonChain:
+
+      examples:
+
+      - notice direction of jostled crowd
+
+      - spot dropped token or torn cloth
+
+      - identify wet footprint before rain erases it
+
+      - choose likely alley exit
+
+      - question a bystander before memory becomes confused
+
+      success_rule: normally 2 successful clue/intercept beats out of 3 before thief exits authored chase space
+
+      Reason_effect: higher Reason extends clue legibility, improves clue ranking and may reveal an intercept instead
+
+        of requiring raw foot speed
+
+      Society_effect: if a suitable NPC is present, Society may block an exit or point out the thief
+
+    catch_without_Hyde: true
+
+    difficulty: deliberately harder than Hyde physical pursuit
+
+  HYDE:
+
+    fantasy: predator pursuit
+
+    physical_modifiers:
+
+      SprintSpeedPercent: 15 + 5*Mobility
+
+      ClimbSpeedPercent: 25 + 8*Mobility
+
+      GapReachContextMod: 5*Mobility
+
+      MeleeDamagePercent: 20 + 10*Brutality
+
+      StaggerPowerContextMod: 8*Brutality
+
+      status: TUNING
+
+    Mobility_actions:
+
+    - vault market stalls
+
+    - climb drainpipes / ledges
+
+    - cross rooftops
+
+    - take vertical shortcuts
+
+    - tackle fleeing target from movement
+
+    Brutality_actions:
+
+    - break obstructing doors
+
+    - shove through hostile blockers
+
+    - tackle / pin thief
+
+    - intimidate accomplices
+
+    PredatorSense:
+
+      skill: Instinct
+
+      tracks:
+
+      - fresh footstep direction
+
+      - breathing / footfall audio
+
+      - fearful heartbeat-like audio cue at close authored range
+
+      - sweat / blood / chemical scent trace
+
+      - disturbed crowd or recently moved objects
+
+      TrackRange: 8 + 4*Instinct game meters
+
+      FreshTrailDurationSeconds: 5 + 2*Instinct
+
+      status: TUNING
+
+      limits:
+
+      - does not identify arbitrary people through thick walls
+
+      - does not reveal future route choices
+
+      - works only on authored fresh trails / tagged targets
+
+      - heavy rain may weaken scent while strengthening footprint clues
+
+  outcomes:
+
+    CAUGHT_CLEAN: recover item; minimal new incident
+
+    CAUGHT_INTIMIDATED: recover item; witness/fear consequences
+
+    CAUGHT_INJURED: recover item; violence incident
+
+    TARGET_ESCAPED: item remains stolen; recovery/fallback may continue later
+
+shop_state_system:
+
+  rule: Shop existence primarily comes from Fidelity. Overdrive does not normally erase the shop; it may add an
+
+    authored complication, contradiction or excessive merchant behavior.
+
+  Fidelity:
+
+    RICH: full shop/interior and normal service may exist
+
+    THIN: limited stock / stall / restricted interaction
+
+    FRAGMENTARY: optional shop may be absent or only a facade
+
+  OverdriveComplication:
+
+    CALM: no extra merchant complication
+
+    BUSY: one optional friction/noise beat may activate
+
+    OVERWRITTEN: strong authored friction variant may activate
+
+  example_last_coat:
+
+    SlotID: SHOP_FRICTION_LAST_COAT
+
+    requires:
+
+    - shop exists
+
+    - ManuscriptOverdrive == OVERWRITTEN
+
+    fiction: The merchant claims the desired coat is the last one and refuses to sell it for an over-specific, overwritten
+
+      reason.
+
+    JEKYLL_options:
+
+    - 'Society: persuade'
+
+    - 'Reason: identify a different usable garment'
+
+    - leave and use another cover route
+
+    HYDE_options_if_present:
+
+    - steal
+
+    - intimidate
+
+    - assault
+
+    mandatory_for_cover: false
+
+resource_initial_state:
+
+  EmploymentState: EMPLOYED
+
+  WalletStatus: PRESENT
+
+  SerumRecipeLevel: SERUM_RECIPE_L1
+
+  SuccessfulBrewCredits: 0
+
+  CarriedSerumCap: 1
+
+  CarriedSuppressorCap: 1
+
+  ProfessionalSerumReserveCap: 1
+
+  HomeSerumReserveCap: 1
+
+  ProfessionalSerumReserve: []
+
+  HomeSerumReserve: []
+
+  CarriedSerum: []
+
+  CarriedSuppressor: []
+
+  Reagents:
+
+    BASE_REAGENT: 0
+
+    CATALYST: 0
+
+    STABILIZER: 0
+
+  SuppressorRecipeKnown: false
+
+  StolenItemCases: []
+
+change_log_v6_7:
+
+  added:
+
+  - access-based nonnumeric economy
+
+  - wallet theft and home-safe recovery
+
+  - fictional reagent sourcing
+
+  - serum recipe mastery
+
+  - professional multi-dose batch scaling
+
+  - serum carried/reserve storage
+
+  - home-lab storage and batch penalties
+
+  - advanced-equipment-only suppressor production
+
+  - pickpocket encounters driven by authored slots + Overdrive
+
+  - Jekyll quick Reason pursuit
+
+  - Hyde physical chase and PredatorSense
+
+  - quick-action accessibility
+
+  - Overdrive merchant-friction shop variants
+
+  preserved:
+
+  - Fidelity / Distortion / Overdrive manuscript rendering
+
+  - author weather
+
+  - canonical Stevenson medication math
+
+  - Hyde Craving / Dependence / blackout architecture
+
+  - identity / newspaper / world memory systems
+
+  - K2 no-Jekyll-after-hours invariant
+
+  - K5 first spontaneous transform without full blackout
+
+  - K7 Carew direct player agency
+s1_revision_note:
+  status: CONCRETE_PLAYTEST_BASELINE
+  changes:
+  - Opt-in authored awake fatigue +0.2/min and FULL_NIGHT_480 numeric recovery.
+  - S1 free activities and all accepted motifs replace AP and top-N selection.
+  - S1 actual medicine grants LATKA once; ordinary dose is not fatal. Existing medication effects unchanged.
+  - Fanny writes, activity durations, motif weights and empty-motif quality behavior defined.
+  not_changed:
+  - S0 and K1 choice/consequence tables
+  - existing medication target and effect tables
+  - existing authoring/packet/weather formula coefficients
+  - S2+ action-point and motif selection systems
+  remaining_sync: Narrative Flow and cumulative S0+K1+S1 summary; K2 authored scenes.

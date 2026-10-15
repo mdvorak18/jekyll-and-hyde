@@ -1,0 +1,1567 @@
+schema:
+  id: JH_AMDD_S0_TECHNICAL_LEVEL_DESIGN
+  version: '1.3'
+  status: PARTIALLY_RECONCILED_NOT_IMPLEMENTATION_READY
+  chapter: S0
+  world: STEVENSON
+  level_id: L_S0_STEVENSON_OPENING
+  purpose: Full greybox-ready Technical Level Design baseline for S0. This revision keeps the existing S0 layout, medication,
+    motif, checkpoint, AuthorPacket and K1 handoff design, and updates the Fanny relationship logic. WAIT_FANNY now contains
+    the authored medication request LAUDANUM / COCAINE / FANNY_CHOOSE, followed by the separate TRUTH / MINIMIZE / ASK_HELP
+    conversation. Relationship effects are cumulative through FannyBond; SUPPORTIVE / STRAINED / WITHDRAWN remain long-term
+    derived relationship states rather than instant one-choice switches. Concrete dialogue text lives in the separate S0 dialogue
+    file. Checkpoint storage/reload implementation remains deferred to the Unreal/C++ CheckpointSystem/SaveGame layer.
+authority:
+  priority:
+  - MASTER
+  - NARRATIVE_FLOW
+  - TECHNICAL_LEVEL_DESIGN
+  - DIALOGUE_AND_CINEMATIC_DETAIL
+  master_source: JH_MASTER(2).yaml
+  conflict_rule: >
+    MASTER always wins. Relationship writes have been restored to story.S0.
+    The WAIT_FANNY medication subchoices, extra relationship writes and
+    exact-target exception below are unresolved proposals, NOT executable
+    rules and NOT approved changes to Master. This document is not ready for
+    implementation until the assisted-medication path is reconciled.
+  master_bindings:
+    chapter_topology: story.S0
+    stevenson_state: stevenson
+    lifecycle: stevenson.state_lifecycle
+    medication_system: medication
+    author_packet: author_packet
+    motifs_global: motifs
+    hard_fail: hard_fail_matrix.S0
+  dialogue_source:
+    file: JH_AMDD_S0_dialogue_v1_0.yaml
+    rule: Concrete spoken text, player-facing choice text, and performance directions live in the dialogue file. TLD owns
+      gameplay consequences, sequencing, gates, and runtime bindings.
+canonical_contract:
+  S0_world: STEVENSON
+  initial_medication_decision:
+    id: S0_MED
+    options:
+    - S0_WAIT_FANNY
+    - S0_ANALGESIC
+    - S0_STIMULANT
+  fanny_decision:
+    id: S0_FANNY
+    options:
+    - S0_TRUTH
+    - S0_MINIMIZE
+    - S0_HELP
+  write_lock_motifs:
+  - LÁTKA
+  - PROMĚNA
+  - BOLEST
+  - ÚLEVA
+  hard_fail:
+  - StevensonFatal
+  wait_fanny_contract:
+    action: WAIT_FANNY
+    writes:
+      Pain: 5
+      Fatigue: 5
+      FannyBond: 3
+    medication_followup:
+      required: true
+      administered_by: FANNY
+      conversation_before_administration: true
+      choice_id: S0_FANNY_MEDICATION_REQUEST
+      options:
+        S0_FANNY_LAUDANUM:
+          player_line: Laudanum.
+          medication_id: ANALGESIC_A
+          dose_policy: EXACT_CANONICAL_TARGET
+          expected_classification: CORRECT
+          relationship:
+            FannyBond: 3
+            direction: SUPPORT
+            meaning: Stevenson acknowledges the pain and accepts Fanny's care.
+        S0_FANNY_COCAINE:
+          player_line: Cocaine.
+          medication_id: STIMULANT_S
+          dose_policy: EXACT_CANONICAL_TARGET
+          expected_classification: CORRECT
+          relationship:
+            FannyBond: -1
+            direction: MILD_STRAIN
+            meaning: Fanny understands why he wants to keep writing, but sees him pushing through real pain.
+        S0_FANNY_CHOOSE:
+          player_line: Fanny, choose.
+          medication_id: ANALGESIC_A
+          dose_policy: EXACT_CANONICAL_TARGET
+          expected_classification: CORRECT
+          relationship:
+            FannyBond: 4
+            direction: SUPPORT
+            meaning: Stevenson explicitly entrusts the care decision to Fanny.
+  implementation_note: 'WAIT_FANNY remains one top-level S0_MED route. Its existing route-commit writes are applied once,
+    then Fanny arrives. The player chooses LAUDANUM, COCAINE, or FANNY_CHOOSE before medication. Fanny administers the exact
+    canonical target in S0, so the assisted dose resolves CORRECT. The medication request also changes FannyBond: LAUDANUM
+    +3, COCAINE -1, FANNY_CHOOSE +4. The later TRUTH / MINIMIZE / ASK_HELP choice remains separate and changes FannyBond by
+    +8 / -4 / +5 respectively; TRUTH also reduces Agitation by 5. MINIMIZE makes Fanny leave to sleep; ASK_HELP makes her
+    stay for a moment. All successful routes converge on Stevenson beginning to write.'
+  fanny_relationship_choice_contract:
+    conversation_id: S0_FANNY_COMMON
+    dialogue_source: JH_AMDD_S0_dialogue_v1_0.yaml
+    options:
+      S0_TRUTH:
+        intent: TRUTH
+        FannyBond: 8
+        Agitation: -5
+        direction: SUPPORT
+        post_choice_presence: LISTENS_BEFORE_WRITING
+      S0_MINIMIZE:
+        intent: MINIMIZE
+        FannyBond: -4
+        Agitation: 2
+        direction: STRAIN
+        post_choice_presence: LEAVES_TO_SLEEP
+      S0_HELP:
+        intent: ASK_HELP
+        FannyBond: 5
+        direction: SUPPORT
+        post_choice_presence: STAYS_A_MOMENT
+    rule: TRUTH and ASK_HELP improve the relationship; MINIMIZE reduces FannyBond and increases Agitation. TRUTH is openness,
+      MINIMIZE withholds the severity of his condition and strains the relationship, and ASK_HELP is direct acceptance of companionship.
+chapter_intent:
+  dramatic_function: 'Introduce Stevenson as a chronically ill author, establish that tonight''s episode is worse than usual,
+    teach basic interaction and medication handling, establish Fanny as familiar care rather than someone discovering the
+    illness, and causally generate the first four manuscript motifs before the first write lock.
+
+    '
+  player_learning:
+  - movement and look
+  - contextual interaction
+  - one authored condition-handling choice
+  - medication consequence feedback
+  - Fanny-assisted medication choice communicated through natural dialogue
+  - one relationship-intent choice with Fanny
+  - motif acquisition feedback
+  - writing commit and world transition
+  motif_causality:
+    BOLEST: Stevenson's actual physical pain and illness.
+    LÁTKA: An actual medication is taken or administered during S0.
+    PROMĚNA: Stevenson experiences a chemically caused change in bodily state.
+    ÚLEVA: Stevenson perceives relief or increased capacity after care/medication.
+  manuscript_echo:
+    K1: 'The first manuscript chapter deforms the author-side sequence BOLEST -> LÁTKA -> PROMĚNA -> ÚLEVA into Jekyll''s
+      chemical experiment, transformation, violence/pain, and the later moral rationalization of relief.
+
+      '
+  relationship_truth:
+  - Fanny is Stevenson's wife.
+  - Fanny already knows he is chronically ill.
+  - Fanny recognizes that tonight he is worse or overexerting himself.
+  - TRUTH / MINIMIZE / ASK_HELP describe Stevenson's stance toward Fanny, not whether medication occurs.
+  - WAIT_FANNY contains no refusal of medication; Fanny will administer one of the authored medication-request outcomes.
+  - Fanny speaks with Stevenson before administering medicine on WAIT_FANNY.
+  - FANNY_CHOOSE resolves to ANALGESIC_A because Fanny prioritizes Stevenson’s pain over his writing.
+  - Stevenson goes to write in every successful S0 route; Fanny does not tell him that the writing can wait.
+  - S0 relationship choices modify FannyBond cumulatively; they do not directly set SUPPORTIVE / STRAINED / WITHDRAWN.
+  - Requesting COCAINE from Fanny is only a mild strain signal in S0 (FannyBond -1), not an immediate STRAINED state.
+  - TRUTH and ASK_HELP improve FannyBond. MINIMIZE reduces FannyBond by 4 and adds Agitation 2.
+  - After the relationship conversation Stevenson proceeds to writing on every successful route.
+scope:
+  included:
+  - S0 greybox layout and traversal
+  - interaction availability
+  - gameplay sequence and gates
+  - medication runtime calls
+  - Fanny entry and care state machine
+  - dialogue intent contract
+  - motif acquisition hooks
+  - write-lock handoff
+  - AuthorPacket generation order
+  - checkpoints and hard-fail handling
+  - debug hooks
+  - acceptance tests
+  - authored WAIT_FANNY medication tutorial dialogue beat
+  - dialogue runtime bindings to S0 dialogue file
+  excluded:
+  - final performance capture
+  - final animation timing
+  - final camera shot list
+  - final UI visual design
+  - final sound library and music
+  - final lighting and shaders
+  - final prop art
+  - exact final room dimensions after art pass
+  - final dialogue performance polish and VO lock
+target_playtime:
+  first_play_minutes:
+    min: 7
+    max: 11
+    status: TUNING
+  replay_minutes:
+    min: 4
+    max: 7
+    status: TUNING
+level:
+  map: L_S0_STEVENSON_OPENING
+  type: compact_sickroom_study
+  shell:
+    width_m: 8.5
+    length_m: 6.5
+    height_m: 3.2
+    status: TUNING
+  traversal:
+    bed_to_medication_m:
+      min: 2.0
+      max: 3.5
+      status: TUNING
+    bed_to_writing_desk_m:
+      min: 5.0
+      max: 7.5
+      status: TUNING
+    primary_clear_path_width_m:
+      min: 1.1
+      max: 1.4
+      status: TUNING
+  design_rule: 'The room must be understandable in one glance after player handoff. The medication area, Fanny entry route,
+    and writing desk must be visually distinct. The player should not need navigation UI to understand the three important
+    anchors.
+
+    '
+zones:
+  S0_ZONE_BED:
+    purpose:
+    - intro start
+    - player handoff
+    - pain tutorial beat
+    - possible recovery staging
+    required:
+    - player_spawn
+    - bed_interaction_anchor
+    - intro_camera_safe_volume
+  S0_ZONE_MEDICINE_TABLE:
+    purpose:
+    - self-medication interaction
+    - medication dose UI anchor
+    - medicine prop staging
+    required:
+    - interaction_volume
+    - prop_socket
+    - UI_focus_anchor
+  S0_ZONE_FIREPLACE:
+    purpose:
+    - optional post-Fanny flavor interaction
+    - ambience anchor
+  S0_ZONE_WINDOW:
+    purpose:
+    - optional post-Fanny flavor interaction
+    - exterior mood read
+  S0_ZONE_WRITING_DESK:
+    purpose:
+    - manuscript inspect before unlock
+    - final S0 commit
+    - write-lock cinematic anchor
+    required:
+    - desk_interaction_volume
+    - chair_or_writing_anchor
+    - transition_safe_volume
+  S0_ZONE_ENTRY_DOOR:
+    purpose:
+    - Fanny physical entry
+    required:
+    - NavMesh connection
+    - door interaction/animation hook
+    - fallback entrance anchor
+  S0_ZONE_DIALOGUE_PRIMARY:
+    purpose:
+    - stable Fanny conversation position
+    required:
+    - two-character spacing
+    - camera-safe line of sight
+    - no collision trap
+player:
+  character: STEVENSON
+  input_enabled:
+  - MOVE
+  - LOOK
+  - INTERACT
+  - DIALOGUE_SELECT
+  - MEDICATION_INPUT
+  input_disabled:
+  - SPRINT
+  - JUMP
+  - CROUCH
+  - COMBAT
+  - WEAPON_USE
+  movement:
+    base_speed_cm_s: 260
+    test_range_cm_s:
+      min: 220
+      max: 300
+    status: TUNING
+  design_intent: 'Movement should communicate illness without becoming an obstacle. S0 is not a traversal challenge.
+
+    '
+runtime_dependencies:
+  required:
+  - StoryFlowController
+  - StevensonStateSystem
+  - MedicationSystem
+  - InteractionSystem
+  - DialogueController
+  - ObjectiveSystem
+  - MotifRuntimeState
+  - CheckpointSystem
+  - SaveGameState
+  - AuthorPacketSystem
+  - CinematicController
+  - ChapterTransitionSystem
+  - AudioStateController
+  - PresentationStateController
+  - DebugStoryOverlay
+  optional_for_first_greybox:
+  - final subtitle styling
+  - final motif UI art
+  - final medication UI art
+  - final reactive post-process
+  - final music
+  dependency_rule: 'Greybox may use text/debug placeholders, but all gameplay events and state writes must already call the
+    same runtime interfaces intended for production.
+
+    '
+state_entry:
+  checkpoint: CP_S0_START
+  initialize:
+    source: stevenson.raw_initial
+  lifecycle:
+    call: stevenson.state_lifecycle.acute_effects.reset_at_S_entry
+    expected_after_reset:
+      Sedation: 0
+      HallucinationSuppression: 0
+      StimulantActivation: 0
+      ActivationFocusMod: 0
+  world_flags:
+    FannyPresent: false
+    S0InitialChoiceResolved: false
+    S0MedicationExperienced: false
+    S0FannyIntentResolved: false
+    S0WriteUnlocked: false
+    S0WriteCommitted: false
+    S0MedRouteLocked: false
+    SelectedS0MedOption: NONE
+    SelectedFannyMedicationRequest: NONE
+    SelectedFannyMedicationID: NONE
+    SelectedS0FannyOption: NONE
+    FannyPostDialogueMode: NONE
+    FannyRelationshipDirection: NONE
+  interaction_defaults:
+    medication_table: LOCKED_DURING_INTRO
+    writing_desk: LOCKED_DURING_INTRO
+    optional_flavor: LOCKED_DURING_INTRO
+  motif_defaults:
+    BOLEST: NOT_ACQUIRED
+    LÁTKA: NOT_ACQUIRED
+    PROMĚNA: NOT_ACQUIRED
+    ÚLEVA: NOT_ACQUIRED
+objectives:
+  OBJ_S0_HANDLE_CONDITION:
+    display_intent: HANDLE_YOUR_CONDITION
+    active_after: S0_PLAYER_HANDOFF
+    complete_when: S0InitialChoiceResolved == true
+  OBJ_S0_SPEAK_WITH_FANNY:
+    display_intent: SPEAK_WITH_FANNY
+    activate_when: Fanny dialogue is ready and S0FannyIntentResolved == false
+    complete_when: S0FannyIntentResolved == true
+  OBJ_S0_BEGIN_WRITING:
+    display_intent: BEGIN_WRITING
+    activate_when:
+    - S0FannyIntentResolved == true
+    - all required S0 motifs acquired
+    complete_when: S0WriteCommitted == true
+  UI_rule: 'Exact wording and final visual treatment are TBD. Greybox can display the display_intent identifiers as plain
+    text.
+
+    '
+interaction_catalog:
+  INT_S0_MEDICINE_TABLE:
+    zone: S0_ZONE_MEDICINE_TABLE
+    enabled_during:
+    - S0_CONDITION_GAMEPLAY
+    disabled_after: S0InitialChoiceResolved
+    actions:
+    - TAKE_ANALGESIC_A
+    - TAKE_STIMULANT_S
+    rule: 'The player may make only one initial S0 medication decision. No second self-medication interaction is available
+      later in S0.
+
+      '
+  INT_S0_WAIT_FOR_FANNY:
+    zone: S0_ZONE_BED
+    enabled_during:
+    - S0_CONDITION_GAMEPLAY
+    action: WAIT_FANNY
+    rule: 'This is a deliberate gameplay choice, not an idle timeout. There is no automatic timeout that chooses WAIT_FANNY
+      for the player.
+
+      '
+  INT_S0_WRITING_DESK:
+    zone: S0_ZONE_WRITING_DESK
+    states:
+      PRE_FANNY:
+        behavior: INSPECT_ONLY
+        commit_allowed: false
+      POST_FANNY:
+        behavior: COMMIT_WRITE
+        commit_allowed_if:
+        - S0FannyIntentResolved == true
+        - S0MedicationExperienced == true
+        - S0 motifs BOLEST, LÁTKA, PROMĚNA, ÚLEVA are acquired
+  INT_S0_WINDOW:
+    zone: S0_ZONE_WINDOW
+    enabled_during:
+    - S0_POST_FANNY_FREE_ROAM
+    consequence: FLAVOR_ONLY
+  INT_S0_FIREPLACE:
+    zone: S0_ZONE_FIREPLACE
+    enabled_during:
+    - S0_POST_FANNY_FREE_ROAM
+    consequence: FLAVOR_ONLY
+  INT_S0_WATER:
+    zone: S0_ZONE_MEDICINE_TABLE
+    enabled_during:
+    - S0_POST_FANNY_FREE_ROAM
+    consequence: FLAVOR_ONLY
+  INT_S0_FANNY_POST:
+    zone: S0_ZONE_DIALOGUE_PRIMARY
+    enabled_during:
+    - S0_POST_FANNY_FREE_ROAM
+    consequence: SHORT_CONTEXTUAL_EXCHANGE_ONLY
+motif_tutorial:
+  status: TLD_AUTHORED_TUTORIAL_RULE
+  purpose: 'S0 teaches that motifs arise from Stevenson''s experience and are carried into the manuscript. S0''s four write-lock
+    motifs are protected from decay until the first write lock.
+
+    '
+  decay_enabled_in_S0: false
+  protection_ends: AFTER_S0_WRITE_LOCK
+  acquisition_feedback:
+    required: true
+    final_UI: TBD
+    greybox_behavior:
+    - fire motif_acquired event
+    - show temporary text/debug indicator
+    - log source event and timestamp/order
+  motifs:
+    BOLEST:
+      acquisition_event: S0_MOTIF_PAIN_BEAT
+      required_for_write: true
+      causal_meaning: Stevenson's bodily pain
+    LÁTKA:
+      acquisition_event: S0_MEDICATION_ACTUALLY_ADMINISTERED
+      required_for_write: true
+      causal_meaning: actual medicine enters Stevenson's body
+    PROMĚNA:
+      acquisition_event: S0_MEDICATION_STATE_CHANGE_PERCEIVED
+      required_for_write: true
+      causal_meaning: chemically altered bodily state
+    ÚLEVA:
+      acquisition_event: S0_RELIEF_PERCEIVED
+      required_for_write: true
+      causal_meaning: relief or temporary capacity after treatment
+  expected_acquisition_order:
+  - BOLEST
+  - LÁTKA
+  - PROMĚNA
+  - ÚLEVA
+  packet_order:
+    source: story.S0.write_lock
+    order:
+    - LÁTKA
+    - PROMĚNA
+    - BOLEST
+    - ÚLEVA
+  rule: 'Acquisition order is experiential; packet order follows the master write_lock. Do not reorder the master list merely
+    because BOLEST is acquired first.
+
+    '
+medication_flow:
+  common:
+    resolver: MedicationSystem
+    source_rules: medication
+    on_actual_dose_confirmed:
+    - set S0MedicationExperienced = true
+    - acquire motif LÁTKA
+    - apply canonical medication classification and effects
+    - evaluate medication.emergency_if
+    - if emergency, evaluate medication.rescue_if
+    - if no valid rescue and fatal handler fires, execute FAIL_STEVENSON_FATAL
+    after_effect_application:
+    - trigger S0_MEDICATION_STATE_CHANGE_PERCEIVED
+    - acquire motif PROMĚNA
+    - trigger S0_RELIEF_PERCEIVED when authored perception beat is reached
+    - acquire motif ÚLEVA
+    rule: 'Motifs are not granted when the player only highlights a medicine. LÁTKA is granted only after a real dose is confirmed.
+
+      '
+  SELF_ANALGESIC:
+    master_option: S0_ANALGESIC
+    action: TAKE_ANALGESIC_A
+    parameter_source: story.S0.decisions.S0_MED.options.S0_ANALGESIC.parametric_drops
+    valid_range:
+    - 0
+    - 20
+    medication_id: ANALGESIC_A
+  SELF_STIMULANT:
+    master_option: S0_STIMULANT
+    action: TAKE_STIMULANT_S
+    parameter_source: story.S0.decisions.S0_MED.options.S0_STIMULANT.parametric_drops
+    valid_range:
+    - 0
+    - 20
+    medication_id: STIMULANT_S
+  WAIT_FANNY:
+    master_option: S0_WAIT_FANNY
+    action: WAIT_FANNY
+    immediate_master_writes:
+      Pain: 5
+      Fatigue: 5
+      FannyBond: 3
+    medication_followup:
+      required: true
+      administered_by: FANNY
+      conversation_before_administration: true
+      choice_id: S0_FANNY_MEDICATION_REQUEST
+      choices:
+        S0_FANNY_LAUDANUM:
+          display_text: Laudanum.
+          medication_id: ANALGESIC_A
+          dose_policy: EXACT_CANONICAL_TARGET
+          expected_classification: CORRECT
+          relationship_write:
+            FannyBond: 3
+            direction: SUPPORT
+        S0_FANNY_COCAINE:
+          display_text: Cocaine.
+          medication_id: STIMULANT_S
+          dose_policy: EXACT_CANONICAL_TARGET
+          expected_classification: CORRECT
+          relationship_write:
+            FannyBond: -1
+            direction: MILD_STRAIN
+        S0_FANNY_CHOOSE:
+          display_text: Fanny, choose.
+          medication_id: ANALGESIC_A
+          dose_policy: EXACT_CANONICAL_TARGET
+          expected_classification: CORRECT
+          reason: Fanny prioritizes Stevensons pain over his writing productivity.
+          relationship_write:
+            FannyBond: 4
+            direction: SUPPORT
+      runtime_rule: 'Resolve the selected medication through MedicationSystem using the current canonical target for that
+        drug. Fanny supplies the exact target value in S0; do not use player dose input and do not roll an assisted error.
+        After the request is committed, apply exactly one corresponding relationship write: LAUDANUM FannyBond +3, COCAINE
+        FannyBond -1, or FANNY_CHOOSE FannyBond +4. Then administer one dose. The resulting medication classification must
+        be CORRECT under the current authored S0 rule.'
+      binding_authority: INACTIVE_PROPOSAL_REQUIRES_EXPLICIT_DECISION
+    refusal_choice_exists: false
+  no_second_dose_in_S0: true
+fanny:
+  actor_id: NPC_FANNY_STEVENSON
+  relationship_context:
+    already_knows_chronic_illness: true
+    recognizes_tonight_is_worse: true
+    discovers_illness_in_S0: false
+  state_machine:
+    OFFSTAGE:
+      next:
+        WAIT_ROUTE: ENTERING_FOR_CARE
+        SELF_MED_ROUTE: ENTERING_AFTER_MEDICATION
+    ENTERING_FOR_CARE:
+      path: S0_ZONE_ENTRY_DOOR -> S0_ZONE_BED_or_CARE_ANCHOR
+      next: MEDICATION_REQUEST_DIALOGUE
+    MEDICATION_REQUEST_DIALOGUE:
+      required_on: WAIT_FANNY
+      player_choice: S0_FANNY_MEDICATION_REQUEST
+      next: ADMINISTERING_MEDICATION
+    ADMINISTERING_MEDICATION:
+      required_on: WAIT_FANNY
+      next: DIALOGUE_READY
+    ENTERING_AFTER_MEDICATION:
+      path: S0_ZONE_ENTRY_DOOR -> S0_ZONE_DIALOGUE_PRIMARY
+      next: DIALOGUE_READY
+    DIALOGUE_READY:
+      next: DIALOGUE_ACTIVE
+    DIALOGUE_ACTIVE:
+      next: POST_DIALOGUE
+    POST_DIALOGUE:
+      by_choice:
+        S0_TRUTH: LISTENING_BEFORE_WRITING
+        S0_MINIMIZE: LEAVING_TO_SLEEP
+        S0_HELP: STAYING_A_MOMENT
+    AMBIENT:
+      behavior: optional contextual post-dialogue exchange
+    LISTENING_BEFORE_WRITING:
+      behavior: Fanny listens/supports briefly; no requirement to remain through the writing session.
+      next: AMBIENT_OR_EXIT
+    LEAVING_TO_SLEEP:
+      behavior: Fanny accepts Stevenson's reassurance and leaves to sleep.
+      next: OFFSTAGE
+    STAYING_A_MOMENT:
+      behavior: Fanny remains beside Stevenson briefly while he prepares to write.
+      next: AMBIENT_OR_EXIT
+    AMBIENT_OR_EXIT:
+      behavior: Non-blocking staging only; Stevenson proceeds to writing.
+  navigation:
+    use_NavMesh: true
+    visible_teleport_allowed: false
+    blocked_path_timeout_s: 12
+    status: TUNING
+    fallback:
+    - choose authored alternate entry anchor outside player view
+    - resume normal navigation
+    - never teleport visibly in front of player
+  dialogue_contract:
+    final_lines: EXTERNAL_DIALOGUE_FILE
+    must_establish:
+    - Fanny already understands Stevenson's chronic illness.
+    - She recognizes that he is worse or pushing himself tonight.
+    - Stevenson still intends to write regardless of which medicine is chosen.
+    - On WAIT_FANNY, Fanny speaks with Stevenson before medication is administered.
+    - The medication exchange teaches function through familiar reactions rather than exposition.
+    - The later TRUTH / MINIMIZE / ASK_HELP choice remains a separate relationship-intent decision.
+    intents:
+      S0_TRUTH:
+        canonical_intent: TRUTH
+        master_writes:
+          FannyBond: 8
+          Agitation: -5
+        relationship_direction: SUPPORT
+        post_choice_presence: LISTENS_BEFORE_WRITING
+      S0_MINIMIZE:
+        canonical_intent: MINIMIZE
+        master_writes:
+          FannyBond: -4
+          Agitation: 2
+        relationship_direction: STRAIN
+        post_choice_presence: LEAVES_TO_SLEEP
+      S0_HELP:
+        canonical_intent: ASK_HELP
+        master_writes:
+          FannyBond: 5
+        relationship_direction: SUPPORT
+        post_choice_presence: STAYS_A_MOMENT
+    branch_rule: The WAIT_FANNY medication-request choice determines the Fanny-administered drug and one small relationship
+      write, but does not create a stable story Variant ID. The later TRUTH / MINIMIZE / ASK_HELP choice is separate. All
+      three relationship choices converge on Stevenson beginning to write.
+    wait_fanny_medication_exchange:
+      status: DIALOGUE_TEXT_EXTERNAL
+      dialogue_file: JH_AMDD_S0_dialogue_v1_0.yaml
+      conversation_id: S0_FANNY_WAIT_ENTRY
+      choice_bindings:
+        S0_FANNY_LAUDANUM:
+          medication_id: ANALGESIC_A
+          FannyBond: 3
+          direction: SUPPORT
+        S0_FANNY_COCAINE:
+          medication_id: STIMULANT_S
+          FannyBond: -1
+          direction: MILD_STRAIN
+        S0_FANNY_CHOOSE:
+          medication_id: ANALGESIC_A
+          FannyBond: 4
+          direction: SUPPORT
+      forbidden_exposition:
+      - Do not define the drugs to each other as if this were their first use.
+      - Do not state stat values, mechanical bonuses, or tutorial terminology in dialogue.
+      - Do not have Fanny tell Stevenson that the writing can wait; he will write in every successful S0 route.
+    dialogue_source:
+      file: JH_AMDD_S0_dialogue_v1_0.yaml
+      conversations:
+      - S0_FANNY_WAIT_ENTRY
+      - S0_FANNY_SELF_MED_ENTRY
+      - S0_FANNY_COMMON
+      - S0_TO_WRITING
+sequence:
+- id: S0_BOOT
+  type: SYSTEM
+  entry: level loaded
+  actions:
+  - initialize Stevenson state from master
+  - apply S-entry acute reset
+  - set S0 runtime flags
+  - register interactables
+  - create CP_S0_START
+  exit: S0_INTRO_CINEMATIC
+- id: S0_INTRO_CINEMATIC
+  type: CINEMATIC
+  player_control: false
+  purpose:
+  - establish Stevenson as chronically ill
+  - show that tonight is worse
+  - establish desire/need to continue writing
+  - establish medicine and writing desk as important room anchors
+  forbidden:
+  - do not resolve S0_MED
+  - do not imply Fanny is learning of the illness for the first time
+  - do not grant LÁTKA before actual medication
+  exit: S0_MOTIF_PAIN_BEAT
+- id: S0_MOTIF_PAIN_BEAT
+  type: TUTORIAL_EVENT
+  player_control: false
+  actions:
+  - communicate physical pain through authored performance/presentation
+  - fire motif acquisition feedback
+  - acquire BOLEST
+  exit: S0_PLAYER_HANDOFF
+- id: S0_PLAYER_HANDOFF
+  type: SYSTEM
+  player_control: true
+  actions:
+  - enable MOVE
+  - enable LOOK
+  - enable INTERACT
+  - activate OBJ_S0_HANDLE_CONDITION
+  - enable medicine table
+  - enable WAIT_FANNY interaction
+  - set writing desk to INSPECT_ONLY
+  exit: S0_CONDITION_GAMEPLAY
+- id: S0_CONDITION_GAMEPLAY
+  type: GAMEPLAY
+  player_control: true
+  available_choices:
+  - S0_WAIT_FANNY
+  - S0_ANALGESIC
+  - S0_STIMULANT
+  no_timeout_choice: true
+  on_choice: S0_INITIAL_CHOICE_RESOLVE
+- id: S0_INITIAL_CHOICE_RESOLVE
+  type: DECISION_RESOLVER
+  commit_order:
+  - store selected S0_MED option in SelectedS0MedOption
+  - disable all other initial medication choices
+  - if selected option is S0_WAIT_FANNY, apply master writes Pain +5, Fatigue +5, FannyBond +3 exactly once
+  - set S0InitialChoiceResolved = true
+  - set S0MedRouteLocked = true
+  - create CP_S0_MED_ROUTE_LOCKED snapshot after the committed route and any route-commit writes
+  - complete OBJ_S0_HANDLE_CONDITION
+  next_by_route:
+    S0_ANALGESIC: S0_SELF_MEDICATION_RESOLVE
+    S0_STIMULANT: S0_SELF_MEDICATION_RESOLVE
+    S0_WAIT_FANNY: S0_FANNY_MEDICATION_ENTRY
+  checkpoint_rule: The checkpoint locks the selected route but occurs before the risky medication resolution. On retry, the
+    player must continue the same WAIT_FANNY / ANALGESIC / STIMULANT route, while medication input/dose may be attempted again.
+- id: S0_SELF_MEDICATION_RESOLVE
+  type: SYSTEM_AND_PRESENTATION
+  routes:
+    S0_ANALGESIC:
+      call: MedicationSystem with ANALGESIC_A
+    S0_STIMULANT:
+      call: MedicationSystem with STIMULANT_S
+  actions:
+  - resolve player medication input
+  - on confirmed dose acquire LÁTKA
+  - apply canonical medication effects
+  - evaluate emergency/rescue/fatal
+  fatal_exit: FAIL_STEVENSON_FATAL
+  normal_exit: S0_SELF_MEDICATION_TRANSFORMATION_BEAT
+  preconditions:
+  - S0MedRouteLocked == true
+  - CP_S0_MED_ROUTE_LOCKED exists
+  - SelectedS0MedOption in [S0_ANALGESIC, S0_STIMULANT]
+- id: S0_SELF_MEDICATION_TRANSFORMATION_BEAT
+  type: PRESENTATION
+  player_control: LIMITED_OR_LOCKED_TUNING
+  actions:
+  - present bodily state change
+  - acquire PROMĚNA
+  - present authored relief/capacity beat
+  - acquire ÚLEVA
+  exit: S0_FANNY_GENERAL_ENTRY
+- id: S0_FANNY_MEDICATION_ENTRY
+  type: NPC_SEQUENCE
+  route: S0_WAIT_FANNY
+  actions:
+  - verify SelectedS0MedOption == S0_WAIT_FANNY and S0MedRouteLocked == true
+  - set Fanny state ENTERING_FOR_CARE
+  - set FannyPresent = true when actor is physically present
+  - move Fanny to care anchor
+  exit: S0_FANNY_MEDICATION_REQUEST_DIALOGUE
+- id: S0_FANNY_MEDICATION_REQUEST_DIALOGUE
+  type: DIALOGUE
+  route: S0_WAIT_FANNY
+  player_control: dialogue_only
+  purpose:
+  - let Fanny and Stevenson speak before medication
+  - let the player choose the Fanny-administered medicine without dose risk
+  - teach the practical meaning of both medicines through familiar relationship dialogue
+  canonical_choices:
+  - S0_FANNY_LAUDANUM
+  - S0_FANNY_COCAINE
+  - S0_FANNY_CHOOSE
+  choice_mapping:
+    S0_FANNY_LAUDANUM: ANALGESIC_A
+    S0_FANNY_COCAINE: STIMULANT_S
+    S0_FANNY_CHOOSE: ANALGESIC_A
+  on_select:
+  - store SelectedFannyMedicationRequest
+  - store SelectedFannyMedicationID
+  - set FannyDosePolicy = EXACT_CANONICAL_TARGET
+  - 'apply exactly one medication-request relationship write: LAUDANUM FannyBond +3; COCAINE FannyBond -1; FANNY_CHOOSE FannyBond
+    +4'
+  - store FannyRelationshipDirection for debug/presentation only
+  - play the selected branch from the external dialogue source
+  - do not expose numeric target or MedicationSystem terminology to the player
+  exit: S0_FANNY_ADMINISTER_MEDICATION
+  dialogue_source:
+    file: JH_AMDD_S0_dialogue_v1_0.yaml
+    conversation_id: S0_FANNY_WAIT_ENTRY
+- id: S0_FANNY_ADMINISTER_MEDICATION
+  type: SYSTEM_AND_NPC_SEQUENCE
+  route: S0_WAIT_FANNY
+  player_choice: resolved in S0_FANNY_MEDICATION_REQUEST_DIALOGUE
+  actions:
+  - read SelectedFannyMedicationID from S0_FANNY_MEDICATION_REQUEST_DIALOGUE
+  - calculate the current canonical target for the selected medication
+  - Fanny administers exactly that target dose
+  - call MedicationSystem with the selected medication and exact target input
+  - assert resulting classification == CORRECT under current S0 rules
+  - on actual dose confirmation acquire LÁTKA
+  - apply canonical medication effects
+  - evaluate emergency/rescue/fatal using canonical MedicationSystem rules
+  refusal_available: false
+  fatal_exit: FAIL_STEVENSON_FATAL
+  normal_exit: S0_FANNY_MEDICATION_TRANSFORMATION_BEAT
+  preconditions:
+  - S0MedRouteLocked == true
+  - CP_S0_MED_ROUTE_LOCKED exists
+  - SelectedS0MedOption == S0_WAIT_FANNY
+  - SelectedFannyMedicationRequest in [S0_FANNY_LAUDANUM, S0_FANNY_COCAINE, S0_FANNY_CHOOSE]
+  - SelectedFannyMedicationID in [ANALGESIC_A, STIMULANT_S]
+  dose_rule: Fanny does not use player dose input in S0. Her authored S0 administration is exact-target and therefore CORRECT.
+- id: S0_FANNY_MEDICATION_TRANSFORMATION_BEAT
+  type: PRESENTATION
+  route: S0_WAIT_FANNY
+  actions:
+  - present bodily state change
+  - acquire PROMĚNA
+  - present relief/care beat
+  - acquire ÚLEVA
+  exit: S0_FANNY_CARE_TO_DIALOGUE
+- id: S0_FANNY_GENERAL_ENTRY
+  type: NPC_SEQUENCE
+  routes:
+  - S0_ANALGESIC
+  - S0_STIMULANT
+  actions:
+  - set Fanny state ENTERING_AFTER_MEDICATION
+  - set FannyPresent = true when actor is physically present
+  - allow route-specific observation that Stevenson already self-medicated
+  - move to dialogue anchor
+  exit: S0_FANNY_CARE_TO_DIALOGUE
+- id: S0_FANNY_CARE_TO_DIALOGUE
+  type: NPC_SEQUENCE
+  actions:
+  - position Stevenson and Fanny in dialogue-safe anchors
+  - activate OBJ_S0_SPEAK_WITH_FANNY if needed
+  - prepare contextual dialogue flags from medication route, Fanny medication request, and current Stevenson state
+  - ensure the next dialogue is the separate relationship-intent conversation, not a repeat of the medication request
+  exit: S0_FANNY_CONVERSATION
+- id: S0_FANNY_CONVERSATION
+  type: DIALOGUE
+  player_control: dialogue_only
+  canonical_choices:
+  - S0_TRUTH
+  - S0_MINIMIZE
+  - S0_HELP
+  on_select:
+  - store SelectedS0FannyOption
+  - apply the selected one-time relationship-choice writes
+  - set FannyPostDialogueMode from the selected choice
+  - set S0FannyIntentResolved = true
+  - complete OBJ_S0_SPEAK_WITH_FANNY
+  - stage Fanny according to FannyPostDialogueMode without blocking Stevenson from writing
+  exit: S0_POST_FANNY_FREE_ROAM
+  dialogue_source:
+    file: JH_AMDD_S0_dialogue_v1_0.yaml
+    conversation_id: S0_FANNY_COMMON
+  choice_effects:
+    S0_TRUTH:
+      writes:
+        FannyBond: 8
+        Agitation: -5
+      FannyPostDialogueMode: LISTENS_BEFORE_WRITING
+    S0_MINIMIZE:
+      writes:
+        FannyBond: -4
+        Agitation: 2
+      FannyPostDialogueMode: LEAVES_TO_SLEEP
+    S0_HELP:
+      writes:
+        FannyBond: 5
+      FannyPostDialogueMode: STAYS_A_MOMENT
+- id: S0_POST_FANNY_FREE_ROAM
+  type: GAMEPLAY
+  player_control: true
+  checkpoint_on_entry: CP_S0_POST_FANNY
+  actions:
+  - unlock writing commit if all gates pass
+  - activate OBJ_S0_BEGIN_WRITING
+  - apply/finish Fanny post-dialogue staging without delaying the write gate
+  - allow optional flavor interactables
+  optional_interactions:
+  - INT_S0_WINDOW
+  - INT_S0_FIREPLACE
+  - INT_S0_WATER
+  - INT_S0_FANNY_POST
+  - manuscript inspect
+  restrictions:
+  - no second medication
+  - no S0 motif decay
+  - no new stable branch
+  exit_on_write_interact: S0_COMMIT_WRITE
+  purpose: Brief pre-writing gameplay after the relationship choice. Fanny may have left, may remain briefly, or may be transitioning
+    out according to FannyPostDialogueMode. The player's mandatory next progression action is to begin writing.
+- id: S0_COMMIT_WRITE
+  type: GATE
+  preconditions:
+  - S0InitialChoiceResolved == true
+  - S0MedicationExperienced == true
+  - S0FannyIntentResolved == true
+  - BOLEST acquired
+  - LÁTKA acquired
+  - PROMĚNA acquired
+  - ÚLEVA acquired
+  if_fail:
+    behavior: deny commit and surface debug reason in greybox
+  if_pass:
+    actions:
+    - set S0WriteCommitted = true
+    - complete OBJ_S0_BEGIN_WRITING
+    exit: S0_WRITE_LOCK
+- id: S0_WRITE_LOCK
+  type: SYSTEM_LOCK
+  player_control: false
+  order:
+  - freeze further S0 state-changing interactions
+  - resolve current derived Stevenson values
+  - generate AuthorPacket from current Stevenson state
+  - commit MotifPacket in master write_lock order
+  - persist S0 state and story flags
+  - save checkpoint/state
+  - clear acute effects according to stevenson.state_lifecycle only AFTER AuthorPacket generation
+  author_packet_rule: 'Sedation, StimulantActivation, HallucinationSuppression and ActivationFocusMod must be available to
+    the write-lock calculation before lifecycle clearing. Clearing them first would destroy the intended S0 -> K1 effect.
+
+    '
+  exit: S0_TO_K1_TRANSITION
+- id: S0_TO_K1_TRANSITION
+  type: CINEMATIC_TRANSITION
+  player_control: false
+  purpose: 'Bridge Stevenson''s act of writing into the manuscript world without explaining away the author/manuscript relationship.
+
+    '
+  requirements:
+  - AuthorPacket exists
+  - MotifPacket exists
+  - S0 save succeeded
+  exact_shots: TBD
+  exit: S0_LOAD_K1
+- id: S0_LOAD_K1
+  type: CHAPTER_TRANSITION
+  actions:
+  - load K1
+  - pass AuthorPacket
+  - pass MotifPacket
+  - initialize K1 from master
+  failure_behavior:
+  - do not silently continue without packet
+  - return to last valid checkpoint or surface development error
+author_packet_handoff:
+  generated_at: S0_WRITE_LOCK
+  source: author_packet
+  required_fields:
+  - CognitiveImprint
+  - ConditionImprint
+  - BleedImprint
+  - ChemicalImprint
+  - MotifPacket
+  derived_render_channels:
+  - ManuscriptFidelity
+  - ManuscriptDistortion
+  - ManuscriptOverdrive
+  lifecycle_order:
+  - APPLY_S0_STATE
+  - CALCULATE_DERIVED_STATE
+  - GENERATE_AUTHOR_PACKET
+  - COMMIT_MOTIFS
+  - SAVE
+  - CLEAR_ACUTE_EFFECTS
+  - TRANSITION_TO_K1
+presentation_hooks:
+  principle: 'Presentation reacts to canonical state; presentation does not create new state or story topology.
+
+    '
+  pain:
+    source: Pain
+    greybox:
+    - animation intensity parameter
+    - breathing/audio parameter
+    - optional camera discomfort parameter
+  fever:
+    source: Fever
+    greybox:
+    - optional post-process intensity parameter
+    - optional breathing/audio parameter
+  sedation:
+    source: Sedation
+    greybox:
+    - movement-response parameter
+    - focus/fog placeholder
+  stimulant:
+    sources:
+    - StimulantActivation
+    - Agitation
+    greybox:
+    - responsiveness parameter
+    - brightness/sharpness placeholder
+  note: 'Final shader, camera, lighting and audio implementation are downstream. Greybox needs only visible/debug evidence
+    that the correct state channel fired.
+
+    '
+cinematic_contract:
+  CINE_S0_INTRO:
+    final_shots: TBD
+    must_not:
+    - remove player agency from S0_MED
+    - reveal a new illness discovery by Fanny
+  CINE_S0_MEDICATION_EFFECT:
+    final_shots: TBD
+    variants:
+    - ANALGESIC
+    - STIMULANT
+    - FANNY_ASSISTED
+    function:
+    - make LÁTKA causally legible
+    - make PROMĚNA perceptible
+    - make ÚLEVA perceptible
+  CINE_S0_WRITE:
+    final_shots: TBD
+    function:
+    - communicate commitment to writing
+    - support transition to K1
+  skip_policy:
+    greybox: ALLOWED_AFTER_FIRST_TRIGGER
+    final: TBD
+    rule: skipping may not skip state writes or motif events
+audio_contract:
+  final_assets: TBD
+  required_events:
+  - S0_AMBIENT_ROOM
+  - S0_PAIN_BEAT
+  - S0_MEDICATION_CONFIRMED
+  - S0_MEDICATION_EFFECT
+  - S0_FANNY_ENTRY
+  - S0_DIALOGUE_START
+  - S0_MOTIF_ACQUIRED
+  - S0_WRITE_COMMIT
+  - S0_TRANSITION_TO_K1
+  implementation_rule: 'Audio events subscribe to gameplay state. They must not be the only evidence that a required gameplay
+    event occurred.
+
+    '
+UI_placeholders:
+  final_UI_design: TBD
+  widgets:
+    WBP_InteractionPrompt:
+      purpose: contextual interaction
+    WBP_ObjectiveText:
+      purpose: temporary objective display
+    WBP_MedicationDose:
+      purpose: medication parameter/input feedback
+    WBP_DialogueChoice:
+      purpose: TRUTH / MINIMIZE / ASK_HELP selection
+    WBP_MotifDebugOrPlaceholder:
+      purpose: motif acquisition feedback
+    WBP_DebugStoryOverlay:
+      purpose: developer-only story/state inspection
+  rule: 'UI art is not a blocker for greybox. Functional placeholder widgets are sufficient.
+
+    '
+checkpoints:
+  CP_S0_START:
+    created_at: S0_BOOT
+    restores:
+    - raw initial Stevenson state
+    - acute S-entry reset
+    - Fanny offstage
+    - no motifs acquired
+    - no initial decision
+  CP_S0_MED_ROUTE_LOCKED:
+    created_at: S0_INITIAL_CHOICE_RESOLVE after route commit and route-specific one-time writes, before medication resolution
+    purpose: Lock the player into the chosen S0 medication route while allowing a clean retry of the risky downstream medication
+      sequence.
+    restores:
+    - SelectedS0MedOption
+    - S0InitialChoiceResolved = true
+    - S0MedRouteLocked = true
+    - Stevenson state exactly after route-commit writes
+    - BOLEST already acquired
+    - Fanny still in the pre-medication route-appropriate state
+    - WAIT_FANNY medication-request choice not yet committed at this checkpoint
+    - no medication consequence from the failed attempt
+    - no LÁTKA / PROMĚNA / ÚLEVA from the failed attempt
+    retry_behavior:
+      same_route_required: true
+      route_reselection_allowed: false
+      medication_input_retry_allowed: true
+      reapply_route_commit_writes: false
+      wait_fanny_request_reselection_allowed: true
+    implementation_note: This is an authored TLD checkpoint location. Runtime snapshot/save/reload is implemented later by
+      the Unreal/C++ CheckpointSystem and SaveGame layer.
+  CP_S0_POST_FANNY:
+    created_at: entry to S0_POST_FANNY_FREE_ROAM
+    restores:
+    - resolved medication route
+    - medication consequences
+    - Fanny intent result
+    - acquired S0 motifs
+    - Fanny ambient state
+    - writing unlocked state
+    - Fanny medication-request relationship write
+    - selected S0_FANNY option
+    - FannyPostDialogueMode
+    - current FannyBond after all S0 relationship writes
+    rule: 'Reload must not re-apply medication, duplicate motif acquisition, or re-apply FannyBond/Agitation writes.
+
+      '
+fail_handling:
+  canonical_hard_fail:
+    id: FAIL_STEVENSON_FATAL
+    allowed_in_S0: true
+    source: hard_fail_matrix.S0
+  medication_emergency:
+    source: medication.emergency_if
+    on_trigger:
+    - evaluate medication.rescue_if
+    - if rescue valid apply medication.rescue_writes
+    - if rescue invalid and fatal handler resolves fatal, execute FAIL_STEVENSON_FATAL
+  fail_screen: TBD
+  rule: TLD does not invent new fatal thresholds. All thresholds come from MedicationSystem/master. If StevensonFatal occurs
+    after S0_MED has been committed, reload CP_S0_MED_ROUTE_LOCKED so the selected route remains locked and the player retries
+    that route from a clean snapshot.
+  reload_policy: RELOAD_LAST_VALID_AUTHORED_CHECKPOINT
+  expected_S0_medication_fatal_target: CP_S0_MED_ROUTE_LOCKED
+  fallback_if_route_checkpoint_missing: CP_S0_START
+save_contract:
+  save_at:
+  - CP_S0_START
+  - CP_S0_MED_ROUTE_LOCKED
+  - CP_S0_POST_FANNY
+  - S0_WRITE_LOCK
+  minimum_persisted_runtime:
+  - S0InitialChoiceResolved
+  - selected S0_MED option
+  - medication classification/result
+  - S0MedicationExperienced
+  - SelectedFannyMedicationRequest
+  - SelectedFannyMedicationID
+  - FannyPresent
+  - S0FannyIntentResolved
+  - selected S0_FANNY option
+  - acquired motifs
+  - current Stevenson state
+  - S0WriteCommitted
+  - AuthorPacket after generation
+  - S0MedRouteLocked
+  - SelectedS0MedOption
+  - last valid authored checkpoint id
+  - SelectedS0FannyOption
+  - FannyPostDialogueMode
+  - FannyRelationshipDirection
+  idempotency:
+    required: true
+    rule: 'Loading a save must reconstruct state, not re-fire one-time writes as if the player had made the choice again.
+
+      '
+  implementation_status: DESIGN_CONTRACT_ONLY_CPP_SAVE_IMPLEMENTATION_DEFERRED
+  checkpoint_vs_disk_save_rule: TLD marks authored recovery points. The C++ implementation may keep a checkpoint as an in-memory
+    snapshot, a SaveGame write, or both. The gameplay contract is the restored state, not the storage mechanism.
+debug:
+  overlay_fields:
+  - current sequence node
+  - current objective
+  - current S0_MED selection
+  - current S0_FANNY selection
+  - Pain
+  - Fever
+  - Fatigue
+  - Agitation
+  - Sedation
+  - SleepDebt
+  - Bleed
+  - Rebound
+  - MedicationDependence
+  - AnalgesicTolerance
+  - StimulantTolerance
+  - FannyBond
+  - HallucinationSuppression
+  - StimulantActivation
+  - ActivationFocusMod
+  - AuthorCondition
+  - AuthoringClarity
+  - ChemicalInstability
+  - SelectedFannyMedicationRequest
+  - SelectedFannyMedicationID
+  - FannyPresent
+  - S0MedicationExperienced
+  - motif acquisition states
+  - S0WriteUnlocked
+  - AuthorPacket generated
+  - current authored checkpoint
+  - S0MedRouteLocked
+  - SelectedS0MedOption
+  - SelectedS0FannyOption
+  - FannyPostDialogueMode
+  - FannyRelationshipDirection
+  debug_actions:
+  - jump_to_S0_PLAYER_HANDOFF
+  - force_S0_WAIT_FANNY
+  - force_S0_ANALGESIC
+  - force_S0_STIMULANT
+  - force_medication_UNDER
+  - force_medication_CORRECT
+  - force_medication_OVER
+  - force_medication_CRITICAL_HIGH
+  - force_FannyMedication_LAUDANUM
+  - force_FannyMedication_COCAINE
+  - force_FannyMedication_FANNY_CHOOSE
+  - force_Fanny_present
+  - force_dialogue_TRUTH
+  - force_dialogue_MINIMIZE
+  - force_dialogue_HELP
+  - acquire_all_S0_motifs
+  - clear_one_required_motif
+  - attempt_write_lock
+  - print_AuthorPacket
+  - reload_CP_S0_START
+  - reload_CP_S0_MED_ROUTE_LOCKED
+  - reload_CP_S0_POST_FANNY
+  logging:
+    categories:
+    - StoryFlow
+    - StevensonState
+    - Medication
+    - Fanny
+    - Motif
+    - AuthorPacket
+    - Checkpoint
+    minimum_event_log:
+    - event_id
+    - sequence_node
+    - old_state_if_relevant
+    - new_state_if_relevant
+    - source_option
+    - timestamp
+greybox_build_spec:
+  must_exist:
+  - closed room shell
+  - bed
+  - medicine table
+  - writing desk
+  - entry door
+  - Fanny navigation path
+  - dialogue anchor
+  - window placeholder
+  - fireplace placeholder
+  - NavMesh
+  - collision
+  - interaction volumes
+  - spawn points
+  - checkpoint volumes/hooks
+  may_be_primitive_meshes:
+  - all furniture
+  - medicine props
+  - doors
+  - window
+  - fireplace
+  no_art_blockers:
+  - final Victorian assets
+  - final character meshes
+  - final facial animation
+  - final lighting
+  - final materials
+  - final VFX
+  greybox_success_definition: A developer can play all three initial condition routes, complete every WAIT_FANNY medication
+    request, complete any TRUTH / MINIMIZE / ASK_HELP relationship choice, verify the correct cumulative FannyBond writes
+    and Fanny staging, commit writing, inspect state changes, and enter K1 with a valid AuthorPacket and the four required
+    motifs.
+edge_cases:
+- id: EC_S0_INTERACT_SPAM
+  condition: player spams medicine interaction during resolver
+  expected: only one S0_MED option resolves; duplicate dose blocked
+- id: EC_S0_WAIT_NO_IDLE_TIMEOUT
+  condition: player does nothing during S0_CONDITION_GAMEPLAY
+  expected: no route auto-selects
+- id: EC_S0_FANNY_PATH_BLOCKED
+  condition: player obstructs Fanny path
+  expected: alternate authored anchor after TUNING timeout; no visible teleport
+- id: EC_S0_WRITE_TOO_EARLY
+  condition: player interacts with desk before Fanny intent resolution
+  expected: inspect-only; no write lock
+- id: EC_S0_MISSING_MOTIF
+  condition: required motif absent due implementation bug
+  expected: commit denied and debug reason surfaced
+- id: EC_S0_RELOAD_POST_FANNY
+  condition: load CP_S0_POST_FANNY
+  expected: no duplicate medication, no duplicate Fanny writes, no duplicate motifs
+- id: EC_S0_SKIP_CINEMATIC
+  condition: player skips a skippable medication or write cinematic
+  expected: all canonical state events still resolve
+- id: EC_S0_EMERGENCY
+  condition: MedicationSystem enters emergency
+  expected: canonical rescue/fatal evaluation only
+- id: EC_S0_AUTHOR_PACKET_ORDER
+  condition: write lock occurs with active Sedation or StimulantActivation
+  expected: AuthorPacket reads active values before lifecycle clear
+- id: EC_S0_RELOAD_ROUTE_LOCKED_SELF_MED
+  condition: StevensonFatal after choosing ANALGESIC or STIMULANT but before successful medication resolution
+  expected: reload CP_S0_MED_ROUTE_LOCKED; same route remains selected; failed medication effects are absent; player may retry
+    medication input
+- id: EC_S0_RELOAD_ROUTE_LOCKED_WAIT
+  condition: a future/master-driven external condition causes StevensonFatal after WAIT_FANNY route commit
+  expected: reload CP_S0_MED_ROUTE_LOCKED; WAIT_FANNY remains selected; route writes remain exactly once; Fanny medication
+    request may be selected again because it occurs downstream of this checkpoint
+- id: EC_S0_ROUTE_RESELECTION_AFTER_FAIL
+  condition: player fails after S0_MED route commit and reloads
+  expected: route selection UI does not reopen; the committed route is restored from checkpoint
+- id: EC_S0_FANNY_MEDICATION_CHOICE_SPAM
+  condition: player submits more than one WAIT_FANNY medication-request option during dialogue
+  expected: accept exactly one request, store one SelectedFannyMedicationID, and administer one dose only
+- id: EC_S0_FANNY_EXACT_DOSE
+  condition: Fanny administers either ANALGESIC_A or STIMULANT_S in S0
+  expected: MedicationSystem receives the exact current canonical target and resolves CORRECT; no player dose input is used
+- id: EC_S0_FANNY_MED_RELATIONSHIP_WRITE_DUPLICATION
+  condition: WAIT_FANNY medication-request dialogue is replayed/reloaded after the request has committed
+  expected: The selected LAUDANUM +3 / COCAINE -1 / FANNY_CHOOSE +4 FannyBond write applies exactly once.
+- id: EC_S0_FANNY_RELATIONSHIP_CHOICE_DUPLICATION
+  condition: TRUTH / MINIMIZE / ASK_HELP dialogue is replayed/reloaded after the choice has committed
+  expected: The selected relationship-choice write applies exactly once and FannyPostDialogueMode is restored rather than
+    re-fired.
+- id: EC_S0_MINIMIZE_FANNY_EXIT
+  condition: Player selects S0_MINIMIZE
+  expected: FannyBond -4 and Agitation +2 is applied, Fanny leaves to sleep, and Stevenson can immediately proceed toward writing.
+- id: EC_S0_HELP_FANNY_STAYS
+  condition: Player selects S0_HELP
+  expected: FannyBond +5 is applied, Fanny stays for a moment, and her presence never blocks the writing transition.
+acceptance_tests:
+- id: AT_S0_001
+  test: Level starts from CP_S0_START with master Stevenson initial state and acute effects reset.
+- id: AT_S0_002
+  test: BOLEST is acquired from the authored pain beat before the initial medication choice.
+- id: AT_S0_003
+  test: Player can choose exactly one of WAIT_FANNY, ANALGESIC_A, STIMULANT_S.
+- id: AT_S0_004
+  test: Committing S0_MED creates CP_S0_MED_ROUTE_LOCKED before risky medication resolution.
+- id: AT_S0_005
+  test: CP_S0_MED_ROUTE_LOCKED restores the chosen S0_MED route and does not allow route reselection after a hard fail.
+- id: AT_S0_006
+  test: Choosing WAIT_FANNY applies Pain +5, Fatigue +5, FannyBond +3 exactly once before CP_S0_MED_ROUTE_LOCKED is created.
+- id: AT_S0_007
+  test: WAIT_FANNY leads to a medication-request conversation before Fanny administers any medicine.
+- id: AT_S0_008
+  test: Reloading WAIT_FANNY from CP_S0_MED_ROUTE_LOCKED never applies its +5/+5/+3 route writes a second time.
+- id: AT_S0_009
+  test: Self-medication routes call MedicationSystem using the selected canonical medication.
+- id: AT_S0_010
+  test: LÁTKA is acquired only after an actual dose is confirmed.
+- id: AT_S0_011
+  test: PROMĚNA and ÚLEVA are acquired from authored post-medication perception beats.
+- id: AT_S0_012
+  test: Fanny never behaves as if she is discovering Stevenson's chronic illness for the first time.
+- id: AT_S0_013
+  test: 'Player can select exactly one of TRUTH, MINIMIZE, ASK_HELP. Master writes apply once: TRUTH FannyBond +8 and
+    Agitation -5; MINIMIZE FannyBond -4 and Agitation +2; ASK_HELP FannyBond +5.'
+- id: AT_S0_014
+  test: Writing remains locked until initial condition choice, medication experience, Fanny intent, and all four required
+    motifs are resolved.
+- id: AT_S0_015
+  test: S0 motifs do not decay or expire before S0 write lock.
+- id: AT_S0_016
+  test: Write lock generates AuthorPacket before clearing acute medication effects.
+- id: AT_S0_017
+  test: MotifPacket contains LÁTKA, PROMĚNA, BOLEST, ÚLEVA in master write-lock order.
+- id: AT_S0_018
+  test: Reloading CP_S0_POST_FANNY does not double-apply route, medication-request, medication, motif, or relationship-choice
+    writes.
+- id: AT_S0_019
+  test: A canonical StevensonFatal after route commit reloads CP_S0_MED_ROUTE_LOCKED and retries the same route from a clean
+    snapshot.
+- id: AT_S0_020
+  test: Successful S0 always transitions to K1 with valid AuthorPacket and MotifPacket.
+- id: AT_S0_021
+  test: No TLD-only optional interaction creates a new stable Variant ID or changes mandatory plot topology.
+- id: AT_S0_022
+  test: Checkpoint entries in this TLD are design-authored locations only; actual storage/reload mechanics remain a future
+    Unreal/C++ implementation task.
+- id: AT_S0_023
+  test: WAIT_FANNY medication request offers exactly LAUDANUM, COCAINE, and FANNY_CHOOSE.
+- id: AT_S0_024
+  test: LAUDANUM maps to ANALGESIC_A, COCAINE maps to STIMULANT_S, and FANNY_CHOOSE maps to ANALGESIC_A.
+- id: AT_S0_025
+  test: Every Fanny-administered S0 dose uses the exact current canonical target and resolves CORRECT under current rules.
+- id: AT_S0_026
+  test: The WAIT_FANNY medication dialogue communicates pain-relief versus writing/alertness through familiar reactions rather
+    than explicit mechanical exposition.
+- id: AT_S0_027
+  test: Fanny never tells Stevenson that the writing can wait; every successful S0 route proceeds to writing.
+- id: AT_S0_028
+  test: TRUTH / MINIMIZE / ASK_HELP occurs after the medication sequence and remains separate from the WAIT_FANNY medication
+    request.
+- id: AT_S0_029
+  test: WAIT_FANNY keeps its existing one-time route-commit FannyBond +3 write.
+- id: AT_S0_030
+  test: Selecting LAUDANUM from Fanny applies one additional FannyBond +3 support write before exact-target ANALGESIC_A administration.
+- id: AT_S0_031
+  test: Selecting COCAINE from Fanny applies only FannyBond -1 as a mild strain signal; it does not directly force STRAINED.
+- id: AT_S0_032
+  test: Selecting FANNY_CHOOSE applies FannyBond +4 and resolves to exact-target ANALGESIC_A.
+- id: AT_S0_033
+  test: MINIMIZE is relationship-negative in S0 (FannyBond -4 and Agitation +2) and stages Fanny leaving to sleep.
+- id: AT_S0_034
+  test: ASK_HELP applies FannyBond +5 and stages Fanny staying with Stevenson for a moment.
+- id: AT_S0_035
+  test: TRUTH applies FannyBond +8 and Agitation -5 and stages Fanny listening/supporting before writing.
+- id: AT_S0_036
+  test: SUPPORTIVE / STRAINED / WITHDRAWN are not directly assigned by any single S0 choice; canonical threshold resolution
+    remains upstream/TBD.
+- id: AT_S0_037
+  test: All TRUTH / MINIMIZE / ASK_HELP outcomes converge on Stevenson beginning to write.
+production_handoff:
+  ready_for:
+  - Unreal project architecture
+  - C++/Blueprint runtime interface stubs
+  - S0 greybox
+  - interaction implementation
+  - medication debug implementation
+  - Fanny navigation prototype
+  - WAIT_FANNY medication dialogue prototype
+  - placeholder dialogue choice UI
+  - motif event prototype
+  - AuthorPacket handoff test
+  - checkpoint hook placement in S0 flow
+  - Fanny relationship-state debug verification
+  not_ready_for:
+  - final dialogue performance polish and VO lock
+  - final cinematic shot production
+  - final animation
+  - final UI art
+  - final sound design
+  - final environment art
+  - final SaveGame/checkpoint C++ implementation
+known_upstream_dependency:
+  id: S0_FANNY_RELATIONSHIP_AND_MEDICATION_SYNC
+  status: REQUIRES_MASTER_SYNC
+  TLD_decisions:
+    WAIT_FANNY_route_commit_current_master:
+      Pain: 5
+      Fatigue: 5
+      FannyBond: 3
+    medication_request:
+      S0_FANNY_LAUDANUM:
+        medication: ANALGESIC_A
+        dose: EXACT_TARGET
+        classification: CORRECT
+        FannyBond: 3
+      S0_FANNY_COCAINE:
+        medication: STIMULANT_S
+        dose: EXACT_TARGET
+        classification: CORRECT
+        FannyBond: -1
+      S0_FANNY_CHOOSE:
+        medication: ANALGESIC_A
+        dose: EXACT_TARGET
+        classification: CORRECT
+        FannyBond: 4
+    relationship_choice:
+      S0_TRUTH:
+        FannyBond: 8
+        Agitation: -5
+        post: LISTENS_BEFORE_WRITING
+      S0_MINIMIZE:
+        FannyBond: -4
+        Agitation: 2
+        post: LEAVES_TO_SLEEP
+      S0_HELP:
+        FannyBond: 5
+        post: STAYS_A_MOMENT
+    relationship_choice_remains_separate_from_medication_request: true
+    all_successful_paths_converge_to_writing: true
+  current_master_mismatches:
+  - Current master does not yet define the three WAIT_FANNY medication-request subchoices.
+  - Current master does not yet define the S0 exact-target Fanny administration exception.
+  - TRUTH and MINIMIZE relationship writes now match current Master.
+  - Current master has S0_HELP FannyBond +5, which already matches the agreed value.
+  - Current master does not yet define LAUDANUM +3 / COCAINE -1 / FANNY_CHOOSE +4 relationship writes.
+  change_control: Do not change Master automatically. Relationship writes are reconciled; the assisted-medication proposal must be resolved separately.
+finalization:
+  baseline: S0_TLD_PARTIAL_RECONCILIATION_V1_3
+  includes:
+  - three authored top-level S0_MED routes
+  - mandatory actual medication on every successful route
+  - WAIT_FANNY conversation before medication
+  - 'WAIT_FANNY medication request: LAUDANUM / COCAINE / FANNY_CHOOSE'
+  - Fanny exact-target CORRECT administration in S0
+  - WAIT_FANNY route-commit FannyBond +3 from current master
+  - 'medication-request relationship writes: LAUDANUM +3 / COCAINE -1 / FANNY_CHOOSE +4'
+  - separate TRUTH / MINIMIZE / ASK_HELP relationship choice
+  - 'relationship writes: TRUTH +8 and Agitation -5 / MINIMIZE -4 and Agitation +2 / ASK_HELP +5'
+  - MINIMIZE makes Fanny leave to sleep
+  - ASK_HELP makes Fanny stay for a moment
+  - SUPPORTIVE / STRAINED / WITHDRAWN treated as long-term derived relationship states, not one-choice switches
+  - four protected tutorial motifs
+  - route-locked retry checkpoint CP_S0_MED_ROUTE_LOCKED
+  - post-Fanny checkpoint CP_S0_POST_FANNY
+  - write lock and AuthorPacket handoff to K1
+  - concrete spoken text externalized to JH_AMDD_S0_dialogue_v1_0.yaml
+  checkpoint_implementation: DESIGNED_HERE_IMPLEMENTED_LATER_IN_UNREAL_CPP
+  master_sync: REQUIRED_FOR_S0_FANNY_RELATIONSHIP_AND_WAIT_FANNY_MEDICATION_CHANGES
+fanny_relationship:
+  state_source: FannyBond
+  initial_value_source: stevenson.raw_initial.FannyBond
+  relationship_labels:
+  - SUPPORTIVE
+  - STRAINED
+  - WITHDRAWN
+  label_behavior_source: medication.Fanny_assistance
+  thresholds: MASTER_TBD
+  S0_rule:
+    direct_bucket_switch_from_single_choice: false
+    resolve_numeric_writes_first: true
+    note: S0 begins from a strong relationship. Choice writes create cumulative direction for later chapters. Do not force
+      SUPPORTIVE / STRAINED / WITHDRAWN from one S0 choice until canonical thresholds exist.
+  S0_wait_route_base_write:
+    FannyBond: 3
+    source: current master story.S0.S0_WAIT_FANNY
+  S0_medication_request_writes_pending_master_sync:
+    S0_FANNY_LAUDANUM:
+      FannyBond: 3
+      direction: SUPPORT
+    S0_FANNY_COCAINE:
+      FannyBond: -1
+      direction: MILD_STRAIN
+    S0_FANNY_CHOOSE:
+      FannyBond: 4
+      direction: SUPPORT
+  S0_relationship_choice_master_writes:
+    S0_TRUTH:
+      FannyBond: 8
+      Agitation: -5
+      direction: SUPPORT
+    S0_MINIMIZE:
+      FannyBond: -4
+      Agitation: 2
+      direction: STRAIN
+      FannyPostDialogueMode: LEAVES_TO_SLEEP
+    S0_HELP:
+      FannyBond: 5
+      direction: SUPPORT
+      FannyPostDialogueMode: STAYS_A_MOMENT
+  cumulative_rule: WAIT_FANNY route-commit bond write, Fanny medication-request bond write, and later relationship-choice
+    bond write are separate one-time writes and therefore accumulate. Self-medication routes skip the Fanny medication-request
+    bond write.
